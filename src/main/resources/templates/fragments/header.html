@@ -1,0 +1,76 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:fragment="header-css">
+        <!-- this is header-css -->
+        <link rel="stylesheet" type="text/css"
+              href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"/>
+        <script src="webjars/jquery/3.0.0/jquery.min.js"></script>
+        <link rel="stylesheet" th:href="@{/css/container.css}"
+              href="../../css/container.css"/>
+    </div>
+</head>
+<body>
+<div th:fragment="header">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#" style="color: rgb(0, 123, 255)">软件开发流程管理系统</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active" id="home">
+                    <a class="nav-link" href="#" >工作台</a>
+                </li>
+                <li class="nav-item" id="doc">
+                    <a class="nav-link" href="#" >文档</a>
+                </li>
+                <li class="nav-item"  id="project">
+                    <a class="nav-link" href="#" >项目</a>
+                </li>
+                <li class="nav-item" id="msg">
+                    <a class="nav-link " href="#" >消息</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
+            </form>
+        </div>
+    </nav>
+</div>
+
+</body>
+</html>
+
+<script>
+    // $(function (){
+    //     $("#home").click(function (){
+    //         $("#doc").removeClass("active")
+    //         $("#project").removeClass("active")
+    //         $("#msg").removeClass("active")
+    //         $("#home").addClass("active")
+    //     })
+    //     $("#doc").click(function (){
+    //         $("#doc").addClass("active")
+    //         $("#project").removeClass("active")
+    //         $("#msg").removeClass("active")
+    //         $("#home").removeClass("active")
+    //     })
+    //     $("#project").click(function (){
+    //         $("#doc").removeClass("active")
+    //         $("#project").addClass("active")
+    //         $("#msg").removeClass("active")
+    //         $("#home").removeClass("active")
+    //     })
+    //     $("#msg").click(function (){
+    //         $("#doc").removeClass("active")
+    //         $("#project").removeClass("active")
+    //         $("#msg").addClass("active")
+    //         $("#home").removeClass("active")
+    //     })
+    // })
+    $(function () {
+        console.log("这是jQuery入口函数的第二种写法");
+    });
+</script>

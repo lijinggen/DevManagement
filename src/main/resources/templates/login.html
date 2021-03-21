@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <title>Spring Security Example </title>
+    <link rel="stylesheet" type="text/css"
+          href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"/>
+    <script src="webjars/jquery/3.0.0/jquery.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/container.css}"
+          href="../css/container.css"/>
+
+</head>
+
+<body style="background-image:url(http://localhost:8080/image/login-background.jpg);background-repeat:no-repeat;background-size:100% 100%;-moz-background-size:100% 100%;">
+<div class="navbar navbar-expand-lg navbar-dark bg-dark" >
+    <a href="#" class="navbar-left">
+        <img alt="Brand" src="http://localhost:8080/image/logo.png" >
+    </a>
+    <span style="margin-left:10px;font-size:20px;font-weight: bold;color: #c1c1c1">开发管理系统</span>
+</div>
+<div class="flex_container">
+    <div style="width: 18%; display: flex; flex-direction: column;justify-content:center" >
+        <br>
+        <div class="input-group" >
+            <input type="text" class="form-control" placeholder="用户名" aria-label="用户名"
+                   aria-describedby="basic-addon1" id="username">
+        </div>
+        <div id = "usernameEmpty" style="display:none;margin-top: 10px">
+            <div class="alert alert-danger">
+                请输入用户名
+            </div>
+        </div>
+        <br>
+        <div class="input-group">
+            <input type="password" class="form-control" placeholder="密码" aria-label="密码"
+                   aria-describedby="basic-addon1" id="password">
+        </div>
+        <br>
+        <div id = "tip" style="display:none">
+            <div class="alert alert-danger">
+                账号密码不正确
+            </div>
+        </div>
+        <br>
+        <div class="row" >
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <input type="button" onclick="login()" class="btn btn-lg btn-primary btn-block" style="font-weight: bold" value="登陆"/>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <input class="btn btn-lg btn-block" onclick="register()" style="font-weight: bold" value="注册"/>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
+
+<script>
+    function login(){
+        if ($("#username").val()==""){
+            $("#usernameEmpty").show()
+            return ;
+        }else{
+            $("#usernameEmpty").hide()
+        }
+        $.ajax({
+            url: "http://localhost:8080/login",
+            data:{
+                userAccount:$("#username").val(),
+                password:$("#password").val()
+            },
+            dataType: "json",
+            type: "POST",
+            success: function (res) {
+                console.log(res)
+                if (res.data==false){
+                    $("#tip").show()
+                }else{
+                    window.location.href='/home';
+                }
+            },
+        })
+    }
+
+    function register(){
+        window.location.href='/register';
+    }
+</script>

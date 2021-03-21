@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css"
+          href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"/>
+    <script src="webjars/jquery/3.0.0/jquery.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/container.css}"
+          href="../css/container.css"/>
+</head>
+<body>
+    <div class="flex_container">
+        <div style="width: 25%; display: flex; flex-direction: column;justify-content:center" >
+            <h1 style="color: rgb(0, 123, 255)">软件流程管理系统</h1>
+            <br>
+            <div class="input-group" >
+                <input type="text" class="form-control" placeholder="用户名" aria-label="用户名"
+                       aria-describedby="basic-addon1" id="username">
+            </div>
+            <div id = "usernameEmpty" style="display:none;margin-top: 10px">
+                <div class="alert alert-danger">
+                    请输入用户名
+                </div>
+            </div>
+            <br>
+            <div class="input-group">
+                <input type="password" class="form-control" placeholder="密码" aria-label="密码"
+                       aria-describedby="basic-addon1" id="password">
+            </div>
+            <br>
+            <div class="input-group">
+                <input type="password" class="form-control" placeholder="请再次输入密码" aria-label="密码"
+                       aria-describedby="basic-addon1" id="confirm_password">
+            </div>
+            <br>
+            <div id = "tip" style="display:none">
+                <div class="alert alert-danger">
+                    两次密码不正确
+                </div>
+            </div>
+            <br>
+            <div class="row" >
+                <div class="col-xs-12 col-sm-12 col-md-12" style="margin: 0 auto">
+                    <input type="button" onclick="register()" class="btn btn-lg btn-primary btn-block"  value="注册"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    function register(){
+        if ($("#username").val()==""){
+            $("#usernameEmpty").show()
+            return ;
+        }else{
+            $("#usernameEmpty").hide()
+        }
+        if ($("#password").val()!=$("#confirm_password").val()){
+            $("#tip").show()
+            return ;
+        }else{
+            $("#tip").hide();
+        }
+        // $.ajax({
+        //     url: "http://localhost:8080/login",
+        //     data:{
+        //     },
+        //     dataType: "json",
+        //     type: "POST",
+        //     success: function (res) {
+        //         console.log(res)
+        //         if (res.data==false){
+        //             $("#tip").show()
+        //         }else{
+        //             window.location.href='/home';
+        //         }
+        //     },
+        // })
+    }
+</script>
