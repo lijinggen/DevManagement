@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.UUID;
 
 @Controller
 public class LoginController {
@@ -27,12 +29,15 @@ public class LoginController {
     @ResponseBody
     public Result<String> login(HttpServletRequest request, User user) {
         User userByAccount = userService.getByUserAccount(user.getUserAccount());
+        System.out.println(UUID.randomUUID());
+        System.out.println(userByAccount);
         if(userByAccount!=null){
             if (!userByAccount.getPassword().equals(user.getPassword())){
                 return new Result(false);
             }else{
-                request.getSession().setAttribute("username",user.getUserAccount());
-                request.getSession().setAttribute("user_id",user.getId());
+                HttpSession session = request.getSession();
+                session.setAttribute("username",user.getUserAccount());
+                session.setAttribute("user_id",userByAccount.getId());
                 return new Result(true);
             }
         }

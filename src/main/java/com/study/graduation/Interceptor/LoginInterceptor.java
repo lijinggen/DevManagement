@@ -14,6 +14,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         try {
             String user = (String) request.getSession().getAttribute("username");
+            String user_id=(String) request.getSession().getAttribute("user_id");
             if (user != null) {
                 return true;
             }
