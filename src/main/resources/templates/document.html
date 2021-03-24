@@ -10,6 +10,8 @@
             th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
     <link rel="stylesheet" th:href="@{/css/container.css}"
           href="../../css/container.css"/>
+    <script src="webjars/bootstrap/4.0.0/js/bootstrap.js"
+    th:src="@{/webjars/bootstrap/4.0.0/js/bootstrap.js}"></script>
 </head>
 <body>
 <div>
@@ -72,56 +74,24 @@
             </li>
         </ul>
     </div>
-    <div style="display: flex;flex-direction: column;height: 100%;width: 80%;padding-left: 20px">
-        <ul class="list-group"style="display: flex;flex-direction: column">
-            <li class="list-group-item nav-item d-flex justify-content-between align-items-center "
-                style="border-color: #5c84aa;background-color: #3D3D3D;padding: 0px; margin-top: 10px" >
-                <a href="#" class="nav-link btn bg-dark"
-                   style="color: #5c84aa;display: flex;flex-direction: row;align-items: center;width: 100%">
-                    <svg t="1616511526358" class="icon" viewBox="0 0 1029 1024" version="1.1"
-                         xmlns="http://www.w3.org/2000/svg" p-id="1720" width="28" height=28>
-                        <path d="M982.4 883.4H52.6c-25.9 0-47-21.1-47-47V160.2h31.3v676.2c0 8.6 7 15.7 15.7 15.7h929.8c8.6 0 15.7-7 15.7-15.7V161.2h31.3v675.2c-0.1 25.9-21.1 47-47 47z"
-                              fill="#5c84aa" p-id="1721"></path>
-                        <path d="M5.3 144.5h1023.9v31.3H5.3z" fill="#5c84aa" p-id="1722"></path>
-                        <path d="M331.6 169.4s-35.8-36.7-58.4-59.3c-17.2-17.2-35.8-16.5-35.9-16.5H105.7c-8.2 0-11 2.9-11.9 3.8-4.1 4.4-4.6 12.7-4.5 15.3v1.2l-0.5 44.9-31.3-0.3 0.5-44.3c-0.2-4.7-0.3-23.9 12.7-37.9 5.9-6.4 16.7-14 34.9-14h130.7c0.4-0.1 31.7-1.6 59.1 25.6 22.7 22.7 58.6 59.5 58.6 59.5l-22.4 22z"
-                              fill="#5c84aa" p-id="1723"></path>
-                    </svg>
-                    <span style="margin-left: 6px">需求文档</span>
-                </a>
-            </li>
-            <li class="list-group-item nav-item d-flex justify-content-between align-items-center "
-                style="border-color: #5c84aa;background-color: #3D3D3D;padding: 0px;height: 30px" >
-                <a href="#" class="nav-link btn bg-dark"
-                   style="color: #5c84aa;display: flex;flex-direction: row;align-items: center;width: 100%">
-                    <svg t="1616511526358" class="icon" viewBox="0 0 1029 1024" version="1.1"
-                         xmlns="http://www.w3.org/2000/svg" p-id="1720" width="28" height=28>
-                        <path d="M982.4 883.4H52.6c-25.9 0-47-21.1-47-47V160.2h31.3v676.2c0 8.6 7 15.7 15.7 15.7h929.8c8.6 0 15.7-7 15.7-15.7V161.2h31.3v675.2c-0.1 25.9-21.1 47-47 47z"
-                              fill="#5c84aa" p-id="1721"></path>
-                        <path d="M5.3 144.5h1023.9v31.3H5.3z" fill="#5c84aa" p-id="1722"></path>
-                        <path d="M331.6 169.4s-35.8-36.7-58.4-59.3c-17.2-17.2-35.8-16.5-35.9-16.5H105.7c-8.2 0-11 2.9-11.9 3.8-4.1 4.4-4.6 12.7-4.5 15.3v1.2l-0.5 44.9-31.3-0.3 0.5-44.3c-0.2-4.7-0.3-23.9 12.7-37.9 5.9-6.4 16.7-14 34.9-14h130.7c0.4-0.1 31.7-1.6 59.1 25.6 22.7 22.7 58.6 59.5 58.6 59.5l-22.4 22z"
-                              fill="#5c84aa" p-id="1723"></path>
-                    </svg>
-                    <span style="margin-left: 6px">需求文档</span>
-                </a>
-            </li>
-            <li class="list-group-item nav-item d-flex justify-content-between align-items-center "
-                style="border-color: #5c84aa;background-color: #3D3D3D;padding: 0px;height: 30px" >
-                <a href="#" class="nav-link btn bg-dark"
-                   style="color: #5c84aa;display: flex;flex-direction: row;align-items: center;width: 100%">
-                    <svg t="1616511526358" class="icon" viewBox="0 0 1029 1024" version="1.1"
-                         xmlns="http://www.w3.org/2000/svg" p-id="1720" width="28" height=28>
-                        <path d="M982.4 883.4H52.6c-25.9 0-47-21.1-47-47V160.2h31.3v676.2c0 8.6 7 15.7 15.7 15.7h929.8c8.6 0 15.7-7 15.7-15.7V161.2h31.3v675.2c-0.1 25.9-21.1 47-47 47z"
-                              fill="#5c84aa" p-id="1721"></path>
-                        <path d="M5.3 144.5h1023.9v31.3H5.3z" fill="#5c84aa" p-id="1722"></path>
-                        <path d="M331.6 169.4s-35.8-36.7-58.4-59.3c-17.2-17.2-35.8-16.5-35.9-16.5H105.7c-8.2 0-11 2.9-11.9 3.8-4.1 4.4-4.6 12.7-4.5 15.3v1.2l-0.5 44.9-31.3-0.3 0.5-44.3c-0.2-4.7-0.3-23.9 12.7-37.9 5.9-6.4 16.7-14 34.9-14h130.7c0.4-0.1 31.7-1.6 59.1 25.6 22.7 22.7 58.6 59.5 58.6 59.5l-22.4 22z"
-                              fill="#5c84aa" p-id="1723"></path>
-                    </svg>
-                    <span style="margin-left: 6px">需求文档</span>
-                </a>
-            </li>
-        </ul>
+<!--    style="display: flex;flex-direction: column;height: 100%;width: 80%;padding-left: 20px;padding-right: 20px"-->
+    <div >
+        <p>
+            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                Link with href
+            </a>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                Button with data-target
+            </button>
+        </p>
+        <div class="collapse" id="collapseExample" style="background-color: olivedrab">
+            <div class="card card-body">
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+            </div>
+        </div>
     </div>
 </div>
+
 </body>
 </html>
 
