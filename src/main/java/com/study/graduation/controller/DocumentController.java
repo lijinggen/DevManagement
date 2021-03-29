@@ -44,6 +44,4 @@ public class DocumentController {
         System.out.println(model);
         return "document";
     }
-
-
 }

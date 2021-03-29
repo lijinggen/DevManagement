@@ -1,6 +1,7 @@
 package com.study.graduation.controller;
 
 import com.study.graduation.entity.Directory;
+import com.study.graduation.entity.MainDocumentList;
 import com.study.graduation.service.DirectoryService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -36,8 +37,8 @@ public class DirectoryController {
 
     @GetMapping("listByProject")
     public String listByProject(Model model ,String id){
+        MainDocumentList mainDocumentList = directoryService.listByProject(id);
 
         return "document";
     }
-
 }

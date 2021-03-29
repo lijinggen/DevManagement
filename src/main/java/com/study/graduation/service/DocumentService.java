@@ -1,17 +1,16 @@
 package com.study.graduation.service;
 
-import com.study.graduation.entity.Directory;
-import com.study.graduation.entity.MainDocumentList;
+import com.study.graduation.entity.Document;
 
 import java.util.List;
 
 /**
- * (Directory)表服务接口
+ * (Document)表服务接口
  *
  * @author makejava
- * @since 2021-03-24 21:36:12
+ * @since 2021-03-29 13:08:54
  */
-public interface DirectoryService {
+public interface DocumentService {
 
     /**
      * 通过ID查询单条数据
@@ -19,7 +18,7 @@ public interface DirectoryService {
      * @param id 主键
      * @return 实例对象
      */
-    Directory queryById(String id);
+    Document queryById(String id);
 
     /**
      * 查询多条数据
@@ -28,23 +27,23 @@ public interface DirectoryService {
      * @param limit  查询条数
      * @return 对象列表
      */
-    List<Directory> queryAllByLimit(int offset, int limit);
+    List<Document> queryAllByLimit(int offset, int limit);
 
     /**
      * 新增数据
      *
-     * @param directory 实例对象
+     * @param document 实例对象
      * @return 实例对象
      */
-    Directory insert(Directory directory);
+    Document insert(Document document);
 
     /**
      * 修改数据
      *
-     * @param directory 实例对象
+     * @param document 实例对象
      * @return 实例对象
      */
-    Directory update(Directory directory);
+    Document update(Document document);
 
     /**
      * 通过主键删除数据
@@ -53,7 +52,5 @@ public interface DirectoryService {
      * @return 是否成功
      */
     boolean deleteById(String id);
-
-    MainDocumentList listByProject(String projectId);
 
 }

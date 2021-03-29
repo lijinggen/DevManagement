@@ -1,11 +1,13 @@
 package com.study.graduation.service.impl;
 
-import com.study.graduation.entity.Directory;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.study.graduation.entity.*;
 import com.study.graduation.dao.DirectoryDao;
 import com.study.graduation.service.DirectoryService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +20,6 @@ import java.util.List;
 public class DirectoryServiceImpl implements DirectoryService {
     @Resource
     private DirectoryDao directoryDao;
-
     /**
      * 通过ID查询单条数据
      *
@@ -75,5 +76,37 @@ public class DirectoryServiceImpl implements DirectoryService {
     @Override
     public boolean deleteById(String id) {
         return this.directoryDao.deleteById(id) > 0;
+    }
+
+    @Override
+    public MainDocumentList listByProject(String projectId) {
+        // 该项目下各个 tab存储的东西
+        SubDocumentList demand=new SubDocumentList();
+        SubDocumentList stander=new SubDocumentList();
+        SubDocumentList dev=new SubDocumentList();
+        SubDocumentList other=new SubDocumentList();
+        // 主列表
+        MainDocumentList documentLists=new MainDocumentList(demand,stander,dev,other);
+        QueryWrapper<Directory> directoryQueryWrapper=new QueryWrapper<>();
+        directoryQueryWrapper.lambda().eq(Directory::getProjectId,projectId);
+        // 1. 查出所有目录，归属到各个tab
+        // 2. 查出所有document，归属到①tab ②目录
+        List<Directory> directories = directoryDao.selectList(directoryQueryWrapper);
+        if(directories!=null&&directories.size()>0){
+            directories.forEach(c->{
+                DirectoryAndDocList directoryAndDocList = new DirectoryAndDocList();
+                directoryAndDocList.setDirectory(c);
+                if(c.getType()==1){
+                    demand.getDirectories().add(directoryAndDocList);
+                }else if(c.getType()==2){
+                    stander.getDirectories().add(directoryAndDocList);
+                }else if(c.getType()==3){
+                    dev.getDirectories().add(directoryAndDocList);
+                }else if(c.getType()==4){
+                    other.getDirectories().add(directoryAndDocList);
+                }
+            });
+        }
+        return documentLists;
     }
 }
