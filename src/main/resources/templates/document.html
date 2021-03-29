@@ -11,19 +11,29 @@
     <link rel="stylesheet" th:href="@{/css/container.css}"
           href="../../css/container.css"/>
     <script src="webjars/bootstrap/4.0.0/js/bootstrap.js"
-    th:src="@{/webjars/bootstrap/4.0.0/js/bootstrap.js}"></script>
+            th:src="@{/webjars/bootstrap/4.0.0/js/bootstrap.js}"></script>
 </head>
 <body>
 <div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a href="#" class="navbar-left">
-            <svg t="1616324298583" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
-                 p-id="5268" width="50" height="50">
-                <path d="M512 0C229.232 0 0 229.232 0 512s229.232 512 512 512 512-229.232 512-512S794.768 0 512 0zM512 512 217.84 217.84C293.12 142.56 397.12 96 512 96L512 512z"
-                      p-id="5269" fill="#5c84aa"></path>
+            <svg t="1616595581005" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                 p-id="10791" width="40" height="40">
+                <path d="M846.726194 462.606307l-108.698095 175.515454v238.176709l88.237277 78.646269H614.30409l85.999376-79.285669v-244.251015l-198.214175-280.377146h125.642211l59.464252-56.26725-105.501093-160.489541-110.296597-32.929129 13.427412-101.344989-167.203247 134.274118-226.667499 422.324071 158.251639 343.358102-72.571964 77.047768v46.03684h119.887606l29.412425-15.665314 23.977522 15.665314h607.750234v-54.988448l-136.19232-136.19232v-173.916953l72.891664-118.608804h26.215423l13.427412 103.582891h38.364034l9.910708-180.310958h-135.552919z"
+                      p-id="10792" fill="#5c84aa"></path>
             </svg>
         </a>
-        <span style="margin-left:10px;font-size:20px;color: #c1c1c1">开 发 管 理 系 统</span>
+        <svg width="200" height="40" xmlns="http://www.w3.org/2000/svg">
+            <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+
+            <g>
+                <title>Layer 1</title>
+                <path id="svg_1" d="m10.3,106.05" opacity="0.5" stroke-width="1.5" stroke="#000" fill="#fff"/>
+                <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_4" y="145.05" x="129.3" stroke-width="0" stroke="#000" fill="#000000">开 发 管 理 系 统</text>
+                <path id="svg_5" d="m37.917363,15.092976" opacity="0.5" stroke-width="1.5" stroke="#000" fill="#fff"/>
+                <text font-weight="normal" font-style="italic" stroke="#000" xml:space="preserve" text-anchor="start" font-family="Junction, sans-serif" font-size="20" id="svg_6" y="26.270564" x="16.744821" stroke-width="0" fill="#5c84aa">Dev-Management</text>
+            </g>
+        </svg>
         <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 50px;">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item " id="home">
@@ -55,12 +65,13 @@
 <div style="display: flex;flex-direction: row;height: 100%">
     <div style="display: flex;flex-direction: column; height: 100%;width: 20%;
                 background-color: #333333">
-        <ul class="list-group">
+        <ul class="list-group" id="project_list">
             <li class="list-group-item nav-item d-flex justify-content-between align-items-center "
                 style="border-color: #5c84aa;background-color: #3D3D3D;padding: 0px"
                 th:each="project, value: ${project_list}">
                 <a href="#" class="nav-link btn bg-dark"
-                   style="color: #5c84aa;display: flex;flex-direction: row;align-items: center;width: 100%">
+                   style="color: #5c84aa;display: flex;flex-direction: row;align-items: center;width: 100%"
+                   th:onclick="getDocument([[${project[id]}]])">
                     <svg t="1616511526358" class="icon" viewBox="0 0 1029 1024" version="1.1"
                          xmlns="http://www.w3.org/2000/svg" p-id="1720" width="38" height=38>
                         <path d="M982.4 883.4H52.6c-25.9 0-47-21.1-47-47V160.2h31.3v676.2c0 8.6 7 15.7 15.7 15.7h929.8c8.6 0 15.7-7 15.7-15.7V161.2h31.3v675.2c-0.1 25.9-21.1 47-47 47z"
@@ -70,23 +81,121 @@
                               fill="#5c84aa" p-id="1723"></path>
                     </svg>
                     <span th:text="${project[name]}" style="margin-left: 6px"></span>
+                    <span th:text="${project[id]}" style="display: none"></span>
                 </a>
             </li>
         </ul>
     </div>
-<!--    style="display: flex;flex-direction: column;height: 100%;width: 80%;padding-left: 20px;padding-right: 20px"-->
-    <div >
-        <p>
-            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                Link with href
-            </a>
-            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                Button with data-target
-            </button>
-        </p>
-        <div class="collapse" id="collapseExample" style="background-color: olivedrab">
-            <div class="card card-body">
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+    <div class="container" style="background-color: #3d3d3d">
+        <h2 style="color: aliceblue;border: #5c84aa 1px dashed;padding: 10px;width: fit-content">消息中心</h2>
+        <div id="accordion">
+            <div class="card bg-dark">
+                <div class="card-header" style="display: flex;flex-direction: row">
+                    <a class="card-link" data-toggle="collapse" href="#collapseOne"
+                       style="display: flex;flex-direction: row">
+                        <svg t="1616511526358" class="icon" viewBox="0 0 1029 1024" version="1.1"
+                             xmlns="http://www.w3.org/2000/svg" p-id="1720" width="26" height="26">
+                            <path d="M982.4 883.4H52.6c-25.9 0-47-21.1-47-47V160.2h31.3v676.2c0 8.6 7 15.7 15.7 15.7h929.8c8.6 0 15.7-7 15.7-15.7V161.2h31.3v675.2c-0.1 25.9-21.1 47-47 47z"
+                                  fill="#5c84aa" p-id="1721"></path>
+                            <path d="M5.3 144.5h1023.9v31.3H5.3z" fill="#5c84aa" p-id="1722"></path>
+                            <path d="M331.6 169.4s-35.8-36.7-58.4-59.3c-17.2-17.2-35.8-16.5-35.9-16.5H105.7c-8.2 0-11 2.9-11.9 3.8-4.1 4.4-4.6 12.7-4.5 15.3v1.2l-0.5 44.9-31.3-0.3 0.5-44.3c-0.2-4.7-0.3-23.9 12.7-37.9 5.9-6.4 16.7-14 34.9-14h130.7c0.4-0.1 31.7-1.6 59.1 25.6 22.7 22.7 58.6 59.5 58.6 59.5l-22.4 22z"
+                                  fill="#5c84aa" p-id="1723"></path>
+                        </svg>
+                        <span style="margin-left: 20px">需求文档</span>
+                    </a>
+                    <a href="#" style="margin-left: auto;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                             class="bi bi-plus-square-dotted" viewBox="0 0 16 16">
+                            <path d="M2.5 0c-.166 0-.33.016-.487.048l.194.98A1.51 1.51 0 0 1 2.5 1h.458V0H2.5zm2.292 0h-.917v1h.917V0zm1.833 0h-.917v1h.917V0zm1.833 0h-.916v1h.916V0zm1.834 0h-.917v1h.917V0zm1.833 0h-.917v1h.917V0zM13.5 0h-.458v1h.458c.1 0 .199.01.293.029l.194-.981A2.51 2.51 0 0 0 13.5 0zm2.079 1.11a2.511 2.511 0 0 0-.69-.689l-.556.831c.164.11.305.251.415.415l.83-.556zM1.11.421a2.511 2.511 0 0 0-.689.69l.831.556c.11-.164.251-.305.415-.415L1.11.422zM16 2.5c0-.166-.016-.33-.048-.487l-.98.194c.018.094.028.192.028.293v.458h1V2.5zM.048 2.013A2.51 2.51 0 0 0 0 2.5v.458h1V2.5c0-.1.01-.199.029-.293l-.981-.194zM0 3.875v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zM0 5.708v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zM0 7.542v.916h1v-.916H0zm15 .916h1v-.916h-1v.916zM0 9.375v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zm-16 .916v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zm-16 .917v.458c0 .166.016.33.048.487l.98-.194A1.51 1.51 0 0 1 1 13.5v-.458H0zm16 .458v-.458h-1v.458c0 .1-.01.199-.029.293l.981.194c.032-.158.048-.32.048-.487zM.421 14.89c.183.272.417.506.69.689l.556-.831a1.51 1.51 0 0 1-.415-.415l-.83.556zm14.469.689c.272-.183.506-.417.689-.69l-.831-.556c-.11.164-.251.305-.415.415l.556.83zm-12.877.373c.158.032.32.048.487.048h.458v-1H2.5c-.1 0-.199-.01-.293-.029l-.194.981zM13.5 16c.166 0 .33-.016.487-.048l-.194-.98A1.51 1.51 0 0 1 13.5 15h-.458v1h.458zm-9.625 0h.917v-1h-.917v1zm1.833 0h.917v-1h-.917v1zm1.834-1v1h.916v-1h-.916zm1.833 1h.917v-1h-.917v1zm1.833 0h.917v-1h-.917v1zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                        </svg>
+                    </a>
+                </div>
+                <div id="collapseOne" class="collapse show" data-parent="#accordion" style="color: #5c84aa">
+                    <div class="card-body">
+                        #1 内容：菜鸟教程 -- 学的不仅是技术，更是梦想！！！
+                    </div>
+                </div>
+            </div>
+            <div class="card  bg-dark">
+                <div class="card-header" style="display: flex;flex-direction: row">
+                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo"
+                       style="display: flex;flex-direction: row">
+                        <svg t="1616511526358" class="icon" viewBox="0 0 1029 1024" version="1.1"
+                             xmlns="http://www.w3.org/2000/svg" p-id="1720" width="26" height="26">
+                            <path d="M982.4 883.4H52.6c-25.9 0-47-21.1-47-47V160.2h31.3v676.2c0 8.6 7 15.7 15.7 15.7h929.8c8.6 0 15.7-7 15.7-15.7V161.2h31.3v675.2c-0.1 25.9-21.1 47-47 47z"
+                                  fill="#5c84aa" p-id="1721"></path>
+                            <path d="M5.3 144.5h1023.9v31.3H5.3z" fill="#5c84aa" p-id="1722"></path>
+                            <path d="M331.6 169.4s-35.8-36.7-58.4-59.3c-17.2-17.2-35.8-16.5-35.9-16.5H105.7c-8.2 0-11 2.9-11.9 3.8-4.1 4.4-4.6 12.7-4.5 15.3v1.2l-0.5 44.9-31.3-0.3 0.5-44.3c-0.2-4.7-0.3-23.9 12.7-37.9 5.9-6.4 16.7-14 34.9-14h130.7c0.4-0.1 31.7-1.6 59.1 25.6 22.7 22.7 58.6 59.5 58.6 59.5l-22.4 22z"
+                                  fill="#5c84aa" p-id="1723"></path>
+                        </svg>
+                        <span style="margin-left: 20px">规范文档</span>
+                    </a>
+                    <a href="#" style="margin-left: auto;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                             class="bi bi-plus-square-dotted" viewBox="0 0 16 16">
+                            <path d="M2.5 0c-.166 0-.33.016-.487.048l.194.98A1.51 1.51 0 0 1 2.5 1h.458V0H2.5zm2.292 0h-.917v1h.917V0zm1.833 0h-.917v1h.917V0zm1.833 0h-.916v1h.916V0zm1.834 0h-.917v1h.917V0zm1.833 0h-.917v1h.917V0zM13.5 0h-.458v1h.458c.1 0 .199.01.293.029l.194-.981A2.51 2.51 0 0 0 13.5 0zm2.079 1.11a2.511 2.511 0 0 0-.69-.689l-.556.831c.164.11.305.251.415.415l.83-.556zM1.11.421a2.511 2.511 0 0 0-.689.69l.831.556c.11-.164.251-.305.415-.415L1.11.422zM16 2.5c0-.166-.016-.33-.048-.487l-.98.194c.018.094.028.192.028.293v.458h1V2.5zM.048 2.013A2.51 2.51 0 0 0 0 2.5v.458h1V2.5c0-.1.01-.199.029-.293l-.981-.194zM0 3.875v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zM0 5.708v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zM0 7.542v.916h1v-.916H0zm15 .916h1v-.916h-1v.916zM0 9.375v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zm-16 .916v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zm-16 .917v.458c0 .166.016.33.048.487l.98-.194A1.51 1.51 0 0 1 1 13.5v-.458H0zm16 .458v-.458h-1v.458c0 .1-.01.199-.029.293l.981.194c.032-.158.048-.32.048-.487zM.421 14.89c.183.272.417.506.69.689l.556-.831a1.51 1.51 0 0 1-.415-.415l-.83.556zm14.469.689c.272-.183.506-.417.689-.69l-.831-.556c-.11.164-.251.305-.415.415l.556.83zm-12.877.373c.158.032.32.048.487.048h.458v-1H2.5c-.1 0-.199-.01-.293-.029l-.194.981zM13.5 16c.166 0 .33-.016.487-.048l-.194-.98A1.51 1.51 0 0 1 13.5 15h-.458v1h.458zm-9.625 0h.917v-1h-.917v1zm1.833 0h.917v-1h-.917v1zm1.834-1v1h.916v-1h-.916zm1.833 1h.917v-1h-.917v1zm1.833 0h.917v-1h-.917v1zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                        </svg>
+                    </a>
+                </div>
+                <div id="collapseTwo" class="collapse" data-parent="#accordion" style="color: #5c84aa">
+                    <div class="card-body">
+                        #2 内容：菜鸟教程 -- 学的不仅是技术，更是梦想！！！
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-dark">
+                <div class="card-header" style="display: flex;flex-direction: row">
+                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree"
+                       style="display: flex;flex-direction: row">
+                        <svg t="1616511526358" class="icon" viewBox="0 0 1029 1024" version="1.1"
+                             xmlns="http://www.w3.org/2000/svg" p-id="1720" width="26" height="26">
+                            <path d="M982.4 883.4H52.6c-25.9 0-47-21.1-47-47V160.2h31.3v676.2c0 8.6 7 15.7 15.7 15.7h929.8c8.6 0 15.7-7 15.7-15.7V161.2h31.3v675.2c-0.1 25.9-21.1 47-47 47z"
+                                  fill="#5c84aa" p-id="1721"></path>
+                            <path d="M5.3 144.5h1023.9v31.3H5.3z" fill="#5c84aa" p-id="1722"></path>
+                            <path d="M331.6 169.4s-35.8-36.7-58.4-59.3c-17.2-17.2-35.8-16.5-35.9-16.5H105.7c-8.2 0-11 2.9-11.9 3.8-4.1 4.4-4.6 12.7-4.5 15.3v1.2l-0.5 44.9-31.3-0.3 0.5-44.3c-0.2-4.7-0.3-23.9 12.7-37.9 5.9-6.4 16.7-14 34.9-14h130.7c0.4-0.1 31.7-1.6 59.1 25.6 22.7 22.7 58.6 59.5 58.6 59.5l-22.4 22z"
+                                  fill="#5c84aa" p-id="1723"></path>
+                        </svg>
+                        <span style="margin-left: 20px">开发文档</span>
+                    </a>
+                    <a href="#" style="margin-left: auto;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                             class="bi bi-plus-square-dotted" viewBox="0 0 16 16">
+                            <path d="M2.5 0c-.166 0-.33.016-.487.048l.194.98A1.51 1.51 0 0 1 2.5 1h.458V0H2.5zm2.292 0h-.917v1h.917V0zm1.833 0h-.917v1h.917V0zm1.833 0h-.916v1h.916V0zm1.834 0h-.917v1h.917V0zm1.833 0h-.917v1h.917V0zM13.5 0h-.458v1h.458c.1 0 .199.01.293.029l.194-.981A2.51 2.51 0 0 0 13.5 0zm2.079 1.11a2.511 2.511 0 0 0-.69-.689l-.556.831c.164.11.305.251.415.415l.83-.556zM1.11.421a2.511 2.511 0 0 0-.689.69l.831.556c.11-.164.251-.305.415-.415L1.11.422zM16 2.5c0-.166-.016-.33-.048-.487l-.98.194c.018.094.028.192.028.293v.458h1V2.5zM.048 2.013A2.51 2.51 0 0 0 0 2.5v.458h1V2.5c0-.1.01-.199.029-.293l-.981-.194zM0 3.875v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zM0 5.708v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zM0 7.542v.916h1v-.916H0zm15 .916h1v-.916h-1v.916zM0 9.375v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zm-16 .916v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zm-16 .917v.458c0 .166.016.33.048.487l.98-.194A1.51 1.51 0 0 1 1 13.5v-.458H0zm16 .458v-.458h-1v.458c0 .1-.01.199-.029.293l.981.194c.032-.158.048-.32.048-.487zM.421 14.89c.183.272.417.506.69.689l.556-.831a1.51 1.51 0 0 1-.415-.415l-.83.556zm14.469.689c.272-.183.506-.417.689-.69l-.831-.556c-.11.164-.251.305-.415.415l.556.83zm-12.877.373c.158.032.32.048.487.048h.458v-1H2.5c-.1 0-.199-.01-.293-.029l-.194.981zM13.5 16c.166 0 .33-.016.487-.048l-.194-.98A1.51 1.51 0 0 1 13.5 15h-.458v1h.458zm-9.625 0h.917v-1h-.917v1zm1.833 0h.917v-1h-.917v1zm1.834-1v1h.916v-1h-.916zm1.833 1h.917v-1h-.917v1zm1.833 0h.917v-1h-.917v1zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                        </svg>
+                    </a>
+                </div>
+                <div id="collapseThree" class="collapse" data-parent="#accordion" style="color: #5c84aa">
+                    <div class="card-body">
+                        #3 内容：菜鸟教程 -- 学的不仅是技术，更是梦想！！！
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-dark">
+                <div class="card-header" style="display: flex;flex-direction: row">
+                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseFour"
+                       style="display: flex;flex-direction: row">
+                        <svg t="1616511526358" class="icon" viewBox="0 0 1029 1024" version="1.1"
+                             xmlns="http://www.w3.org/2000/svg" p-id="1720" width="26" height="26">
+                            <path d="M982.4 883.4H52.6c-25.9 0-47-21.1-47-47V160.2h31.3v676.2c0 8.6 7 15.7 15.7 15.7h929.8c8.6 0 15.7-7 15.7-15.7V161.2h31.3v675.2c-0.1 25.9-21.1 47-47 47z"
+                                  fill="#5c84aa" p-id="1721"></path>
+                            <path d="M5.3 144.5h1023.9v31.3H5.3z" fill="#5c84aa" p-id="1722"></path>
+                            <path d="M331.6 169.4s-35.8-36.7-58.4-59.3c-17.2-17.2-35.8-16.5-35.9-16.5H105.7c-8.2 0-11 2.9-11.9 3.8-4.1 4.4-4.6 12.7-4.5 15.3v1.2l-0.5 44.9-31.3-0.3 0.5-44.3c-0.2-4.7-0.3-23.9 12.7-37.9 5.9-6.4 16.7-14 34.9-14h130.7c0.4-0.1 31.7-1.6 59.1 25.6 22.7 22.7 58.6 59.5 58.6 59.5l-22.4 22z"
+                                  fill="#5c84aa" p-id="1723"></path>
+                        </svg>
+                        <span style="margin-left: 20px">其它</span>
+                    </a>
+                    <a href="#" style="margin-left: auto;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                             class="bi bi-plus-square-dotted" viewBox="0 0 16 16">
+                            <path d="M2.5 0c-.166 0-.33.016-.487.048l.194.98A1.51 1.51 0 0 1 2.5 1h.458V0H2.5zm2.292 0h-.917v1h.917V0zm1.833 0h-.917v1h.917V0zm1.833 0h-.916v1h.916V0zm1.834 0h-.917v1h.917V0zm1.833 0h-.917v1h.917V0zM13.5 0h-.458v1h.458c.1 0 .199.01.293.029l.194-.981A2.51 2.51 0 0 0 13.5 0zm2.079 1.11a2.511 2.511 0 0 0-.69-.689l-.556.831c.164.11.305.251.415.415l.83-.556zM1.11.421a2.511 2.511 0 0 0-.689.69l.831.556c.11-.164.251-.305.415-.415L1.11.422zM16 2.5c0-.166-.016-.33-.048-.487l-.98.194c.018.094.028.192.028.293v.458h1V2.5zM.048 2.013A2.51 2.51 0 0 0 0 2.5v.458h1V2.5c0-.1.01-.199.029-.293l-.981-.194zM0 3.875v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zM0 5.708v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zM0 7.542v.916h1v-.916H0zm15 .916h1v-.916h-1v.916zM0 9.375v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zm-16 .916v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zm-16 .917v.458c0 .166.016.33.048.487l.98-.194A1.51 1.51 0 0 1 1 13.5v-.458H0zm16 .458v-.458h-1v.458c0 .1-.01.199-.029.293l.981.194c.032-.158.048-.32.048-.487zM.421 14.89c.183.272.417.506.69.689l.556-.831a1.51 1.51 0 0 1-.415-.415l-.83.556zm14.469.689c.272-.183.506-.417.689-.69l-.831-.556c-.11.164-.251.305-.415.415l.556.83zm-12.877.373c.158.032.32.048.487.048h.458v-1H2.5c-.1 0-.199-.01-.293-.029l-.194.981zM13.5 16c.166 0 .33-.016.487-.048l-.194-.98A1.51 1.51 0 0 1 13.5 15h-.458v1h.458zm-9.625 0h.917v-1h-.917v1zm1.833 0h.917v-1h-.917v1zm1.834-1v1h.916v-1h-.916zm1.833 1h.917v-1h-.917v1zm1.833 0h.917v-1h-.917v1zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                        </svg>
+                    </a>
+                </div>
+                <div id="collapseFour" class="collapse" data-parent="#accordion" style="color: #5c84aa">
+                    <div class="card-body">
+                        #3 内容：菜鸟教程 -- 学的不仅是技术，更是梦想！！！
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -108,4 +217,7 @@
     //         },
     //     })
     // })
+    function getDocument(id) {
+
+    }
 </script>
