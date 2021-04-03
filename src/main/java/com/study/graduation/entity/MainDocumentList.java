@@ -10,10 +10,11 @@ public class MainDocumentList {
     SubDocumentList stander;
     SubDocumentList dev;
     SubDocumentList other;
-
+    boolean flag=true;
+    String projectName;
     public MainDocumentList() {
-    }
 
+    }
     public MainDocumentList(SubDocumentList demand,SubDocumentList stander, SubDocumentList dev, SubDocumentList other) {
         this.demand = demand;
         this.stander = stander;

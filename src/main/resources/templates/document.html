@@ -12,73 +12,81 @@
           href="../../css/container.css"/>
     <script src="webjars/bootstrap/4.0.0/js/bootstrap.js"
             th:src="@{/webjars/bootstrap/4.0.0/js/bootstrap.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/document.css}"
+          href="../css/document.css"/>
 </head>
 <body>
 <div>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="border-bottom: solid 0.5px #555555">
-        <a href="#" class="navbar-left">
-            <svg t="1616595581005" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
-                 p-id="10791" width="40" height="40">
-                <path d="M846.726194 462.606307l-108.698095 175.515454v238.176709l88.237277 78.646269H614.30409l85.999376-79.285669v-244.251015l-198.214175-280.377146h125.642211l59.464252-56.26725-105.501093-160.489541-110.296597-32.929129 13.427412-101.344989-167.203247 134.274118-226.667499 422.324071 158.251639 343.358102-72.571964 77.047768v46.03684h119.887606l29.412425-15.665314 23.977522 15.665314h607.750234v-54.988448l-136.19232-136.19232v-173.916953l72.891664-118.608804h26.215423l13.427412 103.582891h38.364034l9.910708-180.310958h-135.552919z"
-                      p-id="10792" fill="#4299ff"></path>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background:#545C64 ;padding: 0px;">
+        <a href="#" class="navbar-brand"
+           style="display: flex;flex-direction: row;align-items: center">
+            <svg t="1617175126380" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                 p-id="1055" width="35px" height="35px">
+                <path d="M813.607846 477.139349c0 154.326113-125.064842 279.463205-279.390955 279.463205S254.753687 631.465462 254.753687 477.139349c0-120.729838 76.512806-223.469414 183.731884-262.556692 29.839272-10.909758 62.135046-16.834262 95.73132-16.834262 99.705073 0 187.199887 52.164538 236.618924 130.772596a277.917054 277.917054 0 0 1 42.772031 148.618358z"
+                      fill="#FDBA13" p-id="1056"></path>
+                <path d="M349.762506 248.106682c-20.374515 10.693008-11.126508 40.026529-25.432018 98.332322-27.88852 113.649333-92.263318 121.235589-90.601567 192.185141 0.50575 22.469766 30.561772 67.9873 90.601567 159.022366 34.174275 51.875538 45.951034 64.591547 61.846045 65.169548 37.570028 1.300501 41.47153-67.192549 101.583574-100.499824 66.325549-36.703027 111.265081 18.929514 174.483878-14.37776 36.486277-19.218514 35.041276-44.795033 99.416073-174.483878 60.979045-122.89734 85.616313-146.884358 72.900303-164.585621-30.417272-42.338531-179.107881 83.737811-326.931489 26.51577C425.336062 303.450222 383.720031 230.260919 349.762506 248.106682z"
+                      fill="#E65125" p-id="1057"></path>
+                <path d="M536.384393 474.538348m-170.076625 0a170.076625 170.076625 0 1 0 340.153249 0 170.076625 170.076625 0 1 0-340.153249 0Z"
+                      p-id="1058"></path>
             </svg>
+            <span style="margin-left:5px;font-size: 14px; color: white">DEV-MANAGEMENT</span>
         </a>
-        <svg width="200" height="40" xmlns="http://www.w3.org/2000/svg">
-            <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
-
-            <g>
-                <title>Layer 1</title>
-                <path id="svg_1" d="m10.3,106.05" opacity="0.5" stroke-width="1.5" stroke="#000" fill="#fff"/>
-                <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_4" y="145.05" x="129.3" stroke-width="0" stroke="#000" fill="#000000">开 发 管 理 系 统</text>
-                <path id="svg_5" d="m37.917363,15.092976" opacity="0.5" stroke-width="1.5" stroke="#000" fill="#fff"/>
-                <text font-weight="normal" font-style="italic" stroke="#000" xml:space="preserve" text-anchor="start" font-family="Junction, sans-serif" font-size="20" id="svg_6" y="26.270564" x="16.744821" stroke-width="0" fill="#4299ff">Dev-Management</text>
-            </g>
-        </svg>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 50px;">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 50px; font-size: 12px;">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item bg-dark" id="home">
-                    <a class="nav-link" href="/home" >工作台</a>
+                <li class="nav-item active " id="home">
+                    <a class="nav-link text-white" href="/home">工作台</a>
                 </li>
-                <li class="nav-item active bg-dark" id="doc" style="border: #4299ff 1px solid;border-radius: 0px">
-                    <a class="nav-link" href="/doc/document" >文档</a>
+                <li class="nav-item" id="doc" style="background:#d99500;border-radius: 2px;height: 16px">
+                    <a class="nav-link" style="color: white" href="/doc/document">文档</a>
                 </li>
                 <li class="nav-item" id="project">
-                    <a class="nav-link" href="#">项目</a>
+                    <a class="nav-link text-white" href="#">项目</a>
                 </li>
                 <li class="nav-item" id="msg">
-                    <a class="nav-link " href="#">消息</a>
+                    <a class="nav-link text-white" href="#">消息</a>
                 </li>
                 <li class="nav-item" id="setting">
-                    <a class="nav-link " href="#">人员管理</a>
+                    <a class="nav-link text-white" href="#">人员管理</a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2 bg-dark " type="search" placeholder="请输入关键字"
-                       aria-label="Search" style="border-color: #4299ff;outline-color: #4299ff">
-                <button class="btn my-2 my-sm-0 btn-dark" type="submit"
-                        style="border-color: #4299ff;outline-color: #4299ff">搜索
-                </button>
-            </form>
         </div>
+        <ul class="nav navbar-nav navbar-right " style="margin-right: 30px;display: flex;flex-direction: row;align-items: center" >
+            <svg t="1617466607353" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                 p-id="7615" width="30" height="30" style="" >
+                <path d="M508.493 897.222c-51.985 0-102.402-10.176-149.851-30.245-45.842-19.39-87.018-47.153-122.384-82.519-35.366-35.366-63.129-76.542-82.519-122.385-20.069-47.447-30.245-97.864-30.245-149.85 0-51.986 10.176-102.404 30.245-149.853 19.39-45.843 47.153-87.019 82.519-122.384 35.366-35.366 76.542-63.129 122.384-82.519 47.448-20.069 97.866-30.245 149.851-30.245s102.402 10.176 149.852 30.245c45.843 19.39 87.019 47.153 122.385 82.519s63.13 76.542 82.521 122.384c20.069 47.449 30.245 97.867 30.245 149.853 0 51.984-10.176 102.401-30.245 149.85-19.391 45.843-47.154 87.019-82.521 122.384-35.366 35.366-76.543 63.13-122.385 82.52-47.449 20.07-97.866 30.245-149.852 30.245z"
+                      fill="#FFFFFF" p-id="7616"></path>
+                <path d="M508.494 152.224c48.621 0 95.762 9.511 140.112 28.27 42.863 18.129 81.368 44.093 114.446 77.171s59.043 71.583 77.172 114.445c18.759 44.35 28.27 91.491 28.27 140.113 0 48.621-9.512 95.761-28.27 140.111-18.13 42.862-44.094 81.367-77.172 114.445-33.078 33.078-71.584 59.042-114.447 77.172-44.35 18.759-91.491 28.27-140.112 28.27-48.622 0-95.762-9.511-140.113-28.27-42.862-18.129-81.367-44.094-114.445-77.172-33.078-33.078-59.042-71.583-77.171-114.445-18.758-44.35-28.27-91.49-28.27-140.112s9.511-95.763 28.27-140.114c18.129-42.862 44.093-81.367 77.171-114.445 33.078-33.078 71.583-59.042 114.445-77.171 44.351-18.757 91.492-28.268 140.114-28.268m0-50c-226.436 0-409.998 183.562-409.998 410 0 226.434 183.562 409.998 409.998 409.998 226.434 0 410.002-183.564 410.002-409.998-0.001-226.438-183.568-410-410.002-410z"
+                      fill="#1A1A1A" p-id="7617"></path>
+                <path d="M363.283 435.348c33.022 0 59.792-30.593 59.792-68.333 0-37.739-26.77-68.333-59.792-68.333-33.02 0-59.792 30.595-59.792 68.333 0 37.74 26.772 68.333 59.792 68.333z m290.415 0c33.022 0 59.792-30.593 59.792-68.333 0-37.739-26.77-68.333-59.792-68.333-33.02 0-59.79 30.595-59.79 68.333 0 37.74 26.77 68.333 59.79 68.333z m25.955 85.417H337.356c-21.294 0-37.303 19.137-33.203 39.703 18.785 94.218 103.134 165.297 204.353 165.297 101.215 0 185.568-71.079 204.351-165.297 4.097-20.567-11.912-39.703-33.204-39.703z"
+                      fill="#FFCD36" p-id="7618"></path>
+            </svg>
+            <li class="nav-item dropdown" style="display: flex;flex-direction: row" id="myself">
+                <a class="dropdown-toggle nav-link" id="navbarScrollingDropdown"  role="button" data-toggle="dropdown" aria-expanded="false">
+                    我的
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown" style="width: 30px;padding: 0">
+                    <li><a class="dropdown-item" href="#">退出</a></li>
+                </ul>
+            </li>
+        </ul>
     </nav>
 </div>
-<div style="display: flex;flex-direction: row;height: 100%">
-    <div style="display: flex;flex-direction: column; height: 100%;width: 20%;
-                background-color: #333333;border-right:solid 0.5px #555555">
-        <ul class="list-group" id="project_list">
+<div style="display: flex;flex-direction: row;height: 100%;margin-top: 30px">
+    <div style="display: flex;flex-direction: column; height: 100%;width: 20%;" class="border-right">
+        <ul class="list-group" id="project_list" style="margin-top: 20px;">
             <li class="list-group-item nav-item d-flex justify-content-between align-items-center "
-                style="border-color: #4299ff;background-color: #3D3D3D;padding: 0px"
+                style="padding: 0px;border-radius: 0"
                 th:each="project, value: ${project_list}">
-                <a href="#" class="nav-link btn bg-dark"
-                   style="color: #4299ff;display: flex;flex-direction: row;align-items: center;width: 100%"
-                   th:onclick="getDocument([[${project[id]}]])">
-                    <svg t="1616511526358" class="icon" viewBox="0 0 1029 1024" version="1.1"
-                         xmlns="http://www.w3.org/2000/svg" p-id="1720" width="38" height=38>
-                        <path d="M982.4 883.4H52.6c-25.9 0-47-21.1-47-47V160.2h31.3v676.2c0 8.6 7 15.7 15.7 15.7h929.8c8.6 0 15.7-7 15.7-15.7V161.2h31.3v675.2c-0.1 25.9-21.1 47-47 47z"
-                              fill="#4299ff" p-id="1721"></path>
-                        <path d="M5.3 144.5h1023.9v31.3H5.3z" fill="#4299ff" p-id="1722"></path>
-                        <path d="M331.6 169.4s-35.8-36.7-58.4-59.3c-17.2-17.2-35.8-16.5-35.9-16.5H105.7c-8.2 0-11 2.9-11.9 3.8-4.1 4.4-4.6 12.7-4.5 15.3v1.2l-0.5 44.9-31.3-0.3 0.5-44.3c-0.2-4.7-0.3-23.9 12.7-37.9 5.9-6.4 16.7-14 34.9-14h130.7c0.4-0.1 31.7-1.6 59.1 25.6 22.7 22.7 58.6 59.5 58.6 59.5l-22.4 22z"
-                              fill="#4299ff" p-id="1723"></path>
+                <a href="#" class="nav-link btn bg-light"
+                   style="color: #545C64;display: flex;flex-direction: row;align-items: center;width: 100%"
+                   th:href="@{'http://localhost:8080/doc/document?id='+${project[id]}}">
+                    <!--                    th:onclick="getDocument([[${project[id]}]])"-->
+                    <svg t="1617465759897" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                         xmlns="http://www.w3.org/2000/svg" p-id="10374" width="30" height="30">
+                        <path d="M523.024313 319.51484a16.906591 16.906591 0 0 1-12.054992-5.048953l-94.153925-95.65052-94.170371 95.765643a16.906591 16.906591 0 0 1-28.945137-11.857639V16.906591A16.906591 16.906591 0 0 1 310.606479 0h212.417834a16.906591 16.906591 0 0 1 16.906591 16.906591v285.783888a16.906591 16.906591 0 0 1-16.906591 16.824361z m-106.208917-141.699602a16.906591 16.906591 0 0 1 12.038546 5.048953l77.296672 78.480792V33.862521H327.496624v227.548246l77.296673-78.480791a16.906591 16.906591 0 0 1 12.022099-5.048953z"
+                              fill="#545C64" p-id="10375"></path>
+                        <path d="M828.231046 0.065784H195.714021A111.372992 111.372992 0 0 0 84.456152 111.323654v801.418476a111.372992 111.372992 0 0 0 111.257869 111.25787h632.517025a111.372992 111.372992 0 0 0 111.257869-111.25787V111.323654A111.372992 111.372992 0 0 0 828.231046 0.065784zM118.269334 111.323654a77.543364 77.543364 0 0 1 77.444687-77.444687h632.517025a77.543364 77.543364 0 0 1 77.444687 77.444687v634.441218a77.543364 77.543364 0 0 1-77.444687 77.444687H195.714021a77.543364 77.543364 0 0 1-77.444687-77.444687z m709.961712 878.863163H195.714021a77.543364 77.543364 0 0 1-77.444687-77.444687v-87.164332a110.846717 110.846717 0 0 0 77.444687 31.494282h632.517025a110.846717 110.846717 0 0 0 77.444687-31.494282v87.164332a77.526918 77.526918 0 0 1-77.444687 77.444687z"
+                              fill="#545C64" p-id="10376"></path>
                     </svg>
                     <span th:text="${project[name]}" style="margin-left: 6px"></span>
                     <span th:text="${project[id]}" style="display: none"></span>
@@ -86,22 +94,28 @@
             </li>
         </ul>
     </div>
-    <div th:if="${#lists.isEmpty(doucument_list)}">
-    </div>
-    <div class="container" style="background-color: #3d3d3d" th:if="not ${#lists.isEmpty(doucument_list)}">
-        <h2 style="color: aliceblue;border: #4299ff 1px dashed;padding: 10px;width: fit-content">消息中心</h2>
+
+    <div class="container border" style="margin-top: 30px;height: 80%"
+         th:if="${not #strings.isEmpty(project_name)}">
+        <h2 style="padding: 10px; margin-top: 10px;" class=""
+            th:text="${project_name}"></h2>
         <div id="accordion">
-            <div class="card bg-dark">
+            <div class="card" style="margin-top: 3px">
                 <div class="card-header" style="display: flex;flex-direction: row">
-                    <a class="card-link" data-toggle="collapse" href="#collapseOne"
+                    <a class="card-link " data-toggle="collapse" href="#collapseOne"
                        style="display: flex;flex-direction: row">
-                        <svg t="1616511526358" class="icon" viewBox="0 0 1029 1024" version="1.1"
-                             xmlns="http://www.w3.org/2000/svg" p-id="1720" width="26" height="26">
-                            <path d="M982.4 883.4H52.6c-25.9 0-47-21.1-47-47V160.2h31.3v676.2c0 8.6 7 15.7 15.7 15.7h929.8c8.6 0 15.7-7 15.7-15.7V161.2h31.3v675.2c-0.1 25.9-21.1 47-47 47z"
-                                  fill="#4299ff" p-id="1721"></path>
-                            <path d="M5.3 144.5h1023.9v31.3H5.3z" fill="#4299ff" p-id="1722"></path>
-                            <path d="M331.6 169.4s-35.8-36.7-58.4-59.3c-17.2-17.2-35.8-16.5-35.9-16.5H105.7c-8.2 0-11 2.9-11.9 3.8-4.1 4.4-4.6 12.7-4.5 15.3v1.2l-0.5 44.9-31.3-0.3 0.5-44.3c-0.2-4.7-0.3-23.9 12.7-37.9 5.9-6.4 16.7-14 34.9-14h130.7c0.4-0.1 31.7-1.6 59.1 25.6 22.7 22.7 58.6 59.5 58.6 59.5l-22.4 22z"
-                                  fill="#4299ff" p-id="1723"></path>
+                        <svg t="1617465851467" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                             xmlns="http://www.w3.org/2000/svg" p-id="12817" width="26" height="26">
+                            <path d="M0 266.24h972.8a51.2 51.2 0 0 1 51.2 51.2v552.96a51.2 51.2 0 0 1-51.2 51.2H51.2a51.2 51.2 0 0 1-51.2-51.2V266.24z"
+                                  p-id="12818"></path>
+                            <path d="M51.2 102.4h399.36c16.96768 0 42.42432 9.3696 51.2 30.72l133.12 133.12H0V153.6a51.2 51.2 0 0 1 51.2-51.2z"
+                                  p-id="12819"></path>
+                            <path d="M143.36 440.32m20.48 0l307.2 0q20.48 0 20.48 20.48l0 0q0 20.48-20.48 20.48l-307.2 0q-20.48 0-20.48-20.48l0 0q0-20.48 20.48-20.48Z"
+                                  fill="#EBBA50" p-id="12820"></path>
+                            <path d="M143.36 563.2m20.48 0l307.2 0q20.48 0 20.48 20.48l0 0q0 20.48-20.48 20.48l-307.2 0q-20.48 0-20.48-20.48l0 0q0-20.48 20.48-20.48Z"
+                                  fill="#EBBA50" p-id="12821"></path>
+                            <path d="M143.36 686.08m20.48 0l307.2 0q20.48 0 20.48 20.48l0 0q0 20.48-20.48 20.48l-307.2 0q-20.48 0-20.48-20.48l0 0q0-20.48 20.48-20.48Z"
+                                  fill="#EBBA50" p-id="12822"></path>
                         </svg>
                         <span style="margin-left: 20px">需求文档</span>
                     </a>
@@ -112,23 +126,61 @@
                         </svg>
                     </a>
                 </div>
-                <div id="collapseOne" class="collapse show" data-parent="#accordion" style="color: #4299ff">
-                    <div class="card-body">
-                        #1 内容：菜鸟教程 -- 学的不仅是技术，更是梦想！！！
+                <div id="collapseOne" class="collapse" data-parent="#accordion" style="color: #4299ff;">
+                    <div class="card-body" style="padding-left: 0px;padding-right: 0px;padding-top: 3px;">
+                        <ul class="">
+                            <li th:each="item : ${demand_dirs}">
+                                <div class="card" style="border: none">
+                                    <div class="" style="display: flex;flex-direction: row;height: 25px;line-height: 25px;border: none;
+                                    border-radius: 0px">
+                                        <a class="card-link" data-toggle="collapse" th:href="'#'+${item.directory.id}"
+                                           style="display: flex;flex-direction: row;height: 16px;line-height: 16px">
+                                            <span style="margin-left: 20px" th:text="${item.directory.name}"></span>
+                                        </a>
+                                    </div>
+                                    <div th:id="${item.directory.id}" class="collapse"
+                                         style="color: #4299ff;margin-left: 40px">
+                                        <div class="card-body">
+                                            <span th:text="${item.directory.name}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled" style="margin-top: -12px;margin-left: 40px">
+                            <li th:each="item : ${demand_files}"
+                                style="display: flex;flex-direction: row; align-items: center; padding: 4px;
+                                border-radius: 2px">
+                                <svg t="1617027447949" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                                     xmlns="http://www.w3.org/2000/svg" p-id="2035" width="16" height="16"
+                                     style="margin-left: 10px">
+                                    <path d="M771.746341 1024H138.764488V0.999024h777.540683v875.844683L771.746341 1024z m-602.311804-30.670049h589.524292L885.635122 864.256V31.669073H169.434537v961.660878z"
+                                          fill="#4299ff" p-id="2036"></path>
+                                    <path d="M773.045073 1008.615024h-30.670049V855.164878h158.545171v30.769951h-127.875122z"
+                                          fill="#4299ff" p-id="2037"></path>
+                                </svg>
+                                <a th:text="${item.name}" th:href="@{${item.path}}" style="margin-left: 5px"></a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
-            <div class="card  bg-dark">
+            <div class="card " style="margin-top: 3px">
                 <div class="card-header" style="display: flex;flex-direction: row">
                     <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo"
                        style="display: flex;flex-direction: row">
-                        <svg t="1616511526358" class="icon" viewBox="0 0 1029 1024" version="1.1"
-                             xmlns="http://www.w3.org/2000/svg" p-id="1720" width="26" height="26">
-                            <path d="M982.4 883.4H52.6c-25.9 0-47-21.1-47-47V160.2h31.3v676.2c0 8.6 7 15.7 15.7 15.7h929.8c8.6 0 15.7-7 15.7-15.7V161.2h31.3v675.2c-0.1 25.9-21.1 47-47 47z"
-                                  fill="#4299ff" p-id="1721"></path>
-                            <path d="M5.3 144.5h1023.9v31.3H5.3z" fill="#4299ff" p-id="1722"></path>
-                            <path d="M331.6 169.4s-35.8-36.7-58.4-59.3c-17.2-17.2-35.8-16.5-35.9-16.5H105.7c-8.2 0-11 2.9-11.9 3.8-4.1 4.4-4.6 12.7-4.5 15.3v1.2l-0.5 44.9-31.3-0.3 0.5-44.3c-0.2-4.7-0.3-23.9 12.7-37.9 5.9-6.4 16.7-14 34.9-14h130.7c0.4-0.1 31.7-1.6 59.1 25.6 22.7 22.7 58.6 59.5 58.6 59.5l-22.4 22z"
-                                  fill="#4299ff" p-id="1723"></path>
+                        <svg t="1617465851467" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                             xmlns="http://www.w3.org/2000/svg" p-id="12817" width="26" height="26">
+                            <path d="M0 266.24h972.8a51.2 51.2 0 0 1 51.2 51.2v552.96a51.2 51.2 0 0 1-51.2 51.2H51.2a51.2 51.2 0 0 1-51.2-51.2V266.24z"
+                                  p-id="12818"></path>
+                            <path d="M51.2 102.4h399.36c16.96768 0 42.42432 9.3696 51.2 30.72l133.12 133.12H0V153.6a51.2 51.2 0 0 1 51.2-51.2z"
+                                  p-id="12819"></path>
+                            <path d="M143.36 440.32m20.48 0l307.2 0q20.48 0 20.48 20.48l0 0q0 20.48-20.48 20.48l-307.2 0q-20.48 0-20.48-20.48l0 0q0-20.48 20.48-20.48Z"
+                                  fill="#EBBA50" p-id="12820"></path>
+                            <path d="M143.36 563.2m20.48 0l307.2 0q20.48 0 20.48 20.48l0 0q0 20.48-20.48 20.48l-307.2 0q-20.48 0-20.48-20.48l0 0q0-20.48 20.48-20.48Z"
+                                  fill="#EBBA50" p-id="12821"></path>
+                            <path d="M143.36 686.08m20.48 0l307.2 0q20.48 0 20.48 20.48l0 0q0 20.48-20.48 20.48l-307.2 0q-20.48 0-20.48-20.48l0 0q0-20.48 20.48-20.48Z"
+                                  fill="#EBBA50" p-id="12822"></path>
                         </svg>
                         <span style="margin-left: 20px">规范文档</span>
                     </a>
@@ -145,17 +197,22 @@
                     </div>
                 </div>
             </div>
-            <div class="card bg-dark">
+            <div class="card" style="margin-top: 3px">
                 <div class="card-header" style="display: flex;flex-direction: row">
                     <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree"
                        style="display: flex;flex-direction: row">
-                        <svg t="1616511526358" class="icon" viewBox="0 0 1029 1024" version="1.1"
-                             xmlns="http://www.w3.org/2000/svg" p-id="1720" width="26" height="26">
-                            <path d="M982.4 883.4H52.6c-25.9 0-47-21.1-47-47V160.2h31.3v676.2c0 8.6 7 15.7 15.7 15.7h929.8c8.6 0 15.7-7 15.7-15.7V161.2h31.3v675.2c-0.1 25.9-21.1 47-47 47z"
-                                  fill="#4299ff" p-id="1721"></path>
-                            <path d="M5.3 144.5h1023.9v31.3H5.3z" fill="#4299ff" p-id="1722"></path>
-                            <path d="M331.6 169.4s-35.8-36.7-58.4-59.3c-17.2-17.2-35.8-16.5-35.9-16.5H105.7c-8.2 0-11 2.9-11.9 3.8-4.1 4.4-4.6 12.7-4.5 15.3v1.2l-0.5 44.9-31.3-0.3 0.5-44.3c-0.2-4.7-0.3-23.9 12.7-37.9 5.9-6.4 16.7-14 34.9-14h130.7c0.4-0.1 31.7-1.6 59.1 25.6 22.7 22.7 58.6 59.5 58.6 59.5l-22.4 22z"
-                                  fill="#4299ff" p-id="1723"></path>
+                        <svg t="1617465851467" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                             xmlns="http://www.w3.org/2000/svg" p-id="12817" width="26" height="26">
+                            <path d="M0 266.24h972.8a51.2 51.2 0 0 1 51.2 51.2v552.96a51.2 51.2 0 0 1-51.2 51.2H51.2a51.2 51.2 0 0 1-51.2-51.2V266.24z"
+                                  p-id="12818"></path>
+                            <path d="M51.2 102.4h399.36c16.96768 0 42.42432 9.3696 51.2 30.72l133.12 133.12H0V153.6a51.2 51.2 0 0 1 51.2-51.2z"
+                                  p-id="12819"></path>
+                            <path d="M143.36 440.32m20.48 0l307.2 0q20.48 0 20.48 20.48l0 0q0 20.48-20.48 20.48l-307.2 0q-20.48 0-20.48-20.48l0 0q0-20.48 20.48-20.48Z"
+                                  fill="#EBBA50" p-id="12820"></path>
+                            <path d="M143.36 563.2m20.48 0l307.2 0q20.48 0 20.48 20.48l0 0q0 20.48-20.48 20.48l-307.2 0q-20.48 0-20.48-20.48l0 0q0-20.48 20.48-20.48Z"
+                                  fill="#EBBA50" p-id="12821"></path>
+                            <path d="M143.36 686.08m20.48 0l307.2 0q20.48 0 20.48 20.48l0 0q0 20.48-20.48 20.48l-307.2 0q-20.48 0-20.48-20.48l0 0q0-20.48 20.48-20.48Z"
+                                  fill="#EBBA50" p-id="12822"></path>
                         </svg>
                         <span style="margin-left: 20px">开发文档</span>
                     </a>
@@ -172,17 +229,22 @@
                     </div>
                 </div>
             </div>
-            <div class="card bg-dark">
+            <div class="card" style="margin-top: 3px">
                 <div class="card-header" style="display: flex;flex-direction: row">
                     <a class="collapsed card-link" data-toggle="collapse" href="#collapseFour"
                        style="display: flex;flex-direction: row">
-                        <svg t="1616511526358" class="icon" viewBox="0 0 1029 1024" version="1.1"
-                             xmlns="http://www.w3.org/2000/svg" p-id="1720" width="26" height="26">
-                            <path d="M982.4 883.4H52.6c-25.9 0-47-21.1-47-47V160.2h31.3v676.2c0 8.6 7 15.7 15.7 15.7h929.8c8.6 0 15.7-7 15.7-15.7V161.2h31.3v675.2c-0.1 25.9-21.1 47-47 47z"
-                                  fill="#4299ff" p-id="1721"></path>
-                            <path d="M5.3 144.5h1023.9v31.3H5.3z" fill="#4299ff" p-id="1722"></path>
-                            <path d="M331.6 169.4s-35.8-36.7-58.4-59.3c-17.2-17.2-35.8-16.5-35.9-16.5H105.7c-8.2 0-11 2.9-11.9 3.8-4.1 4.4-4.6 12.7-4.5 15.3v1.2l-0.5 44.9-31.3-0.3 0.5-44.3c-0.2-4.7-0.3-23.9 12.7-37.9 5.9-6.4 16.7-14 34.9-14h130.7c0.4-0.1 31.7-1.6 59.1 25.6 22.7 22.7 58.6 59.5 58.6 59.5l-22.4 22z"
-                                  fill="#4299ff" p-id="1723"></path>
+                        <svg t="1617465851467" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                             xmlns="http://www.w3.org/2000/svg" p-id="12817" width="26" height="26">
+                            <path d="M0 266.24h972.8a51.2 51.2 0 0 1 51.2 51.2v552.96a51.2 51.2 0 0 1-51.2 51.2H51.2a51.2 51.2 0 0 1-51.2-51.2V266.24z"
+                                  p-id="12818"></path>
+                            <path d="M51.2 102.4h399.36c16.96768 0 42.42432 9.3696 51.2 30.72l133.12 133.12H0V153.6a51.2 51.2 0 0 1 51.2-51.2z"
+                                  p-id="12819"></path>
+                            <path d="M143.36 440.32m20.48 0l307.2 0q20.48 0 20.48 20.48l0 0q0 20.48-20.48 20.48l-307.2 0q-20.48 0-20.48-20.48l0 0q0-20.48 20.48-20.48Z"
+                                  fill="#EBBA50" p-id="12820"></path>
+                            <path d="M143.36 563.2m20.48 0l307.2 0q20.48 0 20.48 20.48l0 0q0 20.48-20.48 20.48l-307.2 0q-20.48 0-20.48-20.48l0 0q0-20.48 20.48-20.48Z"
+                                  fill="#EBBA50" p-id="12821"></path>
+                            <path d="M143.36 686.08m20.48 0l307.2 0q20.48 0 20.48 20.48l0 0q0 20.48-20.48 20.48l-307.2 0q-20.48 0-20.48-20.48l0 0q0-20.48 20.48-20.48Z"
+                                  fill="#EBBA50" p-id="12822"></path>
                         </svg>
                         <span style="margin-left: 20px">其它</span>
                     </a>
@@ -207,19 +269,14 @@
 </html>
 
 <script>
-    // $(function (){
-    //     $.ajax({
-    //         url: "http://localhost:8080/project/list",
-    //         data:{
-    //         },
-    //         dataType: "json",
-    //         type: "POST",
-    //         success: function (res) {
-    //             console.log(res)
-    //         },
-    //     })
-    // })
     function getDocument(id) {
-
+        $.ajax({
+            url: "http://localhost:8080/directory/listByProject?id=" + id,
+            dataType: "json",
+            type: "Get",
+            success: function (res) {
+                console.log(res)
+            },
+        })
     }
 </script>

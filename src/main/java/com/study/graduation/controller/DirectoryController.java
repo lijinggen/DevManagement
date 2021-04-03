@@ -3,11 +3,14 @@ package com.study.graduation.controller;
 import com.study.graduation.entity.Directory;
 import com.study.graduation.entity.MainDocumentList;
 import com.study.graduation.service.DirectoryService;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * (Directory)表控制层
@@ -15,7 +18,7 @@ import java.util.List;
  * @author makejava
  * @since 2021-03-24 21:36:12
  */
-@RestController
+@Controller
 @RequestMapping("directory")
 public class DirectoryController {
     /**
@@ -35,9 +38,13 @@ public class DirectoryController {
         return this.directoryService.queryById(id);
     }
 
-    @GetMapping("listByProject")
+    @RequestMapping("listByProject")
     public String listByProject(Model model ,String id){
         MainDocumentList mainDocumentList = directoryService.listByProject(id);
+//        Map<String,Object> result = new HashMap<>();
+//        result.put("document_list",mainDocumentList);
+        System.out.println(mainDocumentList);
+        model.addAttribute("project_name",mainDocumentList.getProjectName());
 
         return "document";
     }

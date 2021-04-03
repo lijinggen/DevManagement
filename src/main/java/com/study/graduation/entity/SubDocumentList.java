@@ -2,7 +2,6 @@ package com.study.graduation.entity;
 
 import lombok.Data;
 
-import javax.swing.text.Document;
 import java.util.ArrayList;
 import java.util.List;
 

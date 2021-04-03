@@ -1,5 +1,6 @@
 package com.study.graduation.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.study.graduation.entity.Document;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -13,7 +14,7 @@ import java.util.List;
  * @since 2021-03-29 13:08:54
  */
 @Mapper
-public interface DocumentDao {
+public interface DocumentDao extends BaseMapper<Document> {
 
     /**
      * 通过ID查询单条数据

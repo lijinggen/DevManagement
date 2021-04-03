@@ -8,17 +8,19 @@
     <script src="webjars/jquery/3.0.0/jquery.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/container.css}"
           href="../css/container.css"/>
-
+    <link rel="stylesheet" th:href="@{/css/login.css}"
+          href="../css/login.css"/>
 </head>
 
 <body style="background-image:url(http://localhost:8080/image/login-background.png);background-repeat:no-repeat;background-size:100% 100%;-moz-background-size:100% 100%;">
 <div class="flex_container">
     <div style="width: 18%; display: flex; flex-direction: column;justify-content:center" >
-        <h1 style="color: #4299ff">DEV MANAGEMENT</h1>
+        <h1 style="color: #545C64">DEV MANAGEMENT</h1>
         <br>
         <div class="input-group" >
-            <input type="text" class="form-control bg-dark border-dark" placeholder="用户名" aria-label="用户名"
-                   aria-describedby="basic-addon1" id="username">
+            <span class="input-group-text">账号</span>
+            <input type="text" class="form-control border-dark" style="background: #545C64;color: white" placeholder="用户名" aria-label="用户名"
+                   aria-describedby="basic-addon1" id="username" autocomplete="off">
         </div>
         <div id = "usernameEmpty" style="display:none;margin-top: 10px">
             <div class="alert alert-danger">
@@ -27,8 +29,9 @@
         </div>
         <br>
         <div class="input-group">
-            <input type="password" class="form-control bg-dark border-dark" placeholder="密码" aria-label="密码"
-                   aria-describedby="basic-addon1" id="password">
+            <span class="input-group-text">密码</span>
+            <input type="password" class="form-control border-dark" placeholder="密码" aria-label="密码"
+                   aria-describedby="basic-addon1" id="password" autocomplete="off" style="background: #545C64;color: white" >
         </div>
         <br>
         <div id = "tip" style="display:none">
@@ -39,10 +42,10 @@
         <br>
         <div class="row" >
             <div class="col-xs-6 col-sm-6 col-md-6">
-                <input type="button" onclick="login()" class="btn btn-lg btn-outline-primary btn-block btn-danger" style="" value="登陆"/>
+                <input onclick="login()" style="height: 40px;line-height: 40px" class="btn btn-lg btn-outline-warning btn-block" value="登陆"/>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6">
-                <input class="btn btn-lg btn-block btn-dark" onclick="register()" style="" value="注册"/>
+                <input class="btn  btn-lg btn-block btn-outline-dark" style="height: 40px;line-height: 40px" onclick="register()" value="注册"/>
             </div>
         </div>
     </div>

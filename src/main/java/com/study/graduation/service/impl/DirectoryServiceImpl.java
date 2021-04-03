@@ -1,12 +1,16 @@
 package com.study.graduation.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.study.graduation.dao.DocumentDao;
+import com.study.graduation.dao.ProjectDao;
 import com.study.graduation.entity.*;
 import com.study.graduation.dao.DirectoryDao;
 import com.study.graduation.service.DirectoryService;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +24,12 @@ import java.util.List;
 public class DirectoryServiceImpl implements DirectoryService {
     @Resource
     private DirectoryDao directoryDao;
+
+    @Resource
+    private ProjectDao projectDao;
+
+    @Resource
+    private DocumentDao documentDao;
     /**
      * 通过ID查询单条数据
      *
@@ -107,6 +117,51 @@ public class DirectoryServiceImpl implements DirectoryService {
                 }
             });
         }
+        QueryWrapper<Document> documentQueryWrapper=new QueryWrapper<>();
+        documentQueryWrapper.lambda().eq(Document::getProjectId,projectId);
+        List<Document> documentList = documentDao.selectList(documentQueryWrapper);
+        if(documentList!=null&&documentList.size()>0){
+            documentList.forEach(c->{
+                if(Strings.isNotBlank(c.getDirectoryId())){
+                    if(c.getType()==1){
+                        documentLists.getDemand().getDirectories().forEach(s->{
+                            if(s.getDirectory().getId().equals(c.getDirectoryId())){
+                                s.getFileList().add(c);
+                            }
+                        });
+                    }else if(c.getType()==2){
+                        documentLists.getStander().getDirectories().forEach(s->{
+                            if(s.getDirectory().getId().equals(c.getDirectoryId())){
+                                s.getFileList().add(c);
+                            }
+                        });
+                    }else if(c.getType()==3){
+                        documentLists.getDev().getDirectories().forEach(s->{
+                            if(s.getDirectory().getId().equals(c.getDirectoryId())){
+                                s.getFileList().add(c);
+                            }
+                        });
+                    }else if(c.getType()==4){
+                        documentLists.getOther().getDirectories().forEach(s->{
+                            if(s.getDirectory().getId().equals(c.getDirectoryId())){
+                                s.getFileList().add(c);
+                            }
+                        });
+                    }
+                }else{
+                    if(c.getType()==1){
+                        demand.getFileList().add(c);
+                    }else if(c.getType()==2){
+                        stander.getFileList().add(c);
+                    }else if(c.getType()==3){
+                        dev.getFileList().add(c);
+                    }else if(c.getType()==4){
+                        other.getFileList().add(c);
+                    }
+                }
+            });
+        }
+        documentLists.setProjectName(projectDao.queryById(projectId).getName());
         return documentLists;
     }
 }

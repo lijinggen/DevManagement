@@ -16,11 +16,6 @@ body{
     height: 100%;
 }
 
-.navbar-nav li.active{
-    background: #4299ff;
-    border-radius: 5px;
-}
-
 .form-control::placeholder{
     color: #c1c1c1;
     font-size: 12px;
