@@ -11,10 +11,11 @@
 </head>
 <body>
     <div class="flex_container">
-        <div style="width: 25%; display: flex; flex-direction: column;justify-content:center" >
-            <h1 style="color: rgb(0, 123, 255)">软件流程管理系统</h1>
+        <div style="width: 22%; display: flex; flex-direction: column;justify-content:center" >
+            <h1 style="color: #545C64">DEV MANAGEMENT</h1>
             <br>
             <div class="input-group" >
+                <span class="input-group-text">用&nbsp;&nbsp;户&nbsp;&nbsp;名</span>
                 <input type="text" class="form-control" placeholder="用户名" aria-label="用户名"
                        aria-describedby="basic-addon1" id="username">
             </div>
@@ -24,12 +25,25 @@
                 </div>
             </div>
             <br>
+            <div class="input-group" >
+                <span class="input-group-text">账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号</span>
+                <input type="text" class="form-control" placeholder="用户名" aria-label="用户名"
+                       aria-describedby="basic-addon1" id="useraccount">
+            </div>
+            <div id = "useraccountEmpty" style="display:none;margin-top: 10px">
+                <div class="alert alert-danger">
+                    请输入账号
+                </div>
+            </div>
+            <br>
             <div class="input-group">
+                <span class="input-group-text">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</span>
                 <input type="password" class="form-control" placeholder="密码" aria-label="密码"
                        aria-describedby="basic-addon1" id="password">
             </div>
             <br>
             <div class="input-group">
+                <span class="input-group-text">确认密码</span>
                 <input type="password" class="form-control" placeholder="请再次输入密码" aria-label="密码"
                        aria-describedby="basic-addon1" id="confirm_password">
             </div>
@@ -39,10 +53,13 @@
                     两次密码不正确
                 </div>
             </div>
-            <br>
             <div class="row" >
                 <div class="col-xs-12 col-sm-12 col-md-12" style="margin: 0 auto">
-                    <input type="button" onclick="register()" class="btn btn-lg btn-primary btn-block"  value="注册"/>
+                    <input onclick="register()" style="font-size: 16px;height: 40px;line-height: 40px;"
+                           class="btn btn-lg btn-block btn-outline-warning"  value="注册"/>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12" style="margin: 0 auto">
+                    <a class="btn btn-lg btn-block" href="login.html" style="font-size: 16px;color: #545C64"/>返回</a>
                 </div>
             </div>
         </div>

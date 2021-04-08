@@ -29,8 +29,6 @@ public class LoginController {
     @ResponseBody
     public Result<String> login(HttpServletRequest request, User user) {
         User userByAccount = userService.getByUserAccount(user.getUserAccount());
-        System.out.println(UUID.randomUUID());
-        System.out.println(userByAccount);
         if(userByAccount!=null){
             if (!userByAccount.getPassword().equals(user.getPassword())){
                 return new Result(false);
@@ -52,6 +50,13 @@ public class LoginController {
     @RequestMapping("/register")
     public String register(){
         return "/register";
+    }
+
+    @RequestMapping("/logout")
+    public String logout(HttpServletRequest request){
+        request.getSession().removeAttribute("username");
+        request.getSession().removeAttribute("user_id");
+        return "login";
     }
 
 }

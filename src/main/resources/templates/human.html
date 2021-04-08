@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>项目</title>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.min.css}"
+          href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"/>
+    <script src="webjars/jquery/3.0.0/jquery.min.js"
+            th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/container.css}"
+          href="../../css/container.css"/>
+    <script src="webjars/bootstrap/4.0.0/js/bootstrap.js"
+            th:src="@{/webjars/bootstrap/4.0.0/js/bootstrap.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/document.css}"
+          href="../css/document.css"/>
+</head>
+<body>
+<div>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background:#545C64 ;padding: 0px;">
+        <a href="#" class="navbar-brand"
+           style="display: flex;flex-direction: row;align-items: center">
+            <svg t="1617175126380" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                 p-id="1055" width="35px" height="35px">
+                <path d="M813.607846 477.139349c0 154.326113-125.064842 279.463205-279.390955 279.463205S254.753687 631.465462 254.753687 477.139349c0-120.729838 76.512806-223.469414 183.731884-262.556692 29.839272-10.909758 62.135046-16.834262 95.73132-16.834262 99.705073 0 187.199887 52.164538 236.618924 130.772596a277.917054 277.917054 0 0 1 42.772031 148.618358z"
+                      fill="#FDBA13" p-id="1056"></path>
+                <path d="M349.762506 248.106682c-20.374515 10.693008-11.126508 40.026529-25.432018 98.332322-27.88852 113.649333-92.263318 121.235589-90.601567 192.185141 0.50575 22.469766 30.561772 67.9873 90.601567 159.022366 34.174275 51.875538 45.951034 64.591547 61.846045 65.169548 37.570028 1.300501 41.47153-67.192549 101.583574-100.499824 66.325549-36.703027 111.265081 18.929514 174.483878-14.37776 36.486277-19.218514 35.041276-44.795033 99.416073-174.483878 60.979045-122.89734 85.616313-146.884358 72.900303-164.585621-30.417272-42.338531-179.107881 83.737811-326.931489 26.51577C425.336062 303.450222 383.720031 230.260919 349.762506 248.106682z"
+                      fill="#E65125" p-id="1057"></path>
+                <path d="M536.384393 474.538348m-170.076625 0a170.076625 170.076625 0 1 0 340.153249 0 170.076625 170.076625 0 1 0-340.153249 0Z"
+                      p-id="1058"></path>
+            </svg>
+            <span style="margin-left:5px;font-size: 14px; color: white">DEV-MANAGEMENT</span>
+        </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 50px; font-size: 12px;">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active " id="home">
+                    <a class="nav-link text-white" href="/home">工作台</a>
+                </li>
+                <li class="nav-item" id="doc">
+                    <a class="nav-link text-white" href="/doc/document">文档</a>
+                </li>
+                <li class="nav-item" id="project">
+                    <a class="nav-link text-white" href="#">项目</a>
+                </li>
+                <li class="nav-item" id="msg">
+                    <a class="nav-link text-white" href="#">消息</a>
+                </li>
+                <li class="nav-item" id="setting" style="background:#8f8f8f;border-radius: 2px;height: 16px">
+                    <a class="nav-link text-white" style="color: white" href="/human/index">人员管理</a>
+                </li>
+            </ul>
+        </div>
+        <ul class="nav navbar-nav navbar-right "
+            style="margin-right: 30px;display: flex;flex-direction: row;align-items: center">
+            <svg t="1617466607353" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                 p-id="7615" width="30" height="30" style="">
+                <path d="M508.493 897.222c-51.985 0-102.402-10.176-149.851-30.245-45.842-19.39-87.018-47.153-122.384-82.519-35.366-35.366-63.129-76.542-82.519-122.385-20.069-47.447-30.245-97.864-30.245-149.85 0-51.986 10.176-102.404 30.245-149.853 19.39-45.843 47.153-87.019 82.519-122.384 35.366-35.366 76.542-63.129 122.384-82.519 47.448-20.069 97.866-30.245 149.851-30.245s102.402 10.176 149.852 30.245c45.843 19.39 87.019 47.153 122.385 82.519s63.13 76.542 82.521 122.384c20.069 47.449 30.245 97.867 30.245 149.853 0 51.984-10.176 102.401-30.245 149.85-19.391 45.843-47.154 87.019-82.521 122.384-35.366 35.366-76.543 63.13-122.385 82.52-47.449 20.07-97.866 30.245-149.852 30.245z"
+                      fill="#FFFFFF" p-id="7616"></path>
+                <path d="M508.494 152.224c48.621 0 95.762 9.511 140.112 28.27 42.863 18.129 81.368 44.093 114.446 77.171s59.043 71.583 77.172 114.445c18.759 44.35 28.27 91.491 28.27 140.113 0 48.621-9.512 95.761-28.27 140.111-18.13 42.862-44.094 81.367-77.172 114.445-33.078 33.078-71.584 59.042-114.447 77.172-44.35 18.759-91.491 28.27-140.112 28.27-48.622 0-95.762-9.511-140.113-28.27-42.862-18.129-81.367-44.094-114.445-77.172-33.078-33.078-59.042-71.583-77.171-114.445-18.758-44.35-28.27-91.49-28.27-140.112s9.511-95.763 28.27-140.114c18.129-42.862 44.093-81.367 77.171-114.445 33.078-33.078 71.583-59.042 114.445-77.171 44.351-18.757 91.492-28.268 140.114-28.268m0-50c-226.436 0-409.998 183.562-409.998 410 0 226.434 183.562 409.998 409.998 409.998 226.434 0 410.002-183.564 410.002-409.998-0.001-226.438-183.568-410-410.002-410z"
+                      fill="#1A1A1A" p-id="7617"></path>
+                <path d="M363.283 435.348c33.022 0 59.792-30.593 59.792-68.333 0-37.739-26.77-68.333-59.792-68.333-33.02 0-59.792 30.595-59.792 68.333 0 37.74 26.772 68.333 59.792 68.333z m290.415 0c33.022 0 59.792-30.593 59.792-68.333 0-37.739-26.77-68.333-59.792-68.333-33.02 0-59.79 30.595-59.79 68.333 0 37.74 26.77 68.333 59.79 68.333z m25.955 85.417H337.356c-21.294 0-37.303 19.137-33.203 39.703 18.785 94.218 103.134 165.297 204.353 165.297 101.215 0 185.568-71.079 204.351-165.297 4.097-20.567-11.912-39.703-33.204-39.703z"
+                      fill="#FFCD36" p-id="7618"></path>
+            </svg>
+            <li class="nav-item dropdown" style="display: flex;flex-direction: row" id="myself">
+                <a class="dropdown-toggle nav-link" id="navbarScrollingDropdown" role="button" data-toggle="dropdown"
+                   aria-expanded="false">
+                    我的
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown" style="width: 30px;padding: 0">
+                    <li><a class="dropdown-item" href="/logout">退出</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</div>
+<div style="display: flex;flex-direction: row;height: 100%;margin-top: 30px">
+    <div style="display: flex;flex-direction: column; height: 100%;width: 20%;" class="border-right">
+        <h5 style="margin-top: 20px;margin-left: 10px;font-weight: bolder">我管理的项目</h5>
+        <ul class="list-group" id="project_list">
+            <li class="list-group-item nav-item d-flex justify-content-between align-items-center "
+                style="padding: 0px;border-radius: 0"
+                th:each="project, value: ${project_list}">
+                <a href="#" class="nav-link btn bg-light"
+                   style="color: #545C64;display: flex;flex-direction: row;align-items: center;width: 100%"
+                   th:href="@{'http://localhost:8080/human/index?id='+${project[id]}}">
+                    <!--                    th:onclick="getDocument([[${project[id]}]])"-->
+                    <svg t="1617465759897" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                         xmlns="http://www.w3.org/2000/svg" p-id="10374" width="30" height="30">
+                        <path d="M523.024313 319.51484a16.906591 16.906591 0 0 1-12.054992-5.048953l-94.153925-95.65052-94.170371 95.765643a16.906591 16.906591 0 0 1-28.945137-11.857639V16.906591A16.906591 16.906591 0 0 1 310.606479 0h212.417834a16.906591 16.906591 0 0 1 16.906591 16.906591v285.783888a16.906591 16.906591 0 0 1-16.906591 16.824361z m-106.208917-141.699602a16.906591 16.906591 0 0 1 12.038546 5.048953l77.296672 78.480792V33.862521H327.496624v227.548246l77.296673-78.480791a16.906591 16.906591 0 0 1 12.022099-5.048953z"
+                              fill="#545C64" p-id="10375"></path>
+                        <path d="M828.231046 0.065784H195.714021A111.372992 111.372992 0 0 0 84.456152 111.323654v801.418476a111.372992 111.372992 0 0 0 111.257869 111.25787h632.517025a111.372992 111.372992 0 0 0 111.257869-111.25787V111.323654A111.372992 111.372992 0 0 0 828.231046 0.065784zM118.269334 111.323654a77.543364 77.543364 0 0 1 77.444687-77.444687h632.517025a77.543364 77.543364 0 0 1 77.444687 77.444687v634.441218a77.543364 77.543364 0 0 1-77.444687 77.444687H195.714021a77.543364 77.543364 0 0 1-77.444687-77.444687z m709.961712 878.863163H195.714021a77.543364 77.543364 0 0 1-77.444687-77.444687v-87.164332a110.846717 110.846717 0 0 0 77.444687 31.494282h632.517025a110.846717 110.846717 0 0 0 77.444687-31.494282v87.164332a77.526918 77.526918 0 0 1-77.444687 77.444687z"
+                              fill="#545C64" p-id="10376"></path>
+                    </svg>
+                    <span th:text="${project[name]}" style="margin-left: 6px"></span>
+                    <span th:text="${project[id]}" style="display: none"></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+</body>
+</html>
+
+<script>
+    function getDocument(id) {
+        $.ajax({
+            url: "http://localhost:8080/directory/listByProject?id=" + id,
+            dataType: "json",
+            type: "Get",
+            success: function (res) {
+                console.log(res)
+            },
+        })
+    }
+</script>
