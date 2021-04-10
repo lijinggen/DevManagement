@@ -53,4 +53,5 @@ public interface ProjectUserRelationService {
      */
     boolean deleteById(String id);
 
+    List<ProjectUserRelation> listByProject(String projectId);
 }

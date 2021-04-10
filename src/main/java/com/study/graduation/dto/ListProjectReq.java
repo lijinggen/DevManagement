@@ -10,5 +10,6 @@ import java.io.Serializable;
 @Setter
 @ToString
 public class ListProjectReq implements Serializable {
-    private String UserId;
+    private String userId;
+    private int role;
 }

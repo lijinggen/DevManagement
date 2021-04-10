@@ -14,6 +14,8 @@ public class User implements Serializable {
 
     private String id;
 
+    private String userName;
+
     private String userAccount;
 
     private String password;
@@ -61,6 +63,14 @@ public class User implements Serializable {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     @Override

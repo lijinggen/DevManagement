@@ -60,4 +60,6 @@ public interface UserService {
      * @return 用户
      */
     User getByUserAccount(String userAccount);
+
+    List<User> listFilterByProjectId(String projectId);
 }

@@ -1,13 +1,18 @@
 package com.study.graduation.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.study.graduation.entity.ProjectUserRelation;
 import com.study.graduation.entity.User;
 import com.study.graduation.dao.UserDao;
+import com.study.graduation.service.ProjectUserRelationService;
 import com.study.graduation.service.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * (User)表服务实现类
@@ -20,6 +25,8 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserDao userDao;
 
+    @Resource
+    private ProjectUserRelationService projectUserRelationService;
     /**
      * 通过ID查询单条数据
      *
@@ -84,5 +91,19 @@ public class UserServiceImpl implements UserService {
         queryWrapper.lambda().eq(User::getUserAccount,userAccount);
         User user = userDao.selectOne(queryWrapper);
         return user;
+    }
+
+    @Override
+    public List<User> listFilterByProjectId(String projectId) {
+        List<User> users = userDao.selectList(new QueryWrapper<>());
+        List<ProjectUserRelation> projectUserRelations=projectUserRelationService.listByProject(projectId);
+        Map<String, String> collect = projectUserRelations.stream().collect(Collectors.toMap(ProjectUserRelation::getUserId, ProjectUserRelation::getId));
+        List<User> results=new ArrayList<>();
+        for (User user : users) {
+            if(collect.get(user.getId())==null){
+                results.add(user);
+            }
+        }
+        return results;
     }
 }

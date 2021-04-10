@@ -92,6 +92,9 @@ public class ProjectServiceImpl implements ProjectService {
         List<Project> result = new ArrayList<>();
         if(Strings.isNotEmpty(req.getUserId())){
             queryWrapper.lambda().eq(ProjectUserRelation::getUserId,req.getUserId());
+            if(req.getRole()!=0){
+                queryWrapper.lambda().eq(ProjectUserRelation::getRole,req.getRole());
+            }
             List<ProjectUserRelation> projectUserRelations = projectUserRelationDao.selectList(queryWrapper);
             if(projectUserRelations!= null){
                 QueryWrapper<Project> projectQueryWrapper=new QueryWrapper<>();

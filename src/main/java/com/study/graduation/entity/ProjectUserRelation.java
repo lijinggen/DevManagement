@@ -24,6 +24,10 @@ public class ProjectUserRelation implements Serializable {
      */
     private String projectId;
     /**
+     * 角色
+     */
+    private int role;
+    /**
      * 创建时间
      */
     private Date createTime;
@@ -59,6 +63,14 @@ public class ProjectUserRelation implements Serializable {
 
     public Date getCreateTime() {
         return createTime;
+    }
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
     }
 
     public void setCreateTime(Date createTime) {

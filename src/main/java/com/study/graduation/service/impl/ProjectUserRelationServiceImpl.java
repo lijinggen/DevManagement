@@ -1,5 +1,6 @@
 package com.study.graduation.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.study.graduation.entity.ProjectUserRelation;
 import com.study.graduation.dao.ProjectUserRelationDao;
 import com.study.graduation.service.ProjectUserRelationService;
@@ -75,5 +76,13 @@ public class ProjectUserRelationServiceImpl implements ProjectUserRelationServic
     @Override
     public boolean deleteById(String id) {
         return this.projectUserRelationDao.deleteById(id) > 0;
+    }
+
+    @Override
+    public List<ProjectUserRelation> listByProject(String projectId) {
+        QueryWrapper<ProjectUserRelation> pURQueryWrapper = new QueryWrapper<>();
+        pURQueryWrapper.lambda().eq(ProjectUserRelation::getProjectId,projectId);
+        List<ProjectUserRelation> projectUserRelations = projectUserRelationDao.selectList(pURQueryWrapper);
+        return projectUserRelations;
     }
 }
