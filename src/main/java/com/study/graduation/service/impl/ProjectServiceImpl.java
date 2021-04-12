@@ -2,17 +2,31 @@ package com.study.graduation.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.study.graduation.dao.ProjectUserRelationDao;
+import com.study.graduation.dao.TaskDao;
 import com.study.graduation.dto.ListProjectReq;
+import com.study.graduation.dto.RoleEnum;
+import com.study.graduation.dto.TaskDto;
+import com.study.graduation.dto.TaskUserDto;
 import com.study.graduation.entity.Project;
 import com.study.graduation.dao.ProjectDao;
 import com.study.graduation.entity.ProjectUserRelation;
+import com.study.graduation.entity.Task;
+import com.study.graduation.entity.User;
 import com.study.graduation.service.ProjectService;
+import com.study.graduation.service.ProjectUserRelationService;
+import com.study.graduation.service.TaskService;
+import com.study.graduation.service.UserService;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalField;
+import java.time.temporal.TemporalUnit;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -28,6 +42,24 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Resource
     private ProjectUserRelationDao projectUserRelationDao;
+
+    @Resource
+    private ProjectUserRelationService projectUserRelationService;
+
+    @Resource
+    private TaskDao taskDao;
+
+    @Resource
+    private TaskService taskService;
+
+    @Resource
+    private UserService userService;
+
+    private static String[] taskType={"需求","测试","bug"};
+
+    private static String[] borderColor={"border-left: 4px solid #DC3545;","border-left: 4px solid #FFC107;",
+                                        "border-left: 4px solid #28A745;","border-left: 4px solid #6C7586;"};
+
     /**
      * 通过ID查询单条数据
      *
@@ -108,5 +140,68 @@ public class ProjectServiceImpl implements ProjectService {
         }else{
             return null;
         }
+    }
+
+    public int hoursBetween(Date d1, Date d2){
+        return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60));
+    }
+
+    @Override
+    public List<TaskUserDto> listTask(String projectId,String status) throws ParseException {
+        List<Task> taskList = taskService.listByProject(projectId);
+        Map<String,List<TaskDto>> resultMap=new HashMap<>();
+        for (Task task : taskList) {
+            Calendar cal1 = new GregorianCalendar();
+            Calendar cal2 = new GregorianCalendar();
+            cal1.setTime(task.getEndTime());
+            cal2.setTime(new Date());
+            int res = hoursBetween(cal2.getTime(), cal1.getTime());
+            String endTime = res / 24 + "d" + res % 24 + "h";
+            TaskDto taskDto = new TaskDto();
+            taskDto.setId(task.getId());
+            taskDto.setProjectId(task.getProjectId());
+            taskDto.setUserId(task.getUserId());
+            taskDto.setEndTime(endTime);
+            taskDto.setTitle(task.getTitle());
+            taskDto.setStatus(task.getStatus());
+            taskDto.setType(taskType[task.getType() - 1]);
+            taskDto.setPriority(task.getPriority());
+            taskDto.setBorder((borderColor[task.getPriority()-1]));
+            if(task.getStatus().equals(4)){
+                taskDto.setBorder(borderColor[borderColor.length-1]);
+            }
+            if(Strings.isNotEmpty(status)&&!status.equals("0")){
+                if(task.getStatus()==Integer.parseInt(status)){
+                    if(resultMap.get(task.getUserId())==null){
+                        List<TaskDto> taskDtoList=new ArrayList<>();
+                        taskDtoList.add(taskDto);
+                        resultMap.put(task.getUserId(),taskDtoList);
+                    }else{
+                        resultMap.get(task.getUserId()).add(taskDto);
+                    }
+                }
+            }else{
+                if(resultMap.get(task.getUserId())==null){
+                    List<TaskDto> taskDtoList=new ArrayList<>();
+                    taskDtoList.add(taskDto);
+                    resultMap.put(task.getUserId(),taskDtoList);
+                }else{
+                    resultMap.get(task.getUserId()).add(taskDto);
+                }
+            }
+        }
+        List<TaskUserDto> list=new ArrayList<>();
+        for (Map.Entry<String,List<TaskDto>> entry : resultMap.entrySet()){
+            TaskUserDto taskUserDto=new TaskUserDto();
+            taskUserDto.setTaskDtoList(new ArrayList<>());
+            taskUserDto.setUserId(entry.getKey());
+            User user = userService.queryById(entry.getKey());
+            ProjectUserRelation projectUserRelation=projectUserRelationService.getByUserId(user.getId(),projectId);
+            taskUserDto.setUserName(user.getUserName());
+            taskUserDto.setTaskDtoList(entry.getValue());
+            taskUserDto.setRole(RoleEnum.RoleName[projectUserRelation.getRole()-1]);
+            list.add(taskUserDto);
+        }
+        return list;
     }
 }

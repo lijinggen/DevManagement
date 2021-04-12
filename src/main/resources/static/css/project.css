@@ -1,0 +1,18 @@
+.list-group-item-action:hover{
+    background: #545C64;
+    color: white;
+}
+
+#navbarNav>ul>li a{
+    color: #000000;
+    font-size: 13px;
+    border-right: #e9e9e9 solid 1px;
+}
+
+#navbarNav>ul>li a:hover{
+    color: #FFD04B;
+}
+
+.a-black-color{
+    color: black;
+}

@@ -41,7 +41,7 @@ public class HumanController {
     ProjectUserRelationService projectUserRelationService;
 
     @RequestMapping("/index")
-    public String index(Model model, HttpServletRequest request, String id){
+    public String index(Model model, HttpServletRequest request, String id,String keyword){
         String userId = (String)request.getSession().getAttribute("user_id");
         ListProjectReq listProjectReq = new ListProjectReq();
         listProjectReq.setUserId(userId);
@@ -64,10 +64,14 @@ public class HumanController {
                 ProjectUser projectUser=new ProjectUser();
                 projectUser.setRoleNum(item.getRole());
                 projectUser.setUserId(item.getUserId());
+                projectUser.setProjectUserRelactionId(item.getId());
                 projectUser.setRole(RoleEnum.RoleName[item.getRole()-1]);
                 User user = userService.queryById(item.getUserId());
                 if(user!=null){
                     projectUser.setUserName(user.getUserName());
+                    if(Strings.isNotEmpty(keyword)&&!user.getUserName().contains(keyword)){
+                        continue;
+                    }
                 }
                 lists.add(projectUser);
             }

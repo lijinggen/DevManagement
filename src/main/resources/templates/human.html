@@ -42,7 +42,7 @@
                     <a class="nav-link text-white" href="/doc/document">文档</a>
                 </li>
                 <li class="nav-item" id="project">
-                    <a class="nav-link text-white" href="#">项目</a>
+                    <a class="nav-link text-white" href="/project/index">项目</a>
                 </li>
                 <li class="nav-item" id="msg">
                     <a class="nav-link text-white" href="#">消息</a>
@@ -67,10 +67,9 @@
     </nav>
 </div>
 <div style="display: flex;flex-direction: row;height: 100%;margin-top: 30px">
-    <div style="display: flex;flex-direction: column; height: 100%;width: 20%;" class="border-right">
-        <div style="margin-top: 15px;font-weight: bolder; padding-left: 10px;padding-top: 10px;
-                background: #efefef;height: 45px;line-height: 45px;">
-            <h5>我管理的项目</h5>
+    <div style="display: flex;flex-direction: column; height: 100%;width: 20%;margin-top: 20px" class="border-right">
+        <div style="font-size: 15px;height: 45px;line-height: 45px;background: rgb(52, 58, 64);color: white;display:flex;justify-content: center;">
+            我参与的项目
         </div>
         <ul class="list-group" id="project_list">
             <li class="list-group-item nav-item d-flex justify-content-between align-items-center "
@@ -93,21 +92,25 @@
             </li>
         </ul>
     </div>
-    <div style="width: 70%;margin: 0 auto; margin-top: 30px; height: 70%;display: flex" class="border"
+    <div style="width: 70%;margin: 0 auto; margin-top: 20px; height: 70%;display: flex" class="border"
          th:if="${#strings.isEmpty(project_name)}">
         <img th:src="@{/image/nothing.svg}" width="500" height="500" style="margin: 0 auto"/>
     </div>
-    <div style="width: 70%;margin: 0 auto; margin-top: 30px; height: 70%" class="border"
+    <div style="width: 70%;margin: 0 auto; margin-top: 20px; height: 85%;display: flex;flex-direction: column"
+         class="" data-bs-spy="scroll"
          th:if="not ${#strings.isEmpty(project_name)}">
-        <div style="width: 100%;padding: 10px;height: 60px;display: flex;flex-direction: row;
-        background:#efefef;align-items: center"
+        <div style="width: 100%;padding: 10px;height: 45px;display: flex;flex-direction: row;
+        background:rgb(52, 58, 64); align-items: center;"
              class="border-left border-top border-right">
-            <h5 th:text="${project_name}"></h5>
+            <span th:text="${project_name}" style="color: white"></span>
             <div class="input-group" style="width: 35%;margin-left: auto">
                 <input type="text" class="form-control form-control-sm" placeholder="用户名" aria-label="用户名"
-                       aria-describedby="basic-addon2">
+                       aria-describedby="basic-addon2" id="keyword">
                 <div class="input-group-append">
-                    <button class="btn btn-outline-warning btn-sm" type="button">搜索</button>
+                    <button class="btn btn-outline-warning btn-sm" type="button"
+                            th:onclick="search([[${project_id}]])">
+                        搜索
+                    </button>
                 </div>
                 <div>
                     <button class="btn btn-outline-success btn-sm" style="margin-left: 10px;border-radius: 0"
@@ -195,14 +198,36 @@
                          <button type="button" class="btn btn-outline-success btn-sm"
                                  style="margin-left: 10px;font-size: 12px;">身份变更</button>
                     </span>
-                    <span>
+                    <div>
                         <button type="button" class="btn btn-outline-danger btn-sm"
-                                style="margin-left: 10px;font-size: 12px;">删除</button>
-                    </span>
+                                style="margin-left: 10px;font-size: 12px;" data-toggle="modal" th:attr="data-target='#'+${item.userId}">删除</button>
+                    </div>
                 </div>
 
             </li>
         </ul>
+    </div>
+</div>
+<div th:each="modelEach:${member_list}">
+    <div class="modal fade" th:id="${modelEach.userId}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" >确认删除</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="font-size: 15px">
+                    <span>删除</span>
+                    <span style="background: red;border-radius: 5px;padding: 3px;color: white" th:text="${modelEach.userName}"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal" th:onclick="rem([[${modelEach.projectUserRelactionId}]],[[${projectId}]])">删除</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -211,6 +236,11 @@
 
 <script>
     let globalUserId;
+
+    function search(projectId){
+       let keyWord= $('#keyword').val()
+        window.location.href = '/human/index?id=' + projectId+'&keyword='+keyWord;
+    }
 
     function addToProject(userId, userName) {
         document.getElementById("myDropdown").classList.toggle("show")
@@ -230,7 +260,7 @@
             dataType: "json",
             type: "POST",
             success: function (res) {
-                window.location.href='/human/index?id='+projectId;
+                window.location.href = '/human/index?id=' + projectId;
                 $("#toBeAddUserName").text("")
             },
         })
@@ -265,5 +295,19 @@
                 a[i].style.display = "none";
             }
         }
+    }
+
+    function rem(id,projectId){
+        $.ajax({
+            url: "http://localhost:8080/human/rem",
+            data: {
+                id: id,
+            },
+            dataType: "json",
+            type: "POST",
+            success: function (res) {
+                window.location.href = '/human/index?id=' + projectId;
+            },
+        })
     }
 </script>

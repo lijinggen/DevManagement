@@ -8,4 +8,5 @@ public class ProjectUser {
     String role;
     int roleNum;
     String userName;
+    String projectUserRelactionId;
 }

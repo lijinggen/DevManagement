@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <title>成功</title>
     <link rel="stylesheet" type="text/css"
+          th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.min.css}"
           href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"/>
-    <script src="webjars/jquery/3.0.0/jquery.min.js"></script>
+    <script src="webjars/jquery/3.0.0/jquery.min.js"
+            th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
     <link rel="stylesheet" th:href="@{/css/home.css}"
           href="../../css/home.css"/>
     <script src="webjars/bootstrap/4.0.0/js/bootstrap.js"
@@ -36,7 +38,7 @@
                     <a class="nav-link text-white" href="/doc/document">文档</a>
                 </li>
                 <li class="nav-item" id="project">
-                    <a class="nav-link text-white" href="#">项目</a>
+                    <a class="nav-link text-white" href="/project/index">项目</a>
                 </li>
                 <li class="nav-item" id="msg">
                     <a class="nav-link text-white" href="#">消息</a>

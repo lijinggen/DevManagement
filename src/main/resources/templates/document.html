@@ -14,6 +14,7 @@
             th:src="@{/webjars/bootstrap/4.0.0/js/bootstrap.js}"></script>
     <link rel="stylesheet" th:href="@{/css/document.css}"
           href="../css/document.css"/>
+
 </head>
 <body>
 <div>
@@ -40,7 +41,7 @@
                     <a class="nav-link" style="color: white" href="/doc/document">文档</a>
                 </li>
                 <li class="nav-item" id="project">
-                    <a class="nav-link text-white" href="#">项目</a>
+                    <a class="nav-link text-white" href="/project/index">项目</a>
                 </li>
                 <li class="nav-item" id="msg">
                     <a class="nav-link text-white" href="#">消息</a>
@@ -65,8 +66,11 @@
     </nav>
 </div>
 <div style="display: flex;flex-direction: row;height: 100%;margin-top: 30px">
-    <div style="display: flex;flex-direction: column; height: 100%;width: 20%;" class="border-right">
-        <ul class="list-group" id="project_list" style="margin-top: 20px;">
+    <div style="display: flex;flex-direction: column; height: 100%;width: 20%;margin-top: 20px" class="border-right">
+        <div style="font-size: 15px;height: 45px;line-height: 45px;background: rgb(52, 58, 64);color: white;display:flex;justify-content: center;">
+            我参与的项目
+        </div>
+        <ul class="list-group" id="project_list">
             <li class="list-group-item nav-item d-flex justify-content-between align-items-center "
                 style="padding: 0px;border-radius: 0"
                 th:each="project, value: ${project_list}">
@@ -87,8 +91,11 @@
             </li>
         </ul>
     </div>
-
-    <div class="container border" style="margin-top: 30px;height: 80%"
+    <div style="width: 70%;margin: 0 auto; margin-top: 20px; height: 70%;display: flex" class="border"
+         th:if="${#strings.isEmpty(project_name)}">
+        <img th:src="@{/image/nothing.svg}" width="500" height="500" style="margin: 0 auto"/>
+    </div>
+    <div class="container border" style="margin-top: 20px;height: 80%"
          th:if="${not #strings.isEmpty(project_name)}">
         <h2 style="padding: 10px; margin-top: 10px;" class=""
             th:text="${project_name}"></h2>

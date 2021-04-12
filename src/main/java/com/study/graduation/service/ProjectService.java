@@ -1,9 +1,14 @@
 package com.study.graduation.service;
 
 import com.study.graduation.dto.ListProjectReq;
+import com.study.graduation.dto.TaskDto;
+import com.study.graduation.dto.TaskUserDto;
 import com.study.graduation.entity.Project;
+import com.study.graduation.entity.Task;
 
+import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * (Project)表服务接口
@@ -61,4 +66,9 @@ public interface ProjectService {
      * @return 列表
      */
     List<Project> list(ListProjectReq req);
+
+    /**
+     *
+     */
+    List<TaskUserDto> listTask(String projectId,String status) throws ParseException;
 }

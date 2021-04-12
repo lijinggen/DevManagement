@@ -85,4 +85,13 @@ public class ProjectUserRelationServiceImpl implements ProjectUserRelationServic
         List<ProjectUserRelation> projectUserRelations = projectUserRelationDao.selectList(pURQueryWrapper);
         return projectUserRelations;
     }
+
+    @Override
+    public ProjectUserRelation getByUserId(String userId,String projectId) {
+        QueryWrapper<ProjectUserRelation> projectUserRelationQueryWrapper=new QueryWrapper<>();
+        projectUserRelationQueryWrapper.lambda().eq(ProjectUserRelation::getUserId,userId);
+        projectUserRelationQueryWrapper.lambda().eq(ProjectUserRelation::getProjectId,projectId);
+        ProjectUserRelation projectUserRelation = projectUserRelationDao.selectOne(projectUserRelationQueryWrapper);
+        return projectUserRelation;
+    }
 }
