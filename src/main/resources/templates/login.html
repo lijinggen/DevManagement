@@ -1,8 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Spring Security Example </title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <link rel="icon" href="http://localhost:8080/image/logo.svg" type="image/x-icon">
+    <meta http-equiv="Cache-Control" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
     <link rel="stylesheet" type="text/css"
           href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"/>
     <script src="webjars/jquery/3.0.0/jquery.min.js"></script>
@@ -14,33 +18,35 @@
 
 <body style="background-image:url(http://localhost:8080/image/login-background.png);background-repeat:no-repeat;background-size:100% 100%;-moz-background-size:100% 100%;">
 <div class="flex_container">
-    <div style="width: 18%; display: flex; flex-direction: column;justify-content:center" >
-        <h1 style="color: #545C64">DEV MANAGEMENT</h1>
-        <br>
+    <svg t="1617175126380" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+         p-id="1055" width="100" height="100" style="margin-bottom: 20px;">
+        <path d="M813.607846 477.139349c0 154.326113-125.064842 279.463205-279.390955 279.463205S254.753687 631.465462 254.753687 477.139349c0-120.729838 76.512806-223.469414 183.731884-262.556692 29.839272-10.909758 62.135046-16.834262 95.73132-16.834262 99.705073 0 187.199887 52.164538 236.618924 130.772596a277.917054 277.917054 0 0 1 42.772031 148.618358z"
+              fill="#FDBA13" p-id="1056"></path>
+        <path d="M349.762506 248.106682c-20.374515 10.693008-11.126508 40.026529-25.432018 98.332322-27.88852 113.649333-92.263318 121.235589-90.601567 192.185141 0.50575 22.469766 30.561772 67.9873 90.601567 159.022366 34.174275 51.875538 45.951034 64.591547 61.846045 65.169548 37.570028 1.300501 41.47153-67.192549 101.583574-100.499824 66.325549-36.703027 111.265081 18.929514 174.483878-14.37776 36.486277-19.218514 35.041276-44.795033 99.416073-174.483878 60.979045-122.89734 85.616313-146.884358 72.900303-164.585621-30.417272-42.338531-179.107881 83.737811-326.931489 26.51577C425.336062 303.450222 383.720031 230.260919 349.762506 248.106682z"
+              fill="#E65125" p-id="1057"></path>
+        <path d="M536.384393 474.538348m-170.076625 0a170.076625 170.076625 0 1 0 340.153249 0 170.076625 170.076625 0 1 0-340.153249 0Z"
+              p-id="1058"></path>
+    </svg>
+    <div style="background: #545C64;width: 22%;padding: 9px">
+        <h4 style="color: white">DEV MANAGEMENT</h4>
+    </div>
+    <div style="padding:15px;width: 22%; display: flex; flex-direction: column;justify-content:center;margin-bottom: 170px" class="border">
         <div class="input-group" >
             <span class="input-group-text">账号</span>
             <input type="text" class="form-control border-dark" style="background: #545C64;color: white" placeholder="用户名" aria-label="用户名"
                    aria-describedby="basic-addon1" id="username" autocomplete="off">
         </div>
-        <div id = "usernameEmpty" style="display:none;margin-top: 10px">
-            <div class="alert alert-danger">
-                请输入用户名
-            </div>
-        </div>
-        <br>
-        <div class="input-group">
+        <div class="input-group" style="margin-top: 15px">
             <span class="input-group-text">密码</span>
             <input type="password" class="form-control border-dark" placeholder="密码" aria-label="密码"
-                   aria-describedby="basic-addon1" id="password" autocomplete="off" style="background: #545C64;color: white" >
+                   aria-describedby="basic-addon1" id="password" autocomplete="new-password" style="background: #545C64;color: white" >
         </div>
-        <br>
-        <div id = "tip" style="display:none">
-            <div class="alert alert-danger">
-                账号密码不正确
+        <div id="tipAlert" style="display:none;font-size: 12px;margin-top: 15px;">
+            <div class="alert alert-danger" style="padding: 10px; margin-bottom: 0px">
+                <span id="tip"></span>
             </div>
         </div>
-        <br>
-        <div class="row" >
+        <div class="row" style="margin-top: 15px;">
             <div class="col-xs-6 col-sm-6 col-md-6">
                 <input onclick="login()" style="height: 40px;line-height: 40px;font-size: 16px" class="btn btn-lg btn-outline-warning btn-block" value="登陆"/>
             </div>
@@ -58,10 +64,11 @@
 <script>
     function login(){
         if ($("#username").val()==""){
-            $("#usernameEmpty").show()
+            $("#tip").text("请输入用户名")
+            $("#tipAlert").show()
             return ;
         }else{
-            $("#usernameEmpty").hide()
+            $("#tipAlert").hide()
         }
         $.ajax({
             url: "http://localhost:8080/login",
@@ -74,7 +81,8 @@
             success: function (res) {
                 console.log(res)
                 if (res.data==false){
-                    $("#tip").show()
+                    $("#tip").text("账号密码不正确")
+                    $("#tipAlert").show()
                 }else{
                     window.location.href='/home';
                 }

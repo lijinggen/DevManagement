@@ -2,7 +2,7 @@ package com.study.graduation.controller;
 
 import com.study.graduation.config.Result;
 import com.study.graduation.dto.ListProjectReq;
-import com.study.graduation.dto.TaskDto;
+import com.study.graduation.dto.RoleEnum;
 import com.study.graduation.dto.TaskUserDto;
 import com.study.graduation.entity.*;
 import com.study.graduation.service.ProjectService;
@@ -11,12 +11,10 @@ import com.study.graduation.service.TaskService;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -87,6 +85,7 @@ public class ProjectController {
         ProjectUserRelation projectUserRelation = projectUserRelationService.getByUserId(userId, id);
         if(projectUserRelation!=null){
             model.addAttribute("role",projectUserRelation.getRole());
+            model.addAttribute("role_name", RoleEnum.RoleName[projectUserRelation.getRole()-1]);
         }
         //-------------------------------------------------------------------基本数据
         List<TaskUserDto> taskUserList=projectService.listTask(id,status);
@@ -96,5 +95,11 @@ public class ProjectController {
         }
         model.addAttribute("status",Integer.parseInt(status));
         return "project";
+    }
+
+    @GetMapping("/demand")
+    public String addDemand(Model model,String projectId){
+        model.addAttribute("project_id",projectId);
+        return "demand";
     }
 }

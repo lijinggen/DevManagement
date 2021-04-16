@@ -57,6 +57,7 @@ public class LoginController {
     public String logout(HttpServletRequest request){
         request.getSession().removeAttribute("username");
         request.getSession().removeAttribute("user_id");
+        request.getSession().removeAttribute("useraccount");
         return "login";
     }
 

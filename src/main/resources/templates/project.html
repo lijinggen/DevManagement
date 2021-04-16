@@ -2,10 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>项目</title>
+    <title>项目管理</title>
     <link rel="stylesheet" type="text/css"
           th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.min.css}"
           href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"/>
+    <link rel="icon" href="http://localhost:8080/image/logo.svg" type="image/x-icon">
+
     <script src="webjars/jquery/3.0.0/jquery.min.js"
             th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
     <link rel="stylesheet" th:href="@{/css/container.css}"
@@ -103,11 +105,12 @@
         <div style="width: 100%;padding: 10px;height: 45px;display: flex;flex-direction: row;
         background:rgb(52, 58, 64); align-items: center;color: white;"
              class="border-left border-top border-right">
-            <span th:text="${project_name}"></span>
+            <span style="padding:3px;font-size: 13px;color: white; border: #dddddd dashed 1px" th:text="'我的角色：'+${role_name}"></span>
+            <span th:text="${project_name}" style="margin-left: auto;"></span>
             <div class="input-group" style="width: fit-content;margin-left: auto;">
                 <div class="input-group-sm">
                     <button class="btn btn-outline-warning btn-sm" type="button"
-                            th:onclick="search([[${project_id}]])" th:if="${role} eq 5">
+                            th:onclick="addDemand([[${project_id}]])" th:if="${role} eq 5">
                         添加需求
                     </button>
                     <button class="btn btn-outline-warning btn-sm" type="button"
@@ -177,7 +180,8 @@
                             <span style="margin-left: 6px;" th:text="${item.title}"></span>
                             <div style="margin-left: auto;width: fit-content;">
                                 <span class="badge rounded-pill badge-primary" th:text="${item.type}"></span>
-                                <span class="badge rounded-pill bg-info" th:text="${item.endTime}">5d:12h</span>
+                                <span class="badge rounded-pill badge-info" th:text="${item.endTime}"></span>
+                                <span class="badge rounded-pill badge-danger" th:if="not ${#strings.isEmpty(item.outOfTime)}" th:text="${item.outOfTime}"></span>
                                 <span class="badge rounded-pill badge-danger" th:if="${item.priority} eq 1">high</span>
                                 <span class="badge rounded-pill badge-warning"
                                       th:if="${item.priority} eq 2">middle</span>
@@ -203,5 +207,9 @@
                 console.log(res)
             },
         })
+    }
+
+    function addDemand(projectId){
+        window.location.href="/project/demand?project_id=?"+projectId
     }
 </script>

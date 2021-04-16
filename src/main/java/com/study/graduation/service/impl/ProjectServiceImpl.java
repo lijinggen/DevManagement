@@ -162,6 +162,9 @@ public class ProjectServiceImpl implements ProjectService {
             taskDto.setProjectId(task.getProjectId());
             taskDto.setUserId(task.getUserId());
             taskDto.setEndTime(endTime);
+            if(res<0){
+                taskDto.setOutOfTime("超期");
+            }
             taskDto.setTitle(task.getTitle());
             taskDto.setStatus(task.getStatus());
             taskDto.setType(taskType[task.getType() - 1]);

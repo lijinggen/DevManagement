@@ -24,6 +24,8 @@ public class TaskDto {
 
     private String endTime;
 
+    private String outOfTime;
+
     private Date createTime;
 
     private Date modifyTime;

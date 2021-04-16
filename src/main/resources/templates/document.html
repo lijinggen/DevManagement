@@ -95,9 +95,9 @@
          th:if="${#strings.isEmpty(project_name)}">
         <img th:src="@{/image/nothing.svg}" width="500" height="500" style="margin: 0 auto"/>
     </div>
-    <div class="container border" style="margin-top: 20px;height: 80%"
+    <div style="width: 70%;margin: 0 auto; margin-top: 20px; height: 85%;display: flex;flex-direction: column"
          th:if="${not #strings.isEmpty(project_name)}">
-        <h2 style="padding: 10px; margin-top: 10px;" class=""
+        <h2 style="padding: 10px; " class=""
             th:text="${project_name}"></h2>
         <div id="accordion">
             <div class="card" style="margin-top: 3px">
@@ -126,13 +126,13 @@
                         </svg>
                     </a>
                 </div>
-                <div id="collapseOne" class="collapse" data-parent="#accordion" style="color: #545C64;">
+                <div id="collapseOne" class="collapse" data-parent="#accordion" style="color: #545C64;padding-bottom: 5px">
                     <div class="card-body" style="padding-left: 0px;padding-right: 0px;padding-top: 3px;">
-                        <ul class="list-unstyled">
+                        <ul class="list-unstyled" style="padding-bottom: 2px">
                             <li th:each="item : ${demand_dirs}">
-                                <div class="card" style="border: none">
+                                <div class="card" style="border: none;padding-top: 5px" >
                                     <div class="" style="display: flex;flex-direction: row;height: 25px;line-height: 25px;border: none;
-                                    border-radius: 0px">
+                                    border-radius: 0px;padding-left: 8px">
                                         <svg t="1617543961956" class="icon" viewBox="0 0 1024 1024" version="1.1"
                                              xmlns="http://www.w3.org/2000/svg" p-id="2533" width="15" height="15">
                                             <path d="M321.11809 65.612347 257.085728 129.009236 638.078998 512.615007 253.882779 892.992247 317.372789 956.917162 765.594207 513.137916Z"
@@ -152,7 +152,7 @@
                                     </div>
                                     <div th:id="${item.directory.id}" class="collapse"
                                          style="color: #545C64;">
-                                        <div class="card-body">
+                                        <div class="card-body" style="padding-top: 2px;padding-bottom: 3px">
                                             <ul class="list-unstyled">
                                                 <li th:each="subItem : ${item.fileList}" style="display: flex;flex-direction: row; align-items: center; padding: 4px;
                                 border-radius: 2px">
@@ -175,7 +175,7 @@
                                 </div>
                             </li>
                         </ul>
-                        <ul class="list-unstyled" style="margin-top: -12px;margin-left:5px">
+                        <ul class="list-unstyled" style="margin-top: -19px;margin-left:5px">
                             <li th:each="item : ${demand_files}"
                                 style="display: flex;flex-direction: row; align-items: center; padding: 4px;
                                 border-radius: 2px">
