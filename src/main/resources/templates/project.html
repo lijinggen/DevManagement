@@ -177,6 +177,8 @@
                             <span class="badge rounded-pill badge-dark" th:if="${item.status} eq 2">已完成</span>
                             <span class="badge rounded-pill badge-success" th:if="${item.status} eq 3">已上线</span>
                             <span class="badge rounded-pill badge-secondary" th:if="${item.status} eq 4">已关闭</span>
+                            <span class="badge rounded-pill badge-warning" th:if="${item.status} eq 5">修复中</span>
+                            <span class="badge rounded-pill badge-warning" th:if="${item.status} eq 6">待上线</span>
                             <span style="margin-left: 6px;" th:text="${item.title}"></span>
                             <div style="margin-left: auto;width: fit-content;">
                                 <span class="badge rounded-pill badge-primary" th:text="${item.type}"></span>

@@ -11,8 +11,10 @@
             th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
     <link rel="stylesheet" th:href="@{/css/home.css}"
           href="../../css/home.css"/>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
     <script src="webjars/bootstrap/4.0.0/js/bootstrap.js"
             th:src="@{/webjars/bootstrap/4.0.0/js/bootstrap.js}"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
 </head>
 <body>
 <div>
@@ -33,7 +35,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 50px; font-size: 12px;">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item" id="home" style="background:#8f8f8f;border-radius: 2px;height: 16px">
-                    <a class="nav-link text-white" style="color: white" href="/home"  >工作台</a>
+                    <a class="nav-link text-white" style="color: white" href="/home">工作台</a>
                 </li>
                 <li class="nav-item" id="doc">
                     <a class="nav-link text-white" href="/doc/document">文档</a>
@@ -68,9 +70,9 @@
         <div style="display: flex;flex-direction: column;margin-top: 30px; padding-left: 20px;width: 300px">
             <ul class="list-group">
                 <li class="list-group-item nav-item d-flex justify-content-between align-items-center btn-outline-warning"
-                    style="border-color: #545C64;margin-top: 40px;padding: 8px">
-
-                    <a href="#" class="nav-link "
+                    style="border-color: #545C64;margin-top: 40px;padding: 8px"
+                    th:classappend="${tabIndex==1}?'active':''">
+                    <a href="/home/index?tabIndex=1" class="nav-link "
                        style="color: #545C64;display: flex;flex-direction: row;align-items: center;font-size: 14px;">
                         <svg t="1616335078172" class="icon" viewBox="0 0 1024 1024" version="1.1"
                              xmlns="http://www.w3.org/2000/svg" p-id="4823" width="25" height="25"
@@ -91,8 +93,9 @@
                     <span class="badge rounded-pill" style="background-color: #FFD04B;color: #545C64">2</span>
                 </li>
                 <li class="list-group-item nav-item d-flex justify-content-between align-items-center btn-outline-warning"
-                    style="border-color: #545C64;padding: 8px">
-                    <a href="#" class="nav-link "
+                    style="border-color: #545C64;padding: 8px"
+                    th:classappend="${tabIndex==2}?'active':''">
+                    <a href="/home/index?tabIndex=2" class="nav-link "
                        style="color: #545C64;display: flex;flex-direction: row;align-items: center;font-size: 14px;">
                         <svg t="1616335032204" class="icon" viewBox="0 0 1024 1024" version="1.1"
                              xmlns="http://www.w3.org/2000/svg" p-id="2264" width="25" height="25"
@@ -105,8 +108,9 @@
                     <span class="badge rounded-pill" style="background-color: #FFD04B;color: #545C64">2</span>
                 </li>
                 <li class="list-group-item nav-item d-flex justify-content-between align-items-center btn-outline-warning"
-                    style="border-color: #545C64;padding: 8px">
-                    <a href="#" class="nav-link"
+                    style="border-color: #545C64;padding: 8px"
+                    th:classappend="${tabIndex==3}?'active':''">
+                    <a href="/home/index?tabIndex=3" class="nav-link"
                        style="color: #545C64;display: flex;flex-direction: row;align-items: center;font-size: 14px;">
                         <svg t="1617529277235" class="icon" viewBox="0 0 1024 1024" version="1.1"
                              xmlns="http://www.w3.org/2000/svg" p-id="2964" width="23" height="23"
@@ -118,8 +122,9 @@
                     <span class="badge rounded-pill" style="background-color: #FFD04B;color: #545C64">2</span>
                 </li>
                 <li class="list-group-item nav-item d-flex justify-content-between align-items-center btn-outline-warning"
-                    style="border-color: #545C64;padding: 8px">
-                    <a href="#" class="nav-link"
+                    style="border-color: #545C64;padding: 8px"
+                    th:classappend="${tabIndex==4}?'active':''">
+                    <a href="/home/index?tabIndex=4" class="nav-link"
                        style="color: #545C64;display: flex;flex-direction: row;align-items: center;font-size: 14px;">
                         <svg t="1616335508621" class="icon" viewBox="0 0 1024 1024" version="1.1"
                              xmlns="http://www.w3.org/2000/svg" p-id="5643" width="25" height="25"
@@ -142,8 +147,9 @@
                     <span class="badge rounded-pill" style="background-color: #FFD04B;color: #545C64">2</span>
                 </li>
                 <li class="list-group-item nav-item d-flex justify-content-between align-items-center btn-outline-warning"
-                    style="border-color: #545C64;padding: 8px">
-                    <a href="#" class="nav-link"
+                    style="border-color: #545C64;padding: 8px"
+                    th:classappend="${tabIndex==5}?'active':''">
+                    <a href="/home/index?tabIndex=5" class="nav-link"
                        style="color: #545C64;display: flex;flex-direction: row;align-items: center;font-size: 14px;">
                         <svg t="1616335748941" class="icon" viewBox="0 0 1024 1024" version="1.1"
                              xmlns="http://www.w3.org/2000/svg" p-id="5824" width="25" height="25"
@@ -156,11 +162,18 @@
                 </li>
             </ul>
         </div>
-        <div style="height:300px;width:74%;margin-left: 20px;margin-top:60px;border-radius: 2px"class="border">
-
+        <div style="height:300px;width:74%;margin-left: 20px;margin-top:60px;border-radius: 2px;
+                display: flex;flex-direction: row" class="border">
+            <div style="display: flex;flex-direction: row;width: 100%" th:if="${tabIndex eq 1}">
+                <div id="myProgress" style="width: 50%">
+                </div>
+                <div id="taskDistribute" style="width: 50%">
+                </div>
+            </div>
         </div>
     </div>
-    <div style="display: flex;flex-direction: column; padding: 15px;width: 94%;margin: 0 auto;margin-top: -5px"class="border">
+    <div style="display: flex;flex-direction: column; padding: 15px;width: 94%;margin: 0 auto;margin-top: -5px"
+         class="border">
         <div style="margin-left: 10px">
             <h5>我的项目</h5>
         </div>
@@ -183,4 +196,64 @@
     </div>
 </div>
 </body>
+<script>
+    $(document).ready(function () {
+        var chart = {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        };
+        var title = {
+            text: '我的任务'
+        };
+        var tooltip = {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        };
+        var credits={
+            enabled:false
+        }
+        var plotOptions = {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}%</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        };
+        var series = [{
+            type: 'pie',
+            name: 'Browser share',
+            data: [
+                {
+                    name: 'Chrome',
+                    y: 12.8,
+                    sliced: true,
+                    selected: true,
+
+                },
+                ['进行中', 45.0],
+                ['超期', 16.8],
+                ['测试中',10.0],
+                ['已关闭', 8.5],
+                ['已完成', 6.2],
+                ['已上线', 0.7]
+            ]
+        }];
+
+        var json = {};
+        json.chart = chart;
+        json.title = title;
+        json.tooltip = tooltip;
+        json.series = series;
+        json.plotOptions = plotOptions;
+        json.credits=credits;
+        $('#myProgress').highcharts(json);
+        $('#taskDistribute').highcharts(json);
+    });
+</script>
 </html>
