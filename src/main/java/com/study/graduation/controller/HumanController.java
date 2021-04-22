@@ -45,7 +45,6 @@ public class HumanController {
         String userId = (String)request.getSession().getAttribute("user_id");
         ListProjectReq listProjectReq = new ListProjectReq();
         listProjectReq.setUserId(userId);
-        listProjectReq.setRole(1);
         List<Project> list = projectService.list(listProjectReq);
         List<Map<String,Object>>resultList=new ArrayList<>();
         if(list!=null&&list.size()>0){

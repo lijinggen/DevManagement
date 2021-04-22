@@ -102,4 +102,10 @@ public class ProjectController {
         model.addAttribute("project_id",projectId);
         return "demand";
     }
+
+    @PostMapping("/addDemandReq")
+    public String addDemandReq(Model model,String projectId){
+        model.addAttribute("project_id",projectId);
+        return "demand";
+    }
 }

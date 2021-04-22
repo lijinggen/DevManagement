@@ -80,20 +80,23 @@
         } else {
             $("#tipAlert").hide()
         }
-        // $.ajax({
-        //     url: "http://localhost:8080/login",
-        //     data:{
-        //     },
-        //     dataType: "json",
-        //     type: "POST",
-        //     success: function (res) {
-        //         console.log(res)
-        //         if (res.data==false){
-        //             $("#tip").show()
-        //         }else{
-        //             window.location.href='/home';
-        //         }
-        //     },
-        // })
+        $.ajax({
+            url: "http://localhost:8080/register",
+            data:{
+                userName:$("#username").val(),
+                userAccount:$("#useraccount").val(),
+                password:$("#password").val()
+            },
+            dataType: "json",
+            type: "POST",
+            success: function (res) {
+                if (res.data==false){
+                    $("#tip").text("该账号已存在，添加失败")
+                    $("#tipAlert").show()
+                }else{
+                    window.location.href='/login';
+                }
+            },
+        })
     }
 </script>

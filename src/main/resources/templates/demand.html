@@ -1,16 +1,73 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <title>Highcharts 教程 | 菜鸟教程(runoob.com)</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <link rel="icon" href="http://localhost:8080/image/logo.svg" type="image/x-icon">
+    <meta http-equiv="Cache-Control" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+    <title>添加需求</title>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.min.css}"
+          href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/container.css}"
+          href="../css/container.css"/>
     <script src="webjars/jquery/3.0.0/jquery.min.js"
             th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
-    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="webjars/bootstrap/4.0.0/js/bootstrap.js"
+            th:src="@{/webjars/bootstrap/4.0.0/js/bootstrap.js}"></script>
 </head>
-<body>
-<div id="container" style="width: 550px; height: 400px; margin: 0 auto"></div>
-<script language="JavaScript">
-
-</script>
+<body style="display: flex;justify-content: center;">
+    <div style="display: flex;flex-direction: column; width: 65%;"class="border">
+        <div style="color: white;background: black;display: flex;justify-content: center;align-items: center;width: 100%;
+                    height: 50px">
+            <h5>添加需求</h5>
+        </div>
+        <div style="height: 700px;padding: 10px">
+            <form action="">
+                <div class="form-group">
+                    <label for="title">标题</label>
+                    <input type="email" class="form-control" id="title" placeholder="请输入标题">
+                </div>
+                <div class="form-group">
+                    <label for="priority">优先级</label>
+                    <select class="form-control" id="priority">
+                        <option>低</option>
+                        <option>中</option>
+                        <option>高</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="detail">需求详情</label>
+                    <textarea class="form-control" id="detail" rows="3"></textarea>
+                </div>
+                <div class="custom-file " >
+                    <input type="file" class="custom-file-input" id="fileList" lang="es" rows="4">
+                    <label class="custom-file-label" for="fileList" >添加附件</label>
+                </div>
+                <div class="form-group row" style="margin-left: auto;width: fit-content">
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <button type="button" class="btn btn-outline-secondary" id="close">关闭</button>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <button type="button" class="btn btn-warning" id="submit">提交</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
+
+<script>
+    $(function(){
+        $('#fileList').change(function(){
+            var input = this;
+            var url = $(this).val();
+
+        });
+        $('#submit').change(function(){
+
+        });
+    });
+</script>

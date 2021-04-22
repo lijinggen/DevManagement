@@ -14,7 +14,6 @@ public class HomeController {
             model.addAttribute("tabIndex",1);
         }else{
             model.addAttribute("tabIndex",Integer.parseInt(tabIndex));
-            System.out.println(tabIndex);
         }
         return "home";
     }

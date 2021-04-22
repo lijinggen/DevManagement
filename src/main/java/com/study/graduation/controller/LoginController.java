@@ -1,17 +1,20 @@
 package com.study.graduation.controller;
 
 import com.study.graduation.config.Result;
+import com.study.graduation.dto.RegisterDto;
 import com.study.graduation.entity.User;
 import com.study.graduation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.UUID;
 
 @Controller
@@ -50,7 +53,16 @@ public class LoginController {
 
     @RequestMapping("/register")
     public String register(){
-        return "/register";
+        return "register";
+    }
+
+    @PostMapping("/register")
+    @ResponseBody
+    public Result<String> register(User user){
+        user.setId(UUID.randomUUID().toString());
+        user.setCreateTime(new Date());
+        user.setModifyTime(new Date());
+        return new Result(false);
     }
 
     @RequestMapping("/logout")
