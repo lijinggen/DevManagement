@@ -207,4 +207,12 @@ public class ProjectServiceImpl implements ProjectService {
         }
         return list;
     }
+
+    @Override
+    public Project getByName(String projectName) {
+        QueryWrapper<Project> projectQueryWrapper=new QueryWrapper<>();
+        projectQueryWrapper.lambda().eq(Project::getName,projectName);
+        Project project = projectDao.selectOne(projectQueryWrapper);
+        return project;
+    }
 }

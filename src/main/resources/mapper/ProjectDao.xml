@@ -48,8 +48,8 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into dev_management.project(name, create_time, modify_time)
-        values (#{name}, #{createTime}, #{modifyTime})
+        insert into dev_management.project(id, name, create_time, modify_time)
+        values (#{id}, #{name}, #{createTime}, #{modifyTime})
     </insert>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">

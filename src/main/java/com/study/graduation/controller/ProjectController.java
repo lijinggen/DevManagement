@@ -3,6 +3,7 @@ package com.study.graduation.controller;
 import com.study.graduation.config.Result;
 import com.study.graduation.dto.ListProjectReq;
 import com.study.graduation.dto.RoleEnum;
+import com.study.graduation.dto.TaskDto;
 import com.study.graduation.dto.TaskUserDto;
 import com.study.graduation.entity.*;
 import com.study.graduation.service.ProjectService;
@@ -16,10 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * (Project)表控制层
@@ -94,6 +92,27 @@ public class ProjectController {
             status="0";
         }
         model.addAttribute("status",Integer.parseInt(status));
+        float progress=0;
+        int bottom;
+        int top;
+        if(taskUserList!=null&&taskUserList.size()>0){
+            bottom=0;
+            top=0;
+            for (TaskUserDto taskUserDto : taskUserList) {
+                for (TaskDto b : taskUserDto.getTaskDtoList()) {
+                    if(b.getStatus().equals(2)||b.getStatus().equals(3)
+                            ||b.getStatus().equals(4)||b.getStatus().equals(6)){
+                        top++;
+                    }
+                    bottom++;
+                }
+            }
+            progress=((float)top/(float)bottom)*100;
+        }else{
+            progress=100;
+        }
+        String format=String.format("%.2f",progress);
+        model.addAttribute("progress",format);
         return "project";
     }
 
@@ -107,5 +126,31 @@ public class ProjectController {
     public String addDemandReq(Model model,String projectId){
         model.addAttribute("project_id",projectId);
         return "demand";
+    }
+
+    @PostMapping("/addProject")
+    public String addProject(Model model,HttpServletRequest request,String projectName){
+        Project byName = projectService.getByName(projectName);
+        if(byName!=null){
+            model.addAttribute("failed","failed");
+            return "redirect:index";
+        }
+        String userId = (String)request.getSession().getAttribute("user_id");
+        Project project=new Project();
+        project.setCreateTime(new Date());
+        project.setModifyTime(new Date());
+        project.setName(projectName);
+        project.setId(UUID.randomUUID().toString());
+        projectService.insert(project);
+        ProjectUserRelation projectUserRelation=new ProjectUserRelation();
+        projectUserRelation.setRole(5);
+        projectUserRelation.setModifyTime(new Date());
+        projectUserRelation.setCreateTime(new Date());
+        projectUserRelation.setUserId(userId);
+        projectUserRelation.setProjectId(project.getId());
+        projectUserRelation.setId(UUID.randomUUID().toString());
+        projectUserRelationService.insert(projectUserRelation);
+        model.addAttribute("success","success");
+        return "redirect:index";
     }
 }

@@ -59,10 +59,16 @@ public class LoginController {
     @PostMapping("/register")
     @ResponseBody
     public Result<String> register(User user){
-        user.setId(UUID.randomUUID().toString());
-        user.setCreateTime(new Date());
-        user.setModifyTime(new Date());
-        return new Result(false);
+        User userServiceByUserAccount=userService.getByUserAccount(user.getUserAccount());
+        if(userServiceByUserAccount!=null){
+            return new Result(false);
+        }else{
+            user.setId(UUID.randomUUID().toString());
+            user.setCreateTime(new Date());
+            user.setModifyTime(new Date());
+            userService.insert(user);
+            return new Result(true);
+        }
     }
 
     @RequestMapping("/logout")

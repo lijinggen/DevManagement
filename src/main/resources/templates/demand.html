@@ -12,13 +12,17 @@
           href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"/>
     <link rel="stylesheet" th:href="@{/css/container.css}"
           href="../css/container.css"/>
+    <link href="https://cdn.bootcss.com/gijgo/1.9.13/combined/css/gijgo.min.css" rel="stylesheet">
     <script src="webjars/jquery/3.0.0/jquery.min.js"
             th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
     <script src="webjars/bootstrap/4.0.0/js/bootstrap.js"
             th:src="@{/webjars/bootstrap/4.0.0/js/bootstrap.js}"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.15.0/esm/popper.min.js"></script>
+    <script src="https://cdn.bootcss.com/gijgo/1.9.13/combined/js/gijgo.min.js"></script>
+    <script src="https://cdn.bootcss.com/gijgo/1.9.13/combined/js/messages/messages.zh-cn.min.js"></script>
 </head>
 <body style="display: flex;justify-content: center;">
-    <div style="display: flex;flex-direction: column; width: 65%;"class="border">
+    <div style="display: flex;flex-direction: column; width: 55%;"class="border">
         <div style="color: white;background: black;display: flex;justify-content: center;align-items: center;width: 100%;
                     height: 50px">
             <h5>添加需求</h5>
@@ -39,15 +43,23 @@
                 </div>
                 <div class="form-group">
                     <label for="detail">需求详情</label>
-                    <textarea class="form-control" id="detail" rows="3"></textarea>
+                    <textarea class="form-control" id="detail" rows="3" style="height: 350px;"></textarea>
                 </div>
-                <div class="custom-file " >
+                <div class="custom-file" >
                     <input type="file" class="custom-file-input" id="fileList" lang="es" rows="4">
                     <label class="custom-file-label" for="fileList" >添加附件</label>
                 </div>
-                <div class="form-group row" style="margin-left: auto;width: fit-content">
+                <div class="form-group" style="margin-top: 10px">
+                    <label for="dateselect">预期时间</label>
+                    <div style="display:flex; flex-direction: row;" id="dateselect" >
+                        <input id="datepicker_begin">
+                        <span class="input-group-addon" style="margin-left: 12px;margin-right: 12px">to</span>
+                        <input id="datepicker_end">
+                    </div>
+                </div>
+                <div class="form-group row" style="margin-left: auto;width: fit-content;margin-top: 20px;">
                     <div class="col-xs-6 col-sm-6 col-md-6">
-                        <button type="button" class="btn btn-outline-secondary" id="close">关闭</button>
+                        <button type="button" class="btn btn-outline-secondary" id="close">返回</button>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6">
                         <button type="button" class="btn btn-warning" id="submit">提交</button>
@@ -69,5 +81,15 @@
         $('#submit').change(function(){
 
         });
+    });
+    $("#datepicker_begin").datepicker({
+        locale: 'zh-cn',
+        format: 'yyyy-mm-dd',
+        weekStartDay: 1
+    });
+    $("#datepicker_end").datepicker({
+        locale: 'zh-cn',
+        format: 'yyyy-mm-dd',
+        weekStartDay: 1
     });
 </script>

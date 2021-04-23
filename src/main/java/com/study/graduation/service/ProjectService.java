@@ -71,4 +71,6 @@ public interface ProjectService {
      *
      */
     List<TaskUserDto> listTask(String projectId,String status) throws ParseException;
+
+    Project getByName(String projectName);
 }
