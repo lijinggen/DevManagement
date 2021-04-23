@@ -120,10 +120,6 @@
                         添加需求
                     </button>
                     <button class="btn btn-outline-warning btn-sm" type="button"
-                            th:onclick="search([[${project_id}]])" th:if="${role} eq 1">
-                        添加需求
-                    </button>
-                    <button class="btn btn-outline-warning btn-sm" type="button"
                             th:onclick="search([[${project_id}]])" th:if="${role} eq 3">
                         添加缺陷
                     </button>
@@ -245,6 +241,6 @@
     }
 
     function addDemand(projectId){
-        window.location.href="/project/demand?project_id=?"+projectId
+        window.location.href="/project/demand?projectId="+projectId
     }
 </script>

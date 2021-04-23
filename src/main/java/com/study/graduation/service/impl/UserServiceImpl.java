@@ -106,4 +106,23 @@ public class UserServiceImpl implements UserService {
         }
         return results;
     }
+
+    @Override
+    public List<User> getProjectDevMember(String projectId) {
+        List<User> users = userDao.selectList(new QueryWrapper<>());
+        List<ProjectUserRelation> projectUserRelations=projectUserRelationService.listByProject(projectId);
+        Map<String, Integer> collect = projectUserRelations.stream().collect(Collectors.toMap(ProjectUserRelation::getUserId, ProjectUserRelation::getRole));
+        List<User> results=new ArrayList<>();
+        for (User user : users) {
+            Integer role = collect.get(user.getId());
+            if(role!=null){
+                if(role.equals(2)){
+                    results.add(user);
+                }
+            }
+        }
+        return results;
+    }
+
+
 }

@@ -9,6 +9,7 @@ import com.study.graduation.entity.*;
 import com.study.graduation.service.ProjectService;
 import com.study.graduation.service.ProjectUserRelationService;
 import com.study.graduation.service.TaskService;
+import com.study.graduation.service.UserService;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +37,9 @@ public class ProjectController {
 
     @Resource
     private ProjectUserRelationService projectUserRelationService;
+
+    @Resource
+    private UserService userService;
 
     @Resource
     private TaskService taskService;
@@ -116,9 +120,12 @@ public class ProjectController {
         return "project";
     }
 
-    @GetMapping("/demand")
+    @RequestMapping("/demand")
     public String addDemand(Model model,String projectId){
         model.addAttribute("project_id",projectId);
+        List<User> addUserList;
+        addUserList=userService.getProjectDevMember(projectId);
+        model.addAttribute("add_user_list",addUserList);
         return "demand";
     }
 

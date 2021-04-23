@@ -62,4 +62,6 @@ public interface UserService {
     User getByUserAccount(String userAccount);
 
     List<User> listFilterByProjectId(String projectId);
+
+    List<User> getProjectDevMember(String projectId);
 }

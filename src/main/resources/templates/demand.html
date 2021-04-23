@@ -12,6 +12,8 @@
           href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"/>
     <link rel="stylesheet" th:href="@{/css/container.css}"
           href="../css/container.css"/>
+    <link rel="stylesheet" th:href="@{/css/demand.css}"
+          href="../css/demand.css"/>
     <link href="https://cdn.bootcss.com/gijgo/1.9.13/combined/css/gijgo.min.css" rel="stylesheet">
     <script src="webjars/jquery/3.0.0/jquery.min.js"
             th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
@@ -59,7 +61,8 @@
                 </div>
                 <div class="form-group row" style="margin-left: auto;width: fit-content;margin-top: 20px;">
                     <div class="col-xs-6 col-sm-6 col-md-6">
-                        <button type="button" class="btn btn-outline-secondary" id="close">返回</button>
+                        <button type="button" class="btn btn-outline-secondary" id="close"
+                            th:onclick="back([[${project_id}]])">返回</button>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6">
                         <button type="button" class="btn btn-warning" id="submit">提交</button>
@@ -68,10 +71,45 @@
             </form>
         </div>
     </div>
+    123
+    <div>
+        <button class="btn btn-outline-success btn-sm" style="margin-left: 10px;border-radius: 0"
+                data-toggle="modal" data-target="#myModal">添加成员
+        </button>
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">添加成员</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body" style="height: 280px;">
+                        <div class="dropdown">
+                            <button onclick="myFunction()" class="dropbtn">人员列表</button>
+                            <div id="myDropdown" class="dropdown-content">
+                                <input type="text" placeholder="搜索" id="myInput" onkeyup="filterFunction()">
+                                <a th:each="item:${add_user_list}"
+                                   th:text="${item.userName}"
+                                   th:onclick="addToProject([[${item.id}]])">
+                                </a>
+                            </div>
+                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-warning" data-dismiss="modal"
+                                th:onclick="allocate()">添加
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
+
 </html>
 
 <script>
+    let globalUserId;
     $(function(){
         $('#fileList').change(function(){
             var input = this;
@@ -92,4 +130,32 @@
         format: 'yyyy-mm-dd',
         weekStartDay: 1
     });
+    function back(projectId){
+        window.location.href='/project/index?id='+projectId;
+    }
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    function filterFunction() {
+        var input, filter, ul, li, a, i;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        div = document.getElementById("myDropdown");
+        a = div.getElementsByTagName("a");
+        for (i = 0; i < a.length; i++) {
+            txtValue = a[i].textContent || a[i].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                a[i].style.display = "";
+            } else {
+                a[i].style.display = "none";
+            }
+        }
+    }
+    function addToProjectPost(userId) {
+        globalUserId=userId
+    }
+    function allocate(){
+
+    }
 </script>
