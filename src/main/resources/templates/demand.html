@@ -24,20 +24,60 @@
     <script src="https://cdn.bootcss.com/gijgo/1.9.13/combined/js/messages/messages.zh-cn.min.js"></script>
 </head>
 <body style="display: flex;justify-content: center;">
-    <div style="display: flex;flex-direction: column; width: 55%;"class="border">
+    <div style="display: flex;flex-direction: column; width: 55%;height: fit-content;margin-bottom: 15px"class="border">
         <div style="color: white;background: black;display: flex;justify-content: center;align-items: center;width: 100%;
                     height: 50px">
             <h5>添加需求</h5>
         </div>
-        <div style="height: 700px;padding: 10px">
-            <form action="">
+        <div style="padding: 10px">
+            <div style="display:flex;flex-direction: row;">
+                <input type="text" disabled id="devMember">
+                <button class="btn btn-outline-success btn-sm" style="margin-left: 10px;border-radius: 0"
+                        data-toggle="modal" data-target="#myModal">分配开发人员
+                </button>
+                <div class="modal fade" id="myModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">添加成员</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body" style="height: 280px;">
+                                <div class="dropdown">
+                                    <button onclick="myFunction()" class="dropbtn">人员列表</button>
+                                    <div id="myDropdown" class="dropdown-content">
+                                        <input type="text" placeholder="搜索" id="myInput" onkeyup="filterFunction()">
+                                        <a th:each="item:${add_user_list}"
+                                           th:text="${item.userName}"
+                                           th:onclick="addToProject([[${item.id}]],[[${item.userName}]])">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div id="toBeAdd" class="bg-warning" style="font-size: 14px;width: fit-content;
+                                            margin-left: 5px;border-radius: 6px;color: black;padding-left: 12px;padding-right: 12px;
+                                            line-height: 35px; margin-top: 20px">
+                                    <span id="toBeAddUserName"></span>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-warning" data-dismiss="modal"
+                                            th:onclick="allocate()">添加
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form action="/project/addDemandReq" method="post" enctype="multipart/form-data" >
+                <input type="text" style="display: none" id="formDevMember" name="userId">
+                <input type="text" style="display: none" id="projectId" name="projectId" th:value="${project_id}">
                 <div class="form-group">
                     <label for="title">标题</label>
-                    <input type="email" class="form-control" id="title" placeholder="请输入标题">
+                    <input type="text" class="form-control" id="title" placeholder="请输入标题" name="title">
                 </div>
                 <div class="form-group">
                     <label for="priority">优先级</label>
-                    <select class="form-control" id="priority">
+                    <select class="form-control" id="priority" name="priority">
                         <option>低</option>
                         <option>中</option>
                         <option>高</option>
@@ -45,18 +85,18 @@
                 </div>
                 <div class="form-group">
                     <label for="detail">需求详情</label>
-                    <textarea class="form-control" id="detail" rows="3" style="height: 350px;"></textarea>
+                    <textarea class="form-control" id="detail" rows="3" style="height: 350px;" name="detail"></textarea>
                 </div>
-                <div class="custom-file" >
-                    <input type="file" class="custom-file-input" id="fileList" lang="es" rows="4">
+                <div class="custom-file">
+                    <input multiple type="file" class="custom-file-input" id="fileList" name="fileList" lang="es" rows="4">
                     <label class="custom-file-label" for="fileList" >添加附件</label>
                 </div>
                 <div class="form-group" style="margin-top: 10px">
                     <label for="dateselect">预期时间</label>
                     <div style="display:flex; flex-direction: row;" id="dateselect" >
-                        <input id="datepicker_begin">
+                        <input id="datepicker_begin" name="beginTime">
                         <span class="input-group-addon" style="margin-left: 12px;margin-right: 12px">to</span>
-                        <input id="datepicker_end">
+                        <input id="datepicker_end" name="endTime">
                     </div>
                 </div>
                 <div class="form-group row" style="margin-left: auto;width: fit-content;margin-top: 20px;">
@@ -65,42 +105,11 @@
                             th:onclick="back([[${project_id}]])">返回</button>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6">
-                        <button type="button" class="btn btn-warning" id="submit">提交</button>
+                        <button type="submit" class="btn btn-warning" id="submit">提交</button>
                     </div>
                 </div>
             </form>
-        </div>
-    </div>
-    123
-    <div>
-        <button class="btn btn-outline-success btn-sm" style="margin-left: 10px;border-radius: 0"
-                data-toggle="modal" data-target="#myModal">添加成员
-        </button>
-        <div class="modal fade" id="myModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">添加成员</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body" style="height: 280px;">
-                        <div class="dropdown">
-                            <button onclick="myFunction()" class="dropbtn">人员列表</button>
-                            <div id="myDropdown" class="dropdown-content">
-                                <input type="text" placeholder="搜索" id="myInput" onkeyup="filterFunction()">
-                                <a th:each="item:${add_user_list}"
-                                   th:text="${item.userName}"
-                                   th:onclick="addToProject([[${item.id}]])">
-                                </a>
-                            </div>
-                        </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-warning" data-dismiss="modal"
-                                th:onclick="allocate()">添加
-                        </button>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
 </body>
@@ -110,6 +119,7 @@
 
 <script>
     let globalUserId;
+    let globalUserName;
     $(function(){
         $('#fileList').change(function(){
             var input = this;
@@ -152,10 +162,20 @@
             }
         }
     }
-    function addToProjectPost(userId) {
+    function addToProject(userId,userName) {
+        document.getElementById("myDropdown").classList.toggle("show")
         globalUserId=userId
+        globalUserName=userName
+        $("#toBeAddUserName").text(userName)
     }
     function allocate(){
-
+        $("#devMember").val(globalUserName)
+        $("#formDevMember").val(globalUserId)
     }
+    $(function(){
+        $('#fileList').change(function(){
+            console.log($(this))
+        });
+
+    });
 </script>

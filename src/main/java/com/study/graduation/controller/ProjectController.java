@@ -1,22 +1,28 @@
 package com.study.graduation.controller;
 
 import com.study.graduation.config.Result;
-import com.study.graduation.dto.ListProjectReq;
-import com.study.graduation.dto.RoleEnum;
-import com.study.graduation.dto.TaskDto;
-import com.study.graduation.dto.TaskUserDto;
+import com.study.graduation.dto.*;
 import com.study.graduation.entity.*;
 import com.study.graduation.service.ProjectService;
 import com.study.graduation.service.ProjectUserRelationService;
 import com.study.graduation.service.TaskService;
 import com.study.graduation.service.UserService;
 import org.apache.logging.log4j.util.Strings;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.ParseException;
 import java.util.*;
 
@@ -43,6 +49,9 @@ public class ProjectController {
 
     @Resource
     private TaskService taskService;
+
+    @Value("${customFile}")
+    public String uploadDir;
     /**
      * 通过主键查询单条数据
      *
@@ -130,9 +139,15 @@ public class ProjectController {
     }
 
     @PostMapping("/addDemandReq")
-    public String addDemandReq(Model model,String projectId){
-        model.addAttribute("project_id",projectId);
-        return "demand";
+    public String addDemandReq(Model model, AddDemandRequest addDemandRequest,@RequestParam("fileList") MultipartFile file){
+        try {
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(uploadDir + file.getOriginalFilename());
+            Files.write(path, bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "redirect:index?id="+addDemandRequest.getProjectId() ;
     }
 
     @PostMapping("/addProject")
