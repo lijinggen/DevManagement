@@ -10,6 +10,7 @@ import com.study.graduation.service.ProjectService;
 import com.study.graduation.service.ProjectUserRelationService;
 import com.study.graduation.service.TaskService;
 import com.study.graduation.service.UserService;
+import com.study.graduation.util.DateUtil;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -242,8 +243,20 @@ public class ProjectServiceImpl implements ProjectService {
             task.setCreateTime(new Date());
             task.setProjectId(addDemandRequest.getProjectId());
             task.setId(UUID.randomUUID().toString());
-//            task.set
-        } catch (IOException e) {
+            task.setBatchNo(UUID.randomUUID().toString());
+            task.setBeginTime(DateUtil.prase(addDemandRequest.getBeginTime()));
+            task.setEndTime(DateUtil.prase(addDemandRequest.getEndTime()));
+            task.setTitle(addDemandRequest.getTitle());
+            task.setUserId(addDemandRequest.getUserId());
+            task.setType(1);
+            task.setStatus(1);
+            if(task.getPriority().equals("低")){
+                task.setPriority(1);
+            }else if(task.getPriority().equals("中")){
+
+            }
+
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
     }

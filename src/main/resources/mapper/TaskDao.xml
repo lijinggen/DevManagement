@@ -4,12 +4,14 @@
 
     <resultMap type="com.study.graduation.entity.Task" id="TaskMap">
         <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="batchNo" column="batch_no" jdbcType="VARCHAR"/>
         <result property="userId" column="user_id" jdbcType="VARCHAR"/>
         <result property="projectId" column="project_id" jdbcType="VARCHAR"/>
         <result property="title" column="title" jdbcType="VARCHAR"/>
         <result property="type" column="type" jdbcType="INTEGER"/>
         <result property="status" column="status" jdbcType="INTEGER"/>
         <result property="priority" column="priority" jdbcType="INTEGER"/>
+        <result property="beginTime" column="begin_time" jdbcType="TIMESTAMP"/>
         <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="modifyTime" column="modify_time" jdbcType="TIMESTAMP"/>
@@ -17,27 +19,50 @@
 
     <!--查询单个-->
     <select id="queryById" resultMap="TaskMap">
-        select
-          id, user_id, project_id, title, type, status, priority, end_time, create_time, modify_time
+        select id,
+               batch_no,
+               user_id,
+               project_id,
+               title,
+               type,
+               status,
+               priority,
+               begin_time,
+               end_time,
+               create_time,
+               modify_time
         from dev_management.task
         where id = #{id}
     </select>
 
     <!--查询指定行数据-->
-    <select id="selectAll" resultMap="TaskMap">
-        select
-          id, user_id, project_id, title, type, status, priority, end_time, create_time, modify_time
-        from dev_management.task
+    <select id="queryAllByLimit" resultMap="TaskMap">
+        select id,
+               batch_no,
+               user_id,
+               project_id,
+               title,
+               type,
+               status,
+               priority,
+               begin_time,
+               end_time,
+               create_time,
+               modify_time
+        from dev_management.task limit #{offset}, #{limit}
     </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TaskMap">
         select
-        id, user_id, project_id, title, type, status, priority, end_time, create_time, modify_time
+        id, batch_no, user_id, project_id, title, type, status, priority, begin_time, end_time, create_time, modify_time
         from dev_management.task
         <where>
             <if test="id != null and id != ''">
                 and id = #{id}
+            </if>
+            <if test="batchNo != null and batchNo != ''">
+                and batch_no = #{batchNo}
             </if>
             <if test="userId != null and userId != ''">
                 and user_id = #{userId}
@@ -57,6 +82,9 @@
             <if test="priority != null">
                 and priority = #{priority}
             </if>
+            <if test="beginTime != null">
+                and begin_time = #{beginTime}
+            </if>
             <if test="endTime != null">
                 and end_time = #{endTime}
             </if>
@@ -71,38 +99,46 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into dev_management.task(user_id, project_id, title, type, status, priority, end_time, create_time, modify_time)
-        values (#{userId}, #{projectId}, #{title}, #{type}, #{status}, #{priority}, #{endTime}, #{createTime}, #{modifyTime})
+        insert into dev_management.task(batch_no, user_id, project_id, title, type, status, priority, begin_time,
+                                        end_time, create_time, modify_time)
+        values (#{batchNo}, #{userId}, #{projectId}, #{title}, #{type}, #{status}, #{priority}, #{beginTime},
+                #{endTime}, #{createTime}, #{modifyTime})
     </insert>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into dev_management.task(user_id, project_id, title, type, status, priority, end_time, create_time,
-        modify_time)
+        insert into dev_management.task(batch_no, user_id, project_id, title, type, status, priority, begin_time,
+        end_time, create_time, modify_time)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.userId}, #{entity.projectId}, #{entity.title}, #{entity.type}, #{entity.status},
-            #{entity.priority}, #{entity.endTime}, #{entity.createTime}, #{entity.modifyTime})
+            (#{entity.batchNo}, #{entity.userId}, #{entity.projectId}, #{entity.title}, #{entity.type},
+            #{entity.status}, #{entity.priority}, #{entity.beginTime}, #{entity.endTime}, #{entity.createTime},
+            #{entity.modifyTime})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into dev_management.task(user_id, project_id, title, type, status, priority, end_time, create_time,
-        modify_time)
+        insert into dev_management.task(batch_no, user_id, project_id, title, type, status, priority, begin_time,
+        end_time, create_time, modify_time)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.userId}, #{entity.projectId}, #{entity.title}, #{entity.type}, #{entity.status},
-            #{entity.priority}, #{entity.endTime}, #{entity.createTime}, #{entity.modifyTime})
+            (#{entity.batchNo}, #{entity.userId}, #{entity.projectId}, #{entity.title}, #{entity.type},
+            #{entity.status}, #{entity.priority}, #{entity.beginTime}, #{entity.endTime}, #{entity.createTime},
+            #{entity.modifyTime})
         </foreach>
         on duplicate key update
-        user_id = values(user_id) , project_id = values(project_id) , title = values(title) , type = values(type) ,
-        status = values(status) , priority = values(priority) , end_time = values(end_time) , create_time =
-        values(create_time) , modify_time = values(modify_time)
+        batch_no = values(batch_no) , user_id = values(user_id) , project_id = values(project_id) , title =
+        values(title) , type = values(type) , status = values(status) , priority = values(priority) , begin_time =
+        values(begin_time) , end_time = values(end_time) , create_time = values(create_time) , modify_time =
+        values(modify_time)
     </insert>
 
     <!--通过主键修改数据-->
     <update id="update">
         update dev_management.task
         <set>
+            <if test="batchNo != null and batchNo != ''">
+                batch_no = #{batchNo},
+            </if>
             <if test="userId != null and userId != ''">
                 user_id = #{userId},
             </if>
@@ -121,6 +157,9 @@
             <if test="priority != null">
                 priority = #{priority},
             </if>
+            <if test="beginTime != null">
+                begin_time = #{beginTime},
+            </if>
             <if test="endTime != null">
                 end_time = #{endTime},
             </if>
@@ -136,7 +175,9 @@
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from dev_management.task where id = #{id}
+        delete
+        from dev_management.task
+        where id = #{id}
     </delete>
 
 </mapper>

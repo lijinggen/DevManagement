@@ -14,6 +14,8 @@ public class Task implements Serializable {
 
     private String id;
 
+    private String batchNo;
+
     private String userId;
 
     private String projectId;
@@ -24,13 +26,17 @@ public class Task implements Serializable {
      */
     private Integer type;
     /**
-     * 1. 进行中 2.已完成 3. 已上线 4. 已关闭
+     * 1. 进行中 2.已完成 3. 已上线 4. 已关闭 5.开发修复中 6. 待上线
      */
     private Integer status;
     /**
      * 1. low 2. middle 3. high
      */
     private Integer priority;
+    /**
+     * 任务预期开始时间
+     */
+    private Date beginTime;
     /**
      * 任务预期完成时间
      */
@@ -51,6 +57,14 @@ public class Task implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getBatchNo() {
+        return batchNo;
+    }
+
+    public void setBatchNo(String batchNo) {
+        this.batchNo = batchNo;
     }
 
     public String getUserId() {
@@ -99,6 +113,14 @@ public class Task implements Serializable {
 
     public void setPriority(Integer priority) {
         this.priority = priority;
+    }
+
+    public Date getBeginTime() {
+        return beginTime;
+    }
+
+    public void setBeginTime(Date beginTime) {
+        this.beginTime = beginTime;
     }
 
     public Date getEndTime() {
