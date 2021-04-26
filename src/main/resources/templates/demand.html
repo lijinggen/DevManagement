@@ -87,9 +87,8 @@
                     <label for="detail">需求详情</label>
                     <textarea class="form-control" id="detail" rows="3" style="height: 350px;" name="detail"></textarea>
                 </div>
-                <div class="custom-file">
-                    <input multiple type="file" class="custom-file-input" id="fileList" name="fileList" lang="es" rows="4">
-                    <label class="custom-file-label" for="fileList" >添加附件</label>
+                <div class="form-group">
+                    <input type="file" id="fileList" name="fileList" multiple>
                 </div>
                 <div class="form-group" style="margin-top: 10px">
                     <label for="dateselect">预期时间</label>
@@ -120,16 +119,6 @@
 <script>
     let globalUserId;
     let globalUserName;
-    $(function(){
-        $('#fileList').change(function(){
-            var input = this;
-            var url = $(this).val();
-
-        });
-        $('#submit').change(function(){
-
-        });
-    });
     $("#datepicker_begin").datepicker({
         locale: 'zh-cn',
         format: 'yyyy-mm-dd',
@@ -172,10 +161,4 @@
         $("#devMember").val(globalUserName)
         $("#formDevMember").val(globalUserId)
     }
-    $(function(){
-        $('#fileList').change(function(){
-            console.log($(this))
-        });
-
-    });
 </script>

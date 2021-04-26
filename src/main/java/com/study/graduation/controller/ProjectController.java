@@ -50,8 +50,7 @@ public class ProjectController {
     @Resource
     private TaskService taskService;
 
-    @Value("${customFile}")
-    public String uploadDir;
+
     /**
      * 通过主键查询单条数据
      *
@@ -139,14 +138,9 @@ public class ProjectController {
     }
 
     @PostMapping("/addDemandReq")
-    public String addDemandReq(Model model, AddDemandRequest addDemandRequest,@RequestParam("fileList") MultipartFile file){
-        try {
-            byte[] bytes = file.getBytes();
-            Path path = Paths.get(uploadDir + file.getOriginalFilename());
-            Files.write(path, bytes);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public String addDemandReq(HttpServletRequest request, AddDemandRequest addDemandRequest,@RequestParam("fileList") MultipartFile []fileList){
+        String userId=(String)request.getSession().getAttribute("user_id");
+        projectService.addDemand(addDemandRequest,fileList,userId);
         return "redirect:index?id="+addDemandRequest.getProjectId() ;
     }
 

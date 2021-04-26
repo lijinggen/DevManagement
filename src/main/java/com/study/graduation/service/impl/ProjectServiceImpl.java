@@ -3,23 +3,23 @@ package com.study.graduation.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.study.graduation.dao.ProjectUserRelationDao;
 import com.study.graduation.dao.TaskDao;
-import com.study.graduation.dto.ListProjectReq;
-import com.study.graduation.dto.RoleEnum;
-import com.study.graduation.dto.TaskDto;
-import com.study.graduation.dto.TaskUserDto;
-import com.study.graduation.entity.Project;
+import com.study.graduation.dto.*;
+import com.study.graduation.entity.*;
 import com.study.graduation.dao.ProjectDao;
-import com.study.graduation.entity.ProjectUserRelation;
-import com.study.graduation.entity.Task;
-import com.study.graduation.entity.User;
 import com.study.graduation.service.ProjectService;
 import com.study.graduation.service.ProjectUserRelationService;
 import com.study.graduation.service.TaskService;
 import com.study.graduation.service.UserService;
 import org.apache.logging.log4j.util.Strings;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.temporal.ChronoUnit;
@@ -54,6 +54,9 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Resource
     private UserService userService;
+
+    @Value("${customFile}")
+    public String uploadDir;
 
     private static String[] taskType={"需求","测试","bug"};
 
@@ -214,5 +217,34 @@ public class ProjectServiceImpl implements ProjectService {
         projectQueryWrapper.lambda().eq(Project::getName,projectName);
         Project project = projectDao.selectOne(projectQueryWrapper);
         return project;
+    }
+
+    @Override
+    public void addDemand(AddDemandRequest addDemandRequest, MultipartFile[] fileList, String userId) {
+        try {
+            String []fileStringList=new String[fileList.length];
+            int i=0;
+            for (MultipartFile file : fileList) {
+                byte[] bytes = file.getBytes();
+                Path path = Paths.get(uploadDir + file.getOriginalFilename());
+                Path resultPath = Files.write(path, bytes);
+                fileStringList[i]=resultPath.toString();
+            }
+            Demand demand=new Demand();
+            Task task=new Task();
+            demand.setCreateTime(new Date());
+            demand.setModifyTime(new Date());
+            demand.setId(UUID.randomUUID().toString());
+            demand.setDetail(addDemandRequest.getDetail());
+            demand.setTitle(addDemandRequest.getTitle());
+            demand.setCreateUserId(userId);
+            demand.setFileList(Arrays.toString(fileStringList));
+            task.setCreateTime(new Date());
+            task.setProjectId(addDemandRequest.getProjectId());
+            task.setId(UUID.randomUUID().toString());
+//            task.set
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

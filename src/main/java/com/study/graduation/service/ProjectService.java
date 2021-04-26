@@ -1,10 +1,12 @@
 package com.study.graduation.service;
 
+import com.study.graduation.dto.AddDemandRequest;
 import com.study.graduation.dto.ListProjectReq;
 import com.study.graduation.dto.TaskDto;
 import com.study.graduation.dto.TaskUserDto;
 import com.study.graduation.entity.Project;
 import com.study.graduation.entity.Task;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.text.ParseException;
 import java.util.List;
@@ -73,4 +75,6 @@ public interface ProjectService {
     List<TaskUserDto> listTask(String projectId,String status) throws ParseException;
 
     Project getByName(String projectName);
+
+    void addDemand(AddDemandRequest addDemandRequest, MultipartFile []fileList,String userId);
 }
