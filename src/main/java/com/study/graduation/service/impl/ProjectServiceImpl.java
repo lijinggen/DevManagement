@@ -280,4 +280,67 @@ public class ProjectServiceImpl implements ProjectService {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public StatisticDto statistic(String userId) {
+        ListTaskReq listTaskReq=new ListTaskReq();
+        listTaskReq.setUserId(userId);
+        List<Task> list = taskService.list(listTaskReq);
+        StatisticDto statisticDto=new StatisticDto();
+        listTaskReq.setUserId("");
+        Map<String,Task> map=new HashMap<>();
+        if(list!=null){
+            for (Task task : list) {
+                map.putIfAbsent(task.getBatchNo(), task);
+            }
+            for (Map.Entry<String, Task> kv : map.entrySet()) {
+                listTaskReq.setBatchNo(kv.getKey());
+                // 根据批次获取到该需求的所有关联单
+                List<Task> list1 = taskService.list(listTaskReq);
+                for (Task task : list1) {
+                    if(task.getUserId().equals(userId)){
+                        //status 1. 进行中 2.已完成 3. 已上线 4. 已关闭 5.开发修复中 6. 待上线
+                        if(task.getStatus().equals(1)||task.getStatus().equals(5)){
+                            Calendar cal1 = new GregorianCalendar();
+                            Calendar cal2 = new GregorianCalendar();
+                            cal1.setTime(task.getEndTime());
+                            cal2.setTime(new Date());
+                            int res = hoursBetween(cal2.getTime(), cal1.getTime());
+                            if(res<0){
+                                statisticDto.setOverdue(statisticDto.getOverdue()+1);
+                            }else{
+                                statisticDto.setProgressing(statisticDto.getProgressing()+1);
+                            }
+                        }else if(task.getStatus().equals(2)||task.getStatus().equals(3)||task.getStatus().equals(4)||task.getStatus().equals(6)){
+                            statisticDto.setFinished(statisticDto.getFinished()+1);
+                        }
+
+                        if(task.getType().equals(1)){
+                            statisticDto.setDev(statisticDto.getDev()+1);
+                        }else if(task.getType().equals(2)){
+                            statisticDto.setTest(statisticDto.getTest()+1);
+                        }else if(task.getType().equals(3)){
+                            statisticDto.setBug(statisticDto.getBug()+1);
+                        }
+                    }else{
+                        if (task.getType().equals(2)){
+                            if(task.getStatus().equals(1)){
+                                statisticDto.setTesting(statisticDto.getTesting()+1);
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+        return statisticDto;
+    }
+
+    @Override
+    public Integer getRole(String userId) {
+        QueryWrapper<ProjectUserRelation> projectUserRelationQueryWrapper=new QueryWrapper<>();
+        projectUserRelationQueryWrapper.lambda().eq(ProjectUserRelation::getUserId,userId);
+        ProjectUserRelation project = projectUserRelationDao.selectOne(projectUserRelationQueryWrapper);
+        return project.getRole();
+    }
 }

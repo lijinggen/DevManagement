@@ -7,7 +7,9 @@ public class StatisticDto {
     float progressing;
     float overdue;
     float testing;
-    float closed;
     float finished;
-    float online;
+
+    float dev;
+    float bug;
+    float test;
 }

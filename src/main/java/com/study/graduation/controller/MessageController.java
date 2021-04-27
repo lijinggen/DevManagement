@@ -5,7 +5,6 @@ import com.study.graduation.config.Result;
 import com.study.graduation.dto.MessageDto;
 import com.study.graduation.entity.Message;
 import com.study.graduation.service.MessageService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

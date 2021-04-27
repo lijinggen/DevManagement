@@ -170,9 +170,11 @@ public class ProjectController {
         return "redirect:index";
     }
 
-    @GetMapping("/statistic")
+    @PostMapping("/statistic")
     @ResponseBody
-    public Result<StatisticDto> getStatistic(){
-        return null;
+    public Result<StatisticDto> getStatistic(HttpServletRequest request){
+        String userId = (String)request.getSession().getAttribute("user_id");
+        StatisticDto statistic = projectService.statistic(userId);
+        return new Result<StatisticDto>(statistic);
     }
 }

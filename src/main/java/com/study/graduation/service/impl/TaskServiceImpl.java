@@ -1,6 +1,7 @@
 package com.study.graduation.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.study.graduation.dto.ListTaskReq;
 import com.study.graduation.entity.Task;
 import com.study.graduation.dao.TaskDao;
 import com.study.graduation.service.TaskService;
@@ -82,5 +83,18 @@ public class TaskServiceImpl implements TaskService {
         taskQueryWrapper.lambda().eq(Task::getProjectId,projectId);
         List<Task> tasks = taskDao.selectList(taskQueryWrapper);
         return tasks;
+    }
+
+    @Override
+    public List<Task> list(ListTaskReq listTaskReq) {
+        QueryWrapper<Task> taskQueryWrapper=new QueryWrapper<>();
+        taskQueryWrapper.lambda();
+        if(listTaskReq.getUserId()!=null&&listTaskReq.getUserId()!=""){
+            taskQueryWrapper.lambda().eq(Task::getUserId,listTaskReq.getUserId());
+        }
+        if(listTaskReq.getBatchNo()!=null&&listTaskReq.getBatchNo()!=""){
+            taskQueryWrapper.lambda().eq(Task::getBatchNo,listTaskReq.getBatchNo());
+        }
+        return taskDao.selectList(taskQueryWrapper);
     }
 }

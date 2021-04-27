@@ -1,5 +1,6 @@
 package com.study.graduation.service;
 
+import com.study.graduation.dto.ListTaskReq;
 import com.study.graduation.entity.Task;
 
 import java.util.List;
@@ -55,4 +56,6 @@ public interface TaskService {
      *
      */
     List<Task> listByProject(String projectId);
+
+    List<Task> list(ListTaskReq listTaskReq);
 }

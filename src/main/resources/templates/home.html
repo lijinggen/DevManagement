@@ -170,6 +170,19 @@
                 <div id="taskDistribute" style="width: 50%">
                 </div>
             </div>
+            <div style="display: flex;flex-direction: row;width: 100%;overflow-x: auto" th:if="${tabIndex eq 2}">
+                <div id="container" style="height: 290px; margin: 0 auto;">
+                </div>
+            </div>
+            <div style="display: flex;flex-direction: column;width: 100%;overflow-y: auto" th:if="${tabIndex eq 3}">
+                <p>111111111</p>
+            </div>
+            <div style="display: flex;flex-direction: row;width: 100%" th:if="${tabIndex eq 4}">
+                <p>111111111</p>
+            </div>
+            <div style="display: flex;flex-direction: row;width: 100%" th:if="${tabIndex eq 5}">
+                <p>111111111</p>
+            </div>
         </div>
     </div>
     <div style="display: flex;flex-direction: column; padding: 15px;width: 94%;margin: 0 auto;margin-top: -5px"
@@ -204,13 +217,16 @@
             plotShadow: false
         };
         var title = {
-            text: '我的任务'
+            text: '我的任务完成情况'
         };
+        var title2 = {
+            text: "我的任务分布"
+        }
         var tooltip = {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
         };
-        var credits={
-            enabled:false
+        var credits = {
+            enabled: false
         }
         var plotOptions = {
             pie: {
@@ -231,31 +247,104 @@
             data: [
                 ['进行中', 20],
                 ['超期', 20],
-                ['测试中',20],
-                ['已关闭', 10],
-                ['已完成', 20],
-                ['已上线', 10]
+                ['测试中', 20],
+                ['已完成', 10],
             ]
         }];
-
+        var series2 = [{
+            type: 'pie',
+            name: 'Browser share',
+            data: [
+                ['开发', 20],
+                ['测试', 20],
+                ['bug', 20],
+            ]
+        }];
         var json = {};
         json.chart = chart;
         json.title = title;
         json.tooltip = tooltip;
         json.series = series;
         json.plotOptions = plotOptions;
-        json.credits=credits;
-
+        json.credits = credits;
+        var json2 = {};
+        json2.chart = chart;
+        json2.title = title2;
+        json2.tooltip = tooltip;
+        json2.series = series2;
+        json2.plotOptions = plotOptions;
+        json2.credits = credits;
         $.ajax({
             url: "http://localhost:8080/project/statistic",
             dataType: "json",
-            type: "get",
+            type: "post",
+            async: true,
             success: function (res) {
-
+                console.log(res)
+                series[0].data[0] = ["进行中", res.data.progressing];
+                series[0].data[1] = ["超期", res.data.overdue];
+                series[0].data[2] = ["测试中", res.data.testing];
+                series[0].data[3] = ["已完成", res.data.finished];
+                series2[0].data[0] = ["开发", res.data.dev];
+                series2[0].data[1] = ["测试", res.data.test];
+                series2[0].data[2] = ["bug", res.data.bug];
+                $('#myProgress').highcharts(json);
+                $('#taskDistribute').highcharts(json2);
             },
         })
-        $('#myProgress').highcharts(json);
-        $('#taskDistribute').highcharts(json);
+        //--------------------------------------
+        var chart3 = {
+            type: 'column'
+        };
+        var title3 = {
+            text: '需求完成情况'
+        };
+        var xAxis = {
+            categories: ['支付中心', "项目中心", "房源中心"],
+            crosshair: true
+        };
+        var yAxis = {
+            min: 0,
+            title: {
+                text: '数量'
+            }
+        };
+        var tooltip3 = {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} %</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        };
+        var plotOptions = {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        };
+        var credits3 = {
+            enabled: false
+        };
+
+        var series3 = [{
+            name: '已完成',
+            data: [12, 2, 3]
+        },{
+            name: '未完成',
+            data: [4, 5, 10]
+        }]
+
+        var json3 = {};
+        json3.chart = chart3;
+        json3.title = title3;
+        json3.tooltip = tooltip3;
+        json3.xAxis = xAxis;
+        json3.yAxis = yAxis;
+        json3.series = series3;
+        json3.plotOptions = plotOptions;
+        json3.credits = credits3;
+        $('#container').highcharts(json3);
     });
 </script>
 </html>
