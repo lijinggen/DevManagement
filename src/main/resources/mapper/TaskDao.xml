@@ -99,9 +99,9 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into dev_management.task(batch_no, user_id, project_id, title, type, status, priority, begin_time,
+        insert into dev_management.task(id, batch_no, user_id, project_id, title, type, status, priority, begin_time,
                                         end_time, create_time, modify_time)
-        values (#{batchNo}, #{userId}, #{projectId}, #{title}, #{type}, #{status}, #{priority}, #{beginTime},
+        values (#{id}, #{batchNo}, #{userId}, #{projectId}, #{title}, #{type}, #{status}, #{priority}, #{beginTime},
                 #{endTime}, #{createTime}, #{modifyTime})
     </insert>
 

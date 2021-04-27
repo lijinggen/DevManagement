@@ -1,10 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>项目管理</title>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.min.css}"
+          href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"/>
+    <link rel="icon" href="http://localhost:8080/image/logo.svg" type="image/x-icon">
+
+    <script src="webjars/jquery/3.0.0/jquery.min.js"
+            th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/container.css}"
+          href="../../css/container.css"/>
+    <script src="webjars/bootstrap/4.0.0/js/bootstrap.js"
+            th:src="@{/webjars/bootstrap/4.0.0/js/bootstrap.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/document.css}"
+          href="../css/document.css"/>
+
+    <link rel="stylesheet" th:href="@{/css/project.css}"
+          href="../css/project.css"/>
 </head>
 <body>
-
+<div>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background:#545C64 ;padding: 0px;">
+        <a href="#" class="navbar-brand"
+           style="display: flex;flex-direction: row;align-items: center">
+            <svg t="1617175126380" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                 p-id="1055" width="35px" height="35px">
+                <path d="M813.607846 477.139349c0 154.326113-125.064842 279.463205-279.390955 279.463205S254.753687 631.465462 254.753687 477.139349c0-120.729838 76.512806-223.469414 183.731884-262.556692 29.839272-10.909758 62.135046-16.834262 95.73132-16.834262 99.705073 0 187.199887 52.164538 236.618924 130.772596a277.917054 277.917054 0 0 1 42.772031 148.618358z"
+                      fill="#FDBA13" p-id="1056"></path>
+                <path d="M349.762506 248.106682c-20.374515 10.693008-11.126508 40.026529-25.432018 98.332322-27.88852 113.649333-92.263318 121.235589-90.601567 192.185141 0.50575 22.469766 30.561772 67.9873 90.601567 159.022366 34.174275 51.875538 45.951034 64.591547 61.846045 65.169548 37.570028 1.300501 41.47153-67.192549 101.583574-100.499824 66.325549-36.703027 111.265081 18.929514 174.483878-14.37776 36.486277-19.218514 35.041276-44.795033 99.416073-174.483878 60.979045-122.89734 85.616313-146.884358 72.900303-164.585621-30.417272-42.338531-179.107881 83.737811-326.931489 26.51577C425.336062 303.450222 383.720031 230.260919 349.762506 248.106682z"
+                      fill="#E65125" p-id="1057"></path>
+                <path d="M536.384393 474.538348m-170.076625 0a170.076625 170.076625 0 1 0 340.153249 0 170.076625 170.076625 0 1 0-340.153249 0Z"
+                      p-id="1058"></path>
+            </svg>
+            <span style="margin-left:5px;font-size: 14px; color: white">DEV-MANAGEMENT</span>
+        </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 50px; font-size: 12px;">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active" id="home">
+                    <a class="nav-link text-white" href="/home/index">工作台</a>
+                </li>
+                <li class="nav-item" id="doc">
+                    <a class="nav-link text-white" href="/doc/document">文档</a>
+                </li>
+                <li class="nav-item" id="project" >
+                    <a class="nav-link text-white" href="/project/index">项目</a>
+                </li>
+                <li class="nav-item" id="msg" style="background:#8f8f8f;border-radius: 2px;height: 16px">
+                    <a class="nav-link text-white" href="/message/index">消息</a>
+                </li>
+                <li class="nav-item" id="setting">
+                    <a class="nav-link text-white" href="/human/index">人员管理</a>
+                </li>
+            </ul>
+        </div>
+        <ul class="nav navbar-nav navbar-right "
+            style="margin-right: 30px;display: flex;flex-direction: row;align-items: center">
+            <li class="nav-item dropdown" style="display: flex;flex-direction: row" id="myself">
+                <a class="dropdown-toggle nav-link" id="navbarScrollingDropdown" role="button" data-toggle="dropdown"
+                   aria-expanded="false">
+                    <span th:text="${session.username}"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown" style="width: 30px;padding: 0">
+                    <li><a class="dropdown-item" href="/logout" style="font-size: 14px">退出</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div>
+        <ul>
+            <li th:each="message_list"></li>
+        </ul>
+    </div>
+</div>
 </body>
 </html>
+
+<script>
+
+</script>

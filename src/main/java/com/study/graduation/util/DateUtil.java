@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class DateUtil {
     public static Date prase(String time) throws ParseException {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date parse = simpleDateFormat.parse(time);
         return parse;
     }

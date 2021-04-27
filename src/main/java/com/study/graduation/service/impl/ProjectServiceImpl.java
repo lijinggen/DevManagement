@@ -6,14 +6,12 @@ import com.study.graduation.dao.TaskDao;
 import com.study.graduation.dto.*;
 import com.study.graduation.entity.*;
 import com.study.graduation.dao.ProjectDao;
-import com.study.graduation.service.ProjectService;
-import com.study.graduation.service.ProjectUserRelationService;
-import com.study.graduation.service.TaskService;
-import com.study.graduation.service.UserService;
+import com.study.graduation.service.*;
 import com.study.graduation.util.DateUtil;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -48,10 +46,16 @@ public class ProjectServiceImpl implements ProjectService {
     private ProjectUserRelationService projectUserRelationService;
 
     @Resource
-    private TaskDao taskDao;
+    private DemandService demandService;
 
     @Resource
     private TaskService taskService;
+
+    @Resource
+    private TaskDao taskDao;
+
+    @Resource
+    private MessageService messageService;
 
     @Resource
     private UserService userService;
@@ -226,8 +230,9 @@ public class ProjectServiceImpl implements ProjectService {
             String []fileStringList=new String[fileList.length];
             int i=0;
             for (MultipartFile file : fileList) {
+                String uuid=UUID.randomUUID().toString();
                 byte[] bytes = file.getBytes();
-                Path path = Paths.get(uploadDir + file.getOriginalFilename());
+                Path path = Paths.get(uploadDir+uuid+"-" + file.getOriginalFilename());
                 Path resultPath = Files.write(path, bytes);
                 fileStringList[i]=resultPath.toString();
             }
@@ -241,6 +246,7 @@ public class ProjectServiceImpl implements ProjectService {
             demand.setCreateUserId(userId);
             demand.setFileList(Arrays.toString(fileStringList));
             task.setCreateTime(new Date());
+            task.setModifyTime(new Date());
             task.setProjectId(addDemandRequest.getProjectId());
             task.setId(UUID.randomUUID().toString());
             task.setBatchNo(UUID.randomUUID().toString());
@@ -250,12 +256,25 @@ public class ProjectServiceImpl implements ProjectService {
             task.setUserId(addDemandRequest.getUserId());
             task.setType(1);
             task.setStatus(1);
-            if(task.getPriority().equals("低")){
+            if(addDemandRequest.getPriority().equals("高")){
                 task.setPriority(1);
-            }else if(task.getPriority().equals("中")){
-
+            }else if(addDemandRequest.getPriority().equals("中")){
+                task.setPriority(2);
+            }else if(addDemandRequest.getPriority().equals("低")){
+                task.setPriority(3);
             }
-
+            Message message=new Message();
+            message.setId(UUID.randomUUID().toString());
+            message.setCreateTime(new Date());
+            message.setModifyTime(new Date());
+            message.setFromUser(userService.queryById(userId).getUserName());
+            message.setToUser(userService.queryById(addDemandRequest.getUserId()).getUserName());
+            message.setTitle(addDemandRequest.getTitle());
+            message.setIsRead(0);
+            message.setProject(projectDao.selectById(addDemandRequest.getProjectId()).getName());
+            messageService.insert(message);
+            demandService.insert(demand);
+            taskService.insert(task);
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
