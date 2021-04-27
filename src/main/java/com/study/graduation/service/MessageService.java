@@ -1,7 +1,9 @@
 package com.study.graduation.service;
 
+import com.study.graduation.dto.MessageDto;
 import com.study.graduation.entity.Message;
 
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -53,5 +55,7 @@ public interface MessageService {
      */
     boolean deleteById(String id);
 
-    public List<Message> queryAllByUserId(String userId);
+    public List<MessageDto> queryAllByUserId(String userId) throws ParseException;
+
+    public void read(String id);
 }

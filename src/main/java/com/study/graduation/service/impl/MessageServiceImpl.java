@@ -1,12 +1,16 @@
 package com.study.graduation.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.study.graduation.dto.MessageDto;
 import com.study.graduation.entity.Message;
 import com.study.graduation.dao.MessageDao;
 import com.study.graduation.service.MessageService;
+import com.study.graduation.util.DateUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -81,17 +85,36 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public List<Message> queryAllByUserId(String userId) {
+    public List<MessageDto> queryAllByUserId(String userId) throws ParseException {
         QueryWrapper<Message>messageQueryWrapper=new QueryWrapper<>();
         messageQueryWrapper.lambda().eq(Message::getToUserId,userId);
         List<Message> messages = messageDao.selectList(messageQueryWrapper);
-        Collections.sort(messages, new Comparator<Message>() {
+        List<MessageDto> messageDtos=new ArrayList<>();
+        for (Message message : messages) {
+            MessageDto messageDto=new MessageDto();
+            messageDto.setId(message.getId());
+            messageDto.setFromUser(message.getFromUser());
+            messageDto.setTitle(message.getTitle());
+            messageDto.setToUser(message.getToUser());
+            messageDto.setToUserId(message.getToUserId());
+            messageDto.setProject(message.getProject());
+            messageDto.setIsRead(message.getIsRead());
+            messageDto.setCreateTime(DateUtil.format(message.getCreateTime()));
+            messageDtos.add(messageDto);
+        }
+        Collections.sort(messageDtos, new Comparator<MessageDto>() {
             @Override
-            public int compare(Message o1, Message o2) {
+            public int compare(MessageDto o1, MessageDto o2) {
                 return o2.getCreateTime().compareTo(o1.getCreateTime());
             }
         });
-        return messages;
+        return messageDtos;
     }
 
+    @Override
+    public void read(String id) {
+        Message message=messageDao.queryById(id);
+        message.setIsRead(1);
+        messageDao.update(message);
+    }
 }

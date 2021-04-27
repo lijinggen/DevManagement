@@ -169,4 +169,10 @@ public class ProjectController {
         model.addAttribute("success","success");
         return "redirect:index";
     }
+
+    @GetMapping("/statistic")
+    @ResponseBody
+    public Result<StatisticDto> getStatistic(){
+        return null;
+    }
 }

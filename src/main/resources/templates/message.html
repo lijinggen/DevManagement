@@ -68,9 +68,22 @@
             </li>
         </ul>
     </nav>
-    <div>
-        <ul>
-            <li th:each="message_list"></li>
+    <div style="margin: 0 auto;margin-top: 100px;padding: 10px;">
+        <ul class="" style="width: 100%">
+            <li class="border" style="padding:15px;display: flex;flex-direction: row;align-items: center;" th:each="item : ${message_list}">
+                <div style="width: 30px;display: flex;flex-direction: row;justify-content: center;align-items: center" >
+                    <div th:if="${item.isRead eq 0}" style="height: 10px;width: 10px;border-radius: 50%;background: rgb(220, 53, 69)">
+                    </div>
+                </div>
+                <span th:text="${item.fromUser}" style="background:rgb(23, 162, 184);color: white;border-radius: 5px;padding:5px;"></span>
+                <span style="margin-left: 10px;">分配了一个任务给您</span>
+                <span th:text="${item.title}" style="margin-left:10px;background:rgb(236, 253, 240);border-radius: 5px;padding:5px;"></span>
+                <span style="margin-left: 10px">于</span>
+                <span th:text="${item.project}+' '+${item.createTime}" style="margin-left:10px;background:rgb(227, 242, 253);border-radius: 5px;padding:5px;"></span>
+                <div style="margin-left: auto;margin-right: 10px" th:if="${item.isRead eq 0}">
+                    <button class="btn btn-sm btn-success" th:onclick="read([[${item.id}]])">已读</button>
+                </div>
+            </li>
         </ul>
     </div>
 </div>
@@ -78,5 +91,17 @@
 </html>
 
 <script>
-
+    function read(id){
+        $.ajax({
+            url: "http://localhost:8080/message/read?id="+id,
+            dataType: "json",
+            type: "get",
+            success: function (res) {
+                if (res.data==false){
+                }else{
+                    window.location.reload();
+                }
+            },
+        })
+    }
 </script>

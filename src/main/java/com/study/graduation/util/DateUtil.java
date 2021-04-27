@@ -10,4 +10,9 @@ public class DateUtil {
         Date parse = simpleDateFormat.parse(time);
         return parse;
     }
+
+    public static String format(Date time) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        return simpleDateFormat.format(time);
+    }
 }

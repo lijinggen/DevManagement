@@ -229,19 +229,12 @@
             type: 'pie',
             name: 'Browser share',
             data: [
-                {
-                    name: 'Chrome',
-                    y: 12.8,
-                    sliced: true,
-                    selected: true,
-
-                },
-                ['进行中', 45.0],
-                ['超期', 16.8],
-                ['测试中',10.0],
-                ['已关闭', 8.5],
-                ['已完成', 6.2],
-                ['已上线', 0.7]
+                ['进行中', 20],
+                ['超期', 20],
+                ['测试中',20],
+                ['已关闭', 10],
+                ['已完成', 20],
+                ['已上线', 10]
             ]
         }];
 
@@ -252,6 +245,15 @@
         json.series = series;
         json.plotOptions = plotOptions;
         json.credits=credits;
+
+        $.ajax({
+            url: "http://localhost:8080/project/statistic",
+            dataType: "json",
+            type: "get",
+            success: function (res) {
+
+            },
+        })
         $('#myProgress').highcharts(json);
         $('#taskDistribute').highcharts(json);
     });

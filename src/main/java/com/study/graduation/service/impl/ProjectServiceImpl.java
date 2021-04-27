@@ -270,6 +270,7 @@ public class ProjectServiceImpl implements ProjectService {
             message.setFromUser(userService.queryById(userId).getUserName());
             message.setToUser(userService.queryById(addDemandRequest.getUserId()).getUserName());
             message.setTitle(addDemandRequest.getTitle());
+            message.setToUserId(addDemandRequest.getUserId());
             message.setIsRead(0);
             message.setProject(projectDao.selectById(addDemandRequest.getProjectId()).getName());
             messageService.insert(message);

@@ -1,12 +1,18 @@
 package com.study.graduation.controller;
 
+import com.baomidou.mybatisplus.extension.api.R;
+import com.study.graduation.config.Result;
+import com.study.graduation.dto.MessageDto;
 import com.study.graduation.entity.Message;
 import com.study.graduation.service.MessageService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -36,10 +42,17 @@ public class MessageController {
     }
 
     @RequestMapping("/index")
-    public String index(Model model){
-        List<Message> messages = messageService.queryAllByUserId();
-
+    public String index(Model model, HttpServletRequest request) throws ParseException {
+        String userId = (String)request.getSession().getAttribute("user_id");
+        List<MessageDto> messages = messageService.queryAllByUserId(userId);
         model.addAttribute("message_list",messages);
         return "message";
+    }
+
+    @GetMapping("/read")
+    @ResponseBody
+    public Result<String> read(String id){
+        messageService.read(id);
+        return new Result(true);
     }
 }
