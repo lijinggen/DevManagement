@@ -21,6 +21,9 @@ public class Demand implements Serializable {
     private String fileList;
 
     private String createUserId;
+
+    private String taskId;
+
     /**
      * 创建时间
      */
@@ -87,4 +90,11 @@ public class Demand implements Serializable {
         this.modifyTime = modifyTime;
     }
 
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
 }

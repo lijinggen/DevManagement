@@ -69,8 +69,8 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into dev_management.demand(id, title, detail, file_list, create_user_id, create_time, modify_time)
-        values (#{id}, #{title}, #{detail}, #{fileList}, #{createUserId}, #{createTime}, #{modifyTime})
+        insert into dev_management.demand(id, title, detail, file_list, create_user_id, create_time, modify_time, task_id)
+        values (#{id}, #{title}, #{detail}, #{fileList}, #{createUserId}, #{createTime}, #{modifyTime}, #{taskId})
     </insert>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">

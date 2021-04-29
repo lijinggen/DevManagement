@@ -41,6 +41,9 @@ public class Task implements Serializable {
      * 任务预期完成时间
      */
     private Date endTime;
+
+    private String createUser;
+
     /**
      * 创建时间
      */
@@ -147,4 +150,11 @@ public class Task implements Serializable {
         this.modifyTime = modifyTime;
     }
 
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
 }

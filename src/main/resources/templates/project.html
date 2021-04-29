@@ -155,6 +155,12 @@
                         <li class="nav-item"><a class="nav-link"
                                                 th:href="@{'http://localhost:8080/project/index?id='+${project_id}+'&status=4'}"
                                                 th:style="${status==4}? 'color: #eaa209':'' ">已关闭</a></li>
+                        <li class="nav-item"><a class="nav-link"
+                                                th:href="@{'http://localhost:8080/project/index?id='+${project_id}+'&status=5'}"
+                                                th:style="${status==5}? 'color: #eaa209':'' ">开发修复中</a></li>
+                        <li class="nav-item"><a class="nav-link"
+                                                th:href="@{'http://localhost:8080/project/index?id='+${project_id}+'&status=6'}"
+                                                th:style="${status==6}? 'color: #eaa209':'' ">待上线</a></li>
                     </ul>
                 </div>
             </nav>

@@ -169,9 +169,11 @@ public class ProjectServiceImpl implements ProjectService {
             taskDto.setId(task.getId());
             taskDto.setProjectId(task.getProjectId());
             taskDto.setUserId(task.getUserId());
-            taskDto.setEndTime(endTime);
-            if(res<0){
-                taskDto.setOutOfTime("超期");
+            if(task.getStatus().equals(1)||task.getStatus().equals(5)){
+                taskDto.setEndTime(endTime);
+                if(res<0){
+                    taskDto.setOutOfTime("超期");
+                }
             }
             taskDto.setTitle(task.getTitle());
             taskDto.setStatus(task.getStatus());
@@ -256,6 +258,8 @@ public class ProjectServiceImpl implements ProjectService {
             task.setUserId(addDemandRequest.getUserId());
             task.setType(1);
             task.setStatus(1);
+            task.setCreateUser(userId);
+            demand.setTaskId(task.getId());
             if(addDemandRequest.getPriority().equals("高")){
                 task.setPriority(1);
             }else if(addDemandRequest.getPriority().equals("中")){
