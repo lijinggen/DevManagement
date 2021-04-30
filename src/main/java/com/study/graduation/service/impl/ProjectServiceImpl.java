@@ -286,7 +286,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public StatisticDto statistic(String userId) {
+    public StatisticDto statistic(String userId) throws ParseException {
         ListTaskReq listTaskReq=new ListTaskReq();
         listTaskReq.setUserId(userId);
         List<Task> list = taskService.list(listTaskReq);
@@ -337,6 +337,7 @@ public class ProjectServiceImpl implements ProjectService {
                 }
             }
         }
+        statisticDto.setICreate(taskService.getICreate(userId));
         return statisticDto;
     }
 

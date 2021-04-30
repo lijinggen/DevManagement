@@ -12,4 +12,6 @@ public class StatisticDto {
     float dev;
     float bug;
     float test;
+
+    int iCreate;
 }

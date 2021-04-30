@@ -72,7 +72,7 @@ public interface ProjectService {
 
     void addDemand(AddDemandRequest addDemandRequest, MultipartFile []fileList,String userId);
 
-    StatisticDto statistic(String userId);
+    StatisticDto statistic(String userId) throws ParseException;
 
     Integer getRole(String userId);
 }

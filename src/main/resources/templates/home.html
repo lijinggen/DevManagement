@@ -34,7 +34,7 @@
         </a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 50px; font-size: 12px;">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item" id="home" style="background:#8f8f8f;border-radius: 2px;height: 16px"   >
+                <li class="nav-item" id="home" style="background:#8f8f8f;border-radius: 2px;height: 16px">
                     <a class="nav-link text-white" style="color: white" href="/home/index">工作台</a>
                 </li>
                 <li class="nav-item" id="doc">
@@ -117,7 +117,8 @@
                                   fill="#545C64" p-id="2965"></path>
                         </svg>
                         我的待办</a>
-                    <span class="badge rounded-pill" style="background-color: #FFD04B;color: #545C64" id="stayDoing"></span>
+                    <span class="badge rounded-pill" style="background-color: #FFD04B;color: #545C64"
+                          id="stayDoing"></span>
                 </li>
                 <li class="list-group-item nav-item d-flex justify-content-between align-items-center btn-outline-warning"
                     style="border-color: #545C64;padding: 8px"
@@ -142,7 +143,8 @@
                                   p-id="5648" fill="#545C64"></path>
                         </svg>
                         我的已办</a>
-                    <span class="badge rounded-pill" style="background-color: #FFD04B;color: #545C64" id="haveDone"></span>
+                    <span class="badge rounded-pill" style="background-color: #FFD04B;color: #545C64"
+                          id="haveDone"></span>
                 </li>
                 <li class="list-group-item nav-item d-flex justify-content-between align-items-center btn-outline-warning"
                     style="border-color: #545C64;padding: 8px"
@@ -156,7 +158,8 @@
                                   p-id="5825" fill="#545C64"></path>
                         </svg>
                         我创建的</a>
-                    <span class="badge rounded-pill" style="background-color: #FFD04B;color: #545C64" id="iCreate" th:text="${iCreate}"></span>
+                    <span class="badge rounded-pill" style="background-color: #FFD04B;color: #545C64"
+                          id="iCreate"></span>
                 </li>
             </ul>
         </div>
@@ -175,10 +178,10 @@
             <div style="display: flex;flex-direction: column;width: 100%;overflow-y: auto" th:if="${tabIndex eq 3}">
                 <ul class="list-group">
                     <li th:each="item:${task_list}" class="list-group-item"
-                            style="display: flex;flex-direction: row;align-items: center">
-                        <div th:text="${item.title}" >
+                        style="display: flex;flex-direction: row;align-items: center">
+                        <div th:text="${item.title}">
                         </div>
-                        <div style="margin-left: auto;margin-right: 10px;display: flex;flex-direction: row;align-items: center" >
+                        <div style="margin-left: auto;margin-right: 10px;display: flex;flex-direction: row;align-items: center">
                             <span>结束时间：</span>
                             <span th:text="${item.priority}"></span>
                             <span th:text="${item.endTime}"></span>
@@ -193,9 +196,9 @@
                 <ul class="list-group">
                     <li th:each="item:${task_list}" class="list-group-item"
                         style="display: flex;flex-direction: row;align-items: center">
-                        <div th:text="${item.title}" >
+                        <div th:text="${item.title}">
                         </div>
-                        <div style="margin-left: auto;margin-right: 10px;display: flex;flex-direction: row;align-items: center" >
+                        <div style="margin-left: auto;margin-right: 10px;display: flex;flex-direction: row;align-items: center">
                             <span>结束时间：</span>
                             <span th:text="${item.priority}"></span>
                             <span th:text="${item.endTime}"></span>
@@ -210,9 +213,9 @@
                 <ul class="list-group">
                     <li th:each="item:${task_list}" class="list-group-item"
                         style="display: flex;flex-direction: row;align-items: center">
-                        <div th:text="${item.title}" >
+                        <div th:text="${item.title}">
                         </div>
-                        <div style="margin-left: auto;margin-right: 10px;display: flex;flex-direction: row;align-items: center" >
+                        <div style="margin-left: auto;margin-right: 10px;display: flex;flex-direction: row;align-items: center">
                             <span>结束时间：</span>
                             <span th:text="${item.priority}"></span>
                             <span th:text="${item.endTime}"></span>
@@ -232,115 +235,31 @@
         </div>
         <div style="display: flex;flex-direction: row;overflow-x: auto;width: 95%">
             <div style="margin-right: 10px">
-                <div class="card" >
-                    <img th:src="@{/image/pro.svg}" class="card-img-top" alt="..." style="width: 13rem;height: 13rem">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div style="margin-right: 10px">
-                <div class="card" >
-                    <img th:src="@{/image/pro.svg}" class="card-img-top" alt="..." style="width: 13rem;height: 13rem">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div style="margin-right: 10px">
-                <div class="card" >
-                    <img th:src="@{/image/pro.svg}" class="card-img-top" alt="..." style="width: 13rem;height: 13rem">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div style="margin-right: 10px">
-                <div class="card" >
-                    <img th:src="@{/image/pro.svg}" class="card-img-top" alt="..." style="width: 13rem;height: 13rem">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div style="margin-right: 10px">
-                <div class="card" >
-                    <img th:src="@{/image/pro.svg}" class="card-img-top" alt="..." style="width: 13rem;height: 13rem">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div style="margin-right: 10px">
-                <div class="card" >
-                    <img th:src="@{/image/pro.svg}" class="card-img-top" alt="..." style="width: 13rem;height: 13rem">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div style="margin-right: 10px">
-                <div class="card" >
-                    <img th:src="@{/image/pro.svg}" class="card-img-top" alt="..." style="width: 13rem;height: 13rem">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div style="margin-right: 10px">
-                <div class="card" >
-                    <img th:src="@{/image/pro.svg}" class="card-img-top" alt="..." style="width: 13rem;height: 13rem">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div style="margin-right: 10px">
-                <div class="card" >
-                    <img th:src="@{/image/pro.svg}" class="card-img-top" alt="..." style="width: 13rem;height: 13rem">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div style="margin-right: 10px">
-                <div class="card" >
-                    <img th:src="@{/image/pro.svg}" class="card-img-top" alt="..." style="width: 13rem;height: 13rem">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div style="margin-right: 10px">
-                <div class="card" >
-                    <img th:src="@{/image/pro.svg}" class="card-img-top" alt="..." style="width: 13rem;height: 13rem">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div style="margin-right: 10px">
-                <div class="card" >
-                    <img th:src="@{/image/pro.svg}" class="card-img-top" alt="..." style="width: 13rem;height: 13rem">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                <div class="card" style="width: 13rem; display: flex;">
+                    <img th:src="@{/image/bg1.svg}" class="card-img-top" alt="..." style="width: 13rem;height: 13rem;margin: 0 auto">
+                    <div class="card-body" style="display: flex; flex-direction: column">
+                        <h5 class="card-title">支付中心</h5>
+                        <a href="#" class="stretched-link text-warning" style="margin-left: auto">
+                            跳转
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+<div class="footer" style="position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #f6f6f6;
+    color: black;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px">
+    <span style="height: 40px;line-height: 40px ">© 2021 Copyright: 李景根</span>
 </div>
 </body>
 <script>
@@ -358,7 +277,8 @@
         }
         var tooltip = {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        };
+        }
+
         var credits = {
             enabled: false
         }
@@ -425,7 +345,8 @@
                 $('#myProgress').highcharts(json);
                 $('#taskDistribute').highcharts(json2);
                 $('#haveDone').text(res.data.finished)
-                $('#stayDoing').text(res.data.progressing+res.data.overdue)
+                $('#stayDoing').text(res.data.progressing + res.data.overdue)
+                $('#iCreate').text(res.data.iCreate)
             },
         })
         //--------------------------------------
@@ -466,7 +387,7 @@
         var series3 = [{
             name: '已完成',
             data: [12, 2, 3]
-        },{
+        }, {
             name: '未完成',
             data: [4, 5, 10]
         }]

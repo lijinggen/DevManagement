@@ -2,12 +2,16 @@ package com.study.graduation.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.study.graduation.dto.ListTaskReq;
+import com.study.graduation.dto.TaskDto;
 import com.study.graduation.entity.Task;
 import com.study.graduation.dao.TaskDao;
 import com.study.graduation.service.TaskService;
+import com.study.graduation.util.DateUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -96,5 +100,23 @@ public class TaskServiceImpl implements TaskService {
             taskQueryWrapper.lambda().eq(Task::getBatchNo,listTaskReq.getBatchNo());
         }
         return taskDao.selectList(taskQueryWrapper);
+    }
+
+    @Override
+    public int getICreate(String userId) throws ParseException {
+        ListTaskReq listTaskReq=new ListTaskReq();
+        listTaskReq.setUserId(userId);
+        List<Task> list = list(listTaskReq);
+        List<TaskDto> res=new ArrayList<>();
+        for (Task task : list) {
+            if(task.getCreateUser().equals(userId)){
+                TaskDto taskDto=new TaskDto();
+                taskDto.setEndTime(DateUtil.format(task.getEndTime()));
+                taskDto.setTitle(task.getTitle());
+                taskDto.setId(task.getId());
+                res.add(taskDto);
+            }
+        }
+        return res.size();
     }
 }

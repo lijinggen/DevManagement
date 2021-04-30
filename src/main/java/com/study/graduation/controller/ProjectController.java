@@ -172,9 +172,9 @@ public class ProjectController {
 
     @PostMapping("/statistic")
     @ResponseBody
-    public Result<StatisticDto> getStatistic(HttpServletRequest request){
+    public Result<StatisticDto> getStatistic(HttpServletRequest request) throws ParseException {
         String userId = (String)request.getSession().getAttribute("user_id");
         StatisticDto statistic = projectService.statistic(userId);
-        return new Result<StatisticDto>(statistic);
+        return new Result<>(statistic);
     }
 }
