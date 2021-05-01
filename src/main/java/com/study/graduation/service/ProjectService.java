@@ -74,5 +74,9 @@ public interface ProjectService {
 
     StatisticDto statistic(String userId) throws ParseException;
 
+    StatisticDto statisticProjectProgress(String userId);
+
     Integer getRole(String userId);
+
+    List<DemandDetailDto> listDemandDetail(String projectId) throws ParseException;
 }

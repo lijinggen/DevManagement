@@ -105,7 +105,6 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public int getICreate(String userId) throws ParseException {
         ListTaskReq listTaskReq=new ListTaskReq();
-        listTaskReq.setUserId(userId);
         List<Task> list = list(listTaskReq);
         List<TaskDto> res=new ArrayList<>();
         for (Task task : list) {

@@ -1,6 +1,7 @@
 package com.study.graduation.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.study.graduation.dao.DemandDao;
 import com.study.graduation.dao.ProjectUserRelationDao;
 import com.study.graduation.dao.TaskDao;
 import com.study.graduation.dto.*;
@@ -60,13 +61,23 @@ public class ProjectServiceImpl implements ProjectService {
     @Resource
     private UserService userService;
 
+    @Resource
+    private DemandDao demandDao;
+
+    @Resource
+    private ProjectService projectService;
+
     @Value("${customFile}")
     public String uploadDir;
 
-    private static String[] taskType={"需求","测试","bug"};
+    private static String[] taskType = {"需求", "测试", "bug"};
 
-    private static String[] borderColor={"border-left: 4px solid #DC3545;","border-left: 4px solid #FFC107;",
-                                        "border-left: 4px solid #28A745;","border-left: 4px solid #6C7586;"};
+    private static String[] borderColor = {"border-left: 4px solid #DC3545;", "border-left: 4px solid #FFC107;",
+            "border-left: 4px solid #28A745;", "border-left: 4px solid #6C7586;"};
+
+    private static String status[] = {"进行中", "已完成", "已上线", "已关闭", "开发修复中", "待上线"};
+
+    private static String priority[] = {"low", "middle", "high"};
 
     /**
      * 通过ID查询单条数据
@@ -128,50 +139,50 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<Project> list(ListProjectReq req) {
-        QueryWrapper<ProjectUserRelation> queryWrapper=new QueryWrapper();
+        QueryWrapper<ProjectUserRelation> queryWrapper = new QueryWrapper();
         List<Project> result = new ArrayList<>();
-        if(Strings.isNotEmpty(req.getUserId())){
-            queryWrapper.lambda().eq(ProjectUserRelation::getUserId,req.getUserId());
-            if(req.getRole()!=0){
-                queryWrapper.lambda().eq(ProjectUserRelation::getRole,req.getRole());
+        if (Strings.isNotEmpty(req.getUserId())) {
+            queryWrapper.lambda().eq(ProjectUserRelation::getUserId, req.getUserId());
+            if (req.getRole() != 0) {
+                queryWrapper.lambda().eq(ProjectUserRelation::getRole, req.getRole());
             }
             List<ProjectUserRelation> projectUserRelations = projectUserRelationDao.selectList(queryWrapper);
-            if(projectUserRelations!= null){
-                QueryWrapper<Project> projectQueryWrapper=new QueryWrapper<>();
-                List<String> ids=projectUserRelations.stream().map(ProjectUserRelation::getProjectId).collect(Collectors.toList());
-                projectQueryWrapper.lambda().in(Project::getId,ids);
+            if (projectUserRelations != null) {
+                QueryWrapper<Project> projectQueryWrapper = new QueryWrapper<>();
+                List<String> ids = projectUserRelations.stream().map(ProjectUserRelation::getProjectId).collect(Collectors.toList());
+                projectQueryWrapper.lambda().in(Project::getId, ids);
                 List<Project> projects = projectDao.selectList(projectQueryWrapper);
                 return projects;
-            }else{
+            } else {
                 return result;
             }
-        }else{
+        } else {
             return null;
         }
     }
 
-    public int hoursBetween(Date d1, Date d2){
-        return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60));
+    public int hoursBetween(Date d1, Date d2) {
+        return (int) ((d2.getTime() - d1.getTime()) / (1000 * 60 * 60));
     }
 
     @Override
-    public List<TaskUserDto> listTask(String projectId,String status) throws ParseException {
+    public List<TaskUserDto> listTask(String projectId, String status) throws ParseException {
         List<Task> taskList = taskService.listByProject(projectId);
-        Map<String,List<TaskDto>> resultMap=new HashMap<>();
+        Map<String, List<TaskDto>> resultMap = new HashMap<>();
         for (Task task : taskList) {
             Calendar cal1 = new GregorianCalendar();
             Calendar cal2 = new GregorianCalendar();
             cal1.setTime(task.getEndTime());
             cal2.setTime(new Date());
             int res = hoursBetween(cal2.getTime(), cal1.getTime());
-            String endTime = res / 24 + "d" + res % 24 + "h";
+            String endTime = res / 24 + "天" + res % 24 + "小时";
             TaskDto taskDto = new TaskDto();
             taskDto.setId(task.getId());
             taskDto.setProjectId(task.getProjectId());
             taskDto.setUserId(task.getUserId());
-            if(task.getStatus().equals(1)||task.getStatus().equals(5)){
+            if (task.getStatus().equals(1) || task.getStatus().equals(5)) {
                 taskDto.setEndTime(endTime);
-                if(res<0){
+                if (res < 0) {
                     taskDto.setOutOfTime("超期");
                 }
             }
@@ -179,40 +190,40 @@ public class ProjectServiceImpl implements ProjectService {
             taskDto.setStatus(task.getStatus());
             taskDto.setType(taskType[task.getType() - 1]);
             taskDto.setPriority(task.getPriority());
-            taskDto.setBorder((borderColor[task.getPriority()-1]));
-            if(task.getStatus().equals(4)){
-                taskDto.setBorder(borderColor[borderColor.length-1]);
+            taskDto.setBorder((borderColor[task.getPriority() - 1]));
+            if (task.getStatus().equals(4)) {
+                taskDto.setBorder(borderColor[borderColor.length - 1]);
             }
-            if(Strings.isNotEmpty(status)&&!status.equals("0")){
-                if(task.getStatus()==Integer.parseInt(status)){
-                    if(resultMap.get(task.getUserId())==null){
-                        List<TaskDto> taskDtoList=new ArrayList<>();
+            if (Strings.isNotEmpty(status) && !status.equals("0")) {
+                if (task.getStatus() == Integer.parseInt(status)) {
+                    if (resultMap.get(task.getUserId()) == null) {
+                        List<TaskDto> taskDtoList = new ArrayList<>();
                         taskDtoList.add(taskDto);
-                        resultMap.put(task.getUserId(),taskDtoList);
-                    }else{
+                        resultMap.put(task.getUserId(), taskDtoList);
+                    } else {
                         resultMap.get(task.getUserId()).add(taskDto);
                     }
                 }
-            }else{
-                if(resultMap.get(task.getUserId())==null){
-                    List<TaskDto> taskDtoList=new ArrayList<>();
+            } else {
+                if (resultMap.get(task.getUserId()) == null) {
+                    List<TaskDto> taskDtoList = new ArrayList<>();
                     taskDtoList.add(taskDto);
-                    resultMap.put(task.getUserId(),taskDtoList);
-                }else{
+                    resultMap.put(task.getUserId(), taskDtoList);
+                } else {
                     resultMap.get(task.getUserId()).add(taskDto);
                 }
             }
         }
-        List<TaskUserDto> list=new ArrayList<>();
-        for (Map.Entry<String,List<TaskDto>> entry : resultMap.entrySet()){
-            TaskUserDto taskUserDto=new TaskUserDto();
+        List<TaskUserDto> list = new ArrayList<>();
+        for (Map.Entry<String, List<TaskDto>> entry : resultMap.entrySet()) {
+            TaskUserDto taskUserDto = new TaskUserDto();
             taskUserDto.setTaskDtoList(new ArrayList<>());
             taskUserDto.setUserId(entry.getKey());
             User user = userService.queryById(entry.getKey());
-            ProjectUserRelation projectUserRelation=projectUserRelationService.getByUserId(user.getId(),projectId);
+            ProjectUserRelation projectUserRelation = projectUserRelationService.getByUserId(user.getId(), projectId);
             taskUserDto.setUserName(user.getUserName());
             taskUserDto.setTaskDtoList(entry.getValue());
-            taskUserDto.setRole(RoleEnum.RoleName[projectUserRelation.getRole()-1]);
+            taskUserDto.setRole(RoleEnum.RoleName[projectUserRelation.getRole() - 1]);
             list.add(taskUserDto);
         }
         return list;
@@ -220,8 +231,8 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project getByName(String projectName) {
-        QueryWrapper<Project> projectQueryWrapper=new QueryWrapper<>();
-        projectQueryWrapper.lambda().eq(Project::getName,projectName);
+        QueryWrapper<Project> projectQueryWrapper = new QueryWrapper<>();
+        projectQueryWrapper.lambda().eq(Project::getName, projectName);
         Project project = projectDao.selectOne(projectQueryWrapper);
         return project;
     }
@@ -229,24 +240,32 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void addDemand(AddDemandRequest addDemandRequest, MultipartFile[] fileList, String userId) {
         try {
-            String []fileStringList=new String[fileList.length];
-            int i=0;
+            String[] fileStringList = new String[fileList.length];
+            String res = "";
+            int i = 0;
             for (MultipartFile file : fileList) {
-                String uuid=UUID.randomUUID().toString();
+                String uuid = UUID.randomUUID().toString();
                 byte[] bytes = file.getBytes();
-                Path path = Paths.get(uploadDir+uuid+"-" + file.getOriginalFilename());
+                Path path = Paths.get(uploadDir + uuid + "-" + file.getOriginalFilename());
                 Path resultPath = Files.write(path, bytes);
-                fileStringList[i]=resultPath.toString();
+                fileStringList[i] = resultPath.toString();
+                i++;
             }
-            Demand demand=new Demand();
-            Task task=new Task();
+            for (int i1 = 0; i1 < fileStringList.length; i1++) {
+                res += fileStringList[i];
+                if (i1 + 1 != fileStringList.length) {
+                    res += ",";
+                }
+            }
+            Demand demand = new Demand();
+            Task task = new Task();
             demand.setCreateTime(new Date());
             demand.setModifyTime(new Date());
             demand.setId(UUID.randomUUID().toString());
             demand.setDetail(addDemandRequest.getDetail());
             demand.setTitle(addDemandRequest.getTitle());
             demand.setCreateUserId(userId);
-            demand.setFileList(Arrays.toString(fileStringList));
+            demand.setFileList(res);
             task.setCreateTime(new Date());
             task.setModifyTime(new Date());
             task.setProjectId(addDemandRequest.getProjectId());
@@ -260,14 +279,14 @@ public class ProjectServiceImpl implements ProjectService {
             task.setStatus(1);
             task.setCreateUser(userId);
             demand.setTaskId(task.getId());
-            if(addDemandRequest.getPriority().equals("高")){
+            if (addDemandRequest.getPriority().equals("高")) {
                 task.setPriority(1);
-            }else if(addDemandRequest.getPriority().equals("中")){
+            } else if (addDemandRequest.getPriority().equals("中")) {
                 task.setPriority(2);
-            }else if(addDemandRequest.getPriority().equals("低")){
+            } else if (addDemandRequest.getPriority().equals("低")) {
                 task.setPriority(3);
             }
-            Message message=new Message();
+            Message message = new Message();
             message.setId(UUID.randomUUID().toString());
             message.setCreateTime(new Date());
             message.setModifyTime(new Date());
@@ -287,13 +306,13 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public StatisticDto statistic(String userId) throws ParseException {
-        ListTaskReq listTaskReq=new ListTaskReq();
+        ListTaskReq listTaskReq = new ListTaskReq();
         listTaskReq.setUserId(userId);
         List<Task> list = taskService.list(listTaskReq);
-        StatisticDto statisticDto=new StatisticDto();
+        StatisticDto statisticDto = new StatisticDto();
         listTaskReq.setUserId("");
-        Map<String,Task> map=new HashMap<>();
-        if(list!=null){
+        Map<String, Task> map = new HashMap<>();
+        if (list != null) {
             for (Task task : list) {
                 map.putIfAbsent(task.getBatchNo(), task);
             }
@@ -302,34 +321,34 @@ public class ProjectServiceImpl implements ProjectService {
                 // 根据批次获取到该需求的所有关联单
                 List<Task> list1 = taskService.list(listTaskReq);
                 for (Task task : list1) {
-                    if(task.getUserId().equals(userId)){
+                    if (task.getUserId().equals(userId)) {
                         //status 1. 进行中 2.已完成 3. 已上线 4. 已关闭 5.开发修复中 6. 待上线
-                        if(task.getStatus().equals(1)||task.getStatus().equals(5)){
+                        if (task.getStatus().equals(1) || task.getStatus().equals(5)) {
                             Calendar cal1 = new GregorianCalendar();
                             Calendar cal2 = new GregorianCalendar();
                             cal1.setTime(task.getEndTime());
                             cal2.setTime(new Date());
                             int res = hoursBetween(cal2.getTime(), cal1.getTime());
-                            if(res<0){
-                                statisticDto.setOverdue(statisticDto.getOverdue()+1);
-                            }else{
-                                statisticDto.setProgressing(statisticDto.getProgressing()+1);
+                            if (res < 0) {
+                                statisticDto.setOverdue(statisticDto.getOverdue() + 1);
+                            } else {
+                                statisticDto.setProgressing(statisticDto.getProgressing() + 1);
                             }
-                        }else if(task.getStatus().equals(2)||task.getStatus().equals(3)||task.getStatus().equals(4)||task.getStatus().equals(6)){
-                            statisticDto.setFinished(statisticDto.getFinished()+1);
+                        } else if (task.getStatus().equals(2) || task.getStatus().equals(3) || task.getStatus().equals(4) || task.getStatus().equals(6)) {
+                            statisticDto.setFinished(statisticDto.getFinished() + 1);
                         }
 
-                        if(task.getType().equals(1)){
-                            statisticDto.setDev(statisticDto.getDev()+1);
-                        }else if(task.getType().equals(2)){
-                            statisticDto.setTest(statisticDto.getTest()+1);
-                        }else if(task.getType().equals(3)){
-                            statisticDto.setBug(statisticDto.getBug()+1);
+                        if (task.getType().equals(1)) {
+                            statisticDto.setDev(statisticDto.getDev() + 1);
+                        } else if (task.getType().equals(2)) {
+                            statisticDto.setTest(statisticDto.getTest() + 1);
+                        } else if (task.getType().equals(3)) {
+                            statisticDto.setBug(statisticDto.getBug() + 1);
                         }
-                    }else{
-                        if (task.getType().equals(2)){
-                            if(task.getStatus().equals(1)){
-                                statisticDto.setTesting(statisticDto.getTesting()+1);
+                    } else {
+                        if (task.getType().equals(2)) {
+                            if (task.getStatus().equals(1)) {
+                                statisticDto.setTesting(statisticDto.getTesting() + 1);
                             }
                         }
                     }
@@ -338,14 +357,70 @@ public class ProjectServiceImpl implements ProjectService {
             }
         }
         statisticDto.setICreate(taskService.getICreate(userId));
+        StatisticDto statisticDto1 = statisticProjectProgress(userId);
+        statisticDto.setWeiWanCheng(statisticDto1.getWeiWanCheng());
+        statisticDto.setWanCheng(statisticDto1.getWanCheng());
+        statisticDto.setProject(statisticDto1.getProject());
+        return statisticDto;
+    }
+
+    @Override
+    public StatisticDto statisticProjectProgress(String userId) {
+        StatisticDto statisticDto = new StatisticDto();
+        QueryWrapper<ProjectUserRelation> projectUserRelationQueryWrapper = new QueryWrapper<>();
+        projectUserRelationQueryWrapper.lambda().eq(ProjectUserRelation::getUserId, userId);
+        List<ProjectUserRelation> projectUserRelations = projectUserRelationDao.selectList(projectUserRelationQueryWrapper);
+        statisticDto.setWanCheng(new int[projectUserRelations.size()]);
+        statisticDto.setWeiWanCheng(new int[projectUserRelations.size()]);
+        statisticDto.setProject(new String[projectUserRelations.size()]);
+        int i = 0;
+        for (int i1 = projectUserRelations.size() - 1; i1 >= 0; i1--) {
+            Project project = projectService.queryById(projectUserRelations.get(i1).getProjectId());
+            statisticDto.getProject()[i1] = project.getName();
+            List<Task> tasks = taskService.listByProject(project.getId());
+            for (Task task : tasks) {
+                if (task.getStatus().equals(1) || task.getStatus().equals(5)) {
+                    statisticDto.getWanCheng()[i1]++;
+                } else {
+                    statisticDto.getWeiWanCheng()[i1]++;
+                }
+            }
+        }
         return statisticDto;
     }
 
     @Override
     public Integer getRole(String userId) {
-        QueryWrapper<ProjectUserRelation> projectUserRelationQueryWrapper=new QueryWrapper<>();
-        projectUserRelationQueryWrapper.lambda().eq(ProjectUserRelation::getUserId,userId);
+        QueryWrapper<ProjectUserRelation> projectUserRelationQueryWrapper = new QueryWrapper<>();
+        projectUserRelationQueryWrapper.lambda().eq(ProjectUserRelation::getUserId, userId);
         ProjectUserRelation project = projectUserRelationDao.selectOne(projectUserRelationQueryWrapper);
         return project.getRole();
+    }
+
+    @Override
+    public List<DemandDetailDto> listDemandDetail(String projectId) throws ParseException {
+        List<Task> tasks = taskService.listByProject(projectId);
+        List<DemandDetailDto> list = new ArrayList<>();
+        for (Task task : tasks) {
+            QueryWrapper<Demand> demandQueryWrapper = new QueryWrapper<>();
+            demandQueryWrapper.lambda().eq(Demand::getTaskId, task.getId());
+            Demand demand = demandDao.selectOne(demandQueryWrapper);
+            DemandDetailDto demandDetailDto = new DemandDetailDto();
+            demandDetailDto.setId(task.getId());
+            demandDetailDto.setBatchNo(task.getBatchNo());
+            demandDetailDto.setBeginTime(DateUtil.format(task.getBeginTime()));
+            demandDetailDto.setEndTime(DateUtil.format(task.getEndTime()));
+            demandDetailDto.setStatus(status[task.getStatus()-1]);
+            demandDetailDto.setType(taskType[task.getType()-1]);
+            demandDetailDto.setPriority(priority[task.getPriority()-1]);
+            demandDetailDto.setTitle(task.getTitle());
+            demandDetailDto.setCreateUser(userService.queryById(task.getCreateUser()).getUserName());
+            demandDetailDto.setDetail(demand.getDetail());
+            String[] split = demand.getFileList().split(",");
+            demandDetailDto.setFileList(split);
+            demandDetailDto.setDemandId(demand.getId());
+            list.add(demandDetailDto);
+        }
+        return list;
     }
 }

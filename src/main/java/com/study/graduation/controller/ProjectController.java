@@ -125,6 +125,9 @@ public class ProjectController {
         }
         String format=String.format("%.2f",progress);
         model.addAttribute("progress",format);
+        //--------------------------------------------------------------------------详情页数据
+        List<DemandDetailDto> demandDetailDtos = projectService.listDemandDetail(id);
+        model.addAttribute("demand_detail_list",demandDetailDtos);
         return "project";
     }
 

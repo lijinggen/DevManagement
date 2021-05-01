@@ -14,4 +14,8 @@ public class StatisticDto {
     float test;
 
     int iCreate;
+
+    String project[];
+    int wanCheng[];
+    int weiWanCheng[];
 }

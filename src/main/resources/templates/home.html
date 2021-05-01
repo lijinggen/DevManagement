@@ -65,7 +65,7 @@
         </ul>
     </nav>
 </div>
-<div style="display: flex;flex-direction: column;height: 100%">
+<div style="padding-bottom: 60px;display: flex;flex-direction: column;height: 100%">
     <div style="display: flex;flex-direction: row;height: 400px;">
         <div style="display: flex;flex-direction: column;margin-top: 30px; padding-left: 20px;width: 300px">
             <ul class="list-group">
@@ -166,9 +166,9 @@
         <div style="height:300px;width:74%;margin-left: 20px;margin-top:60px;border-radius: 2px;
                 display: flex;flex-direction: row" class="border">
             <div style="display: flex;flex-direction: row;width: 100%" th:if="${tabIndex eq 1}">
-                <div id="myProgress" style="width: 50%">
+                <div id="myProgress" style="width: 50%;height: 90%">
                 </div>
-                <div id="taskDistribute" style="width: 50%">
+                <div id="taskDistribute" style="width: 50%;height: 90%">
                 </div>
             </div>
             <div style="display: flex;flex-direction: row;width: 100%;overflow-x: auto" th:if="${tabIndex eq 2}">
@@ -233,13 +233,13 @@
         <div style="margin-left: 10px">
             <h5>我的项目</h5>
         </div>
-        <div style="display: flex;flex-direction: row;overflow-x: auto;width: 95%">
-            <div style="margin-right: 10px">
-                <div class="card" style="width: 13rem; display: flex;">
-                    <img th:src="@{/image/bg1.svg}" class="card-img-top" alt="..." style="width: 13rem;height: 13rem;margin: 0 auto">
-                    <div class="card-body" style="display: flex; flex-direction: column">
-                        <h5 class="card-title">支付中心</h5>
-                        <a href="#" class="stretched-link text-warning" style="margin-left: auto">
+        <div style="display: flex;flex-direction: row;overflow-x: auto;width: 100%">
+            <div style="margin-right: 10px" th:each="item,idx : ${project_list}">
+                <div class="card" style="width: 13rem; display: flex;" >
+                    <img th:src="@{'/image/bg'+${(idx.index)%6+1}+'.svg'}" class="card-img-top" alt="..." style="width: 13rem;height: 13rem;margin: 0 auto">
+                    <div class="card-body" style="display: flex; flex-direction: column;background: #f6f6f6">
+                        <h5 class="card-title" th:text="${item.name}">支付中心</h5>
+                        <a th:href="@{'/project/index?id='+${item.id}}" class="stretched-link text-warning" style="margin-left: auto">
                             跳转
                         </a>
                     </div>
@@ -248,12 +248,12 @@
         </div>
     </div>
 </div>
-<div class="footer" style="position: fixed;
+<div class="footer" style="
     left: 0;
     bottom: 0;
     width: 100%;
     background-color: #f6f6f6;
-    color: black;
+    color: #808080;
     text-align: center;
     display: flex;
     align-items: center;
@@ -328,28 +328,7 @@
         json2.series = series2;
         json2.plotOptions = plotOptions;
         json2.credits = credits;
-        $.ajax({
-            url: "http://localhost:8080/project/statistic",
-            dataType: "json",
-            type: "post",
-            async: true,
-            success: function (res) {
-                console.log(res)
-                series[0].data[0] = ["进行中", res.data.progressing];
-                series[0].data[1] = ["超期", res.data.overdue];
-                series[0].data[2] = ["测试中", res.data.testing];
-                series[0].data[3] = ["已完成", res.data.finished];
-                series2[0].data[0] = ["开发", res.data.dev];
-                series2[0].data[1] = ["测试", res.data.test];
-                series2[0].data[2] = ["bug", res.data.bug];
-                $('#myProgress').highcharts(json);
-                $('#taskDistribute').highcharts(json2);
-                $('#haveDone').text(res.data.finished)
-                $('#stayDoing').text(res.data.progressing + res.data.overdue)
-                $('#iCreate').text(res.data.iCreate)
-            },
-        })
-        //--------------------------------------
+
         var chart3 = {
             type: 'column'
         };
@@ -357,7 +336,7 @@
             text: '需求完成情况'
         };
         var xAxis = {
-            categories: ['支付中心', "项目中心", "房源中心"],
+            categories: [],
             crosshair: true
         };
         var yAxis = {
@@ -367,9 +346,14 @@
             }
         };
         var tooltip3 = {
-            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} %</b></td></tr>',
+            formatter: function () {
+                var s = '<b>' + this.x + '</b>';
+                $.each(this.points, function () {
+                    s += '<br/>' + this.series.name + ': ' +
+                        this.y;
+                });
+                return s;
+            },
             footerFormat: '</table>',
             shared: true,
             useHTML: true
@@ -386,10 +370,10 @@
 
         var series3 = [{
             name: '已完成',
-            data: [12, 2, 3]
+            data: []
         }, {
             name: '未完成',
-            data: [4, 5, 10]
+            data: []
         }]
 
         var json3 = {};
@@ -401,7 +385,41 @@
         json3.series = series3;
         json3.plotOptions = plotOptions;
         json3.credits = credits3;
-        $('#container').highcharts(json3);
+
+        $.ajax({
+            url: "http://localhost:8080/project/statistic",
+            dataType: "json",
+            type: "post",
+            async: true,
+            success: function (res) {
+                console.log(res)
+                series[0].data[0] = ["进行中", res.data.progressing];
+                series[0].data[1] = ["超期", res.data.overdue];
+                series[0].data[2] = ["测试中", res.data.testing];
+                series[0].data[3] = ["已完成", res.data.finished];
+                series2[0].data[0] = ["开发", res.data.dev];
+                series2[0].data[1] = ["测试", res.data.test];
+                series2[0].data[2] = ["bug", res.data.bug];
+                xAxis.categories=new Array()
+                series3[0].data=new Array()
+                series3[1].data=new Array()
+                if(res.data.project.length>0){
+                    for (let i = 0; i < res.data.project.length; i++) {
+                        xAxis.categories.push(res.data.project[i])
+                        series3[0].data.push(res.data.wanCheng[i])
+                        series3[1].data.push(res.data.weiWanCheng[i])
+                        $('#container').highcharts(json3);
+                    }
+                }
+                $('#myProgress').highcharts(json);
+                $('#taskDistribute').highcharts(json2);
+                $('#haveDone').text(res.data.finished)
+                $('#stayDoing').text(res.data.progressing + res.data.overdue)
+                $('#iCreate').text(res.data.icreate)
+            },
+        })
+
+
     });
 </script>
 </html>

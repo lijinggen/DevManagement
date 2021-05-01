@@ -95,7 +95,8 @@
             </li>
             <li style=" margin-top:10px;display:flex;justify-content: center;align-items: center">
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#addProject">
+                <button type="button" class="btn btn-outline-warning btn-sm" data-toggle="modal"
+                        data-target="#addProject">
                     添加项目
                 </button>
             </li>
@@ -111,7 +112,8 @@
         <div style="width: 100%;padding: 10px;height: 45px;display: flex;flex-direction: row;
         background:rgb(52, 58, 64); align-items: center;color: white;"
              class="border-left border-top border-right">
-            <span style="padding:3px;font-size: 13px;color: white; border: #dddddd dashed 1px" th:text="'我的角色：'+${role_name}"></span>
+            <span style="padding:3px;font-size: 13px;color: white; border: #dddddd dashed 1px"
+                  th:text="'我的角色：'+${role_name}"></span>
             <span th:text="${project_name}" style="margin-left: auto;"></span>
             <div class="input-group" style="width: fit-content;margin-left: auto;">
                 <div class="input-group-sm">
@@ -129,7 +131,7 @@
         <div class="progress" style="border-radius: 0 !important">
             <div class="progress-bar bg-warning" role="progressbar" style=""
                  th:style="'width:'+${progress}+'%;border-radius: 0;'"
-                th:attr="aria-valuenow=${progress}" aria-valuemin="0" aria-valuemax="100" th:text="${progress}">
+                 th:attr="aria-valuenow=${progress}" aria-valuemin="0" aria-valuemax="100" th:text="${progress}">
             </div>
         </div>
         <div class="border-left border-right">
@@ -142,16 +144,16 @@
                     <ul class="navbar-nav">
                         <li class="nav-item"><a class="nav-link"
                                                 th:href="@{'http://localhost:8080/project/index?id='+${project_id}+'&status=0'}"
-                                                th:style="${status==0}? 'color: #eaa209':'' " >全部</a></li>
+                                                th:style="${status==0}? 'color: #eaa209':'' ">全部</a></li>
                         <li class="nav-item"><a class="nav-link"
                                                 th:href="@{'http://localhost:8080/project/index?id='+${project_id}+'&status=1'}"
-                                                th:style="${status==1}? 'color: #eaa209':'' " >进行中</a></li>
+                                                th:style="${status==1}? 'color: #eaa209':'' ">进行中</a></li>
                         <li class="nav-item"><a class="nav-link"
                                                 th:href="@{'http://localhost:8080/project/index?id='+${project_id}+'&status=2'}"
-                                                th:style="${status==2}? 'color: #eaa209':'' " >已完成</a></li>
+                                                th:style="${status==2}? 'color: #eaa209':'' ">已完成</a></li>
                         <li class="nav-item"><a class="nav-link"
                                                 th:href="@{'http://localhost:8080/project/index?id='+${project_id}+'&status=3'}"
-                                                th:style="${status==3}? 'color: #eaa209':'' " >已上线</a></li>
+                                                th:style="${status==3}? 'color: #eaa209':'' ">已上线</a></li>
                         <li class="nav-item"><a class="nav-link"
                                                 th:href="@{'http://localhost:8080/project/index?id='+${project_id}+'&status=4'}"
                                                 th:style="${status==4}? 'color: #eaa209':'' ">已关闭</a></li>
@@ -192,11 +194,31 @@
                             <div style="margin-left: auto;width: fit-content;">
                                 <span class="badge rounded-pill badge-primary" th:text="${item.type}"></span>
                                 <span class="badge rounded-pill badge-info" th:text="${item.endTime}"></span>
-                                <span class="badge rounded-pill badge-danger" th:if="not ${#strings.isEmpty(item.outOfTime)}" th:text="${item.outOfTime}"></span>
+                                <span class="badge rounded-pill badge-danger"
+                                      th:if="not ${#strings.isEmpty(item.outOfTime)}"
+                                      th:text="${item.outOfTime}"></span>
                                 <span class="badge rounded-pill badge-danger" th:if="${item.priority} eq 1">high</span>
                                 <span class="badge rounded-pill badge-warning"
                                       th:if="${item.priority} eq 2">middle</span>
                                 <span class="badge rounded-pill badge-success" th:if="${item.priority} eq 3">low</span>
+                            </div>
+                            <div>
+                                <button
+                                        style="font-size: 10px;margin-left: 3px;height: 20px;line-height: 20px;padding: 0;padding-left: 4px;padding-right: 4px"
+                                        class="btn btn-outline-info" data-toggle="modal"
+                                        th:attr="data-target='#demandDetail'+${item.id}"
+                                        th:if="${item.type eq '需求'}">详情
+                                </button>
+                                <button
+                                        style="font-size: 10px;margin-left: 3px;height: 20px;line-height: 20px;padding: 0;padding-left: 4px;padding-right: 4px"
+                                        class="btn btn-outline-info"
+                                        th:if="${item.type eq 'bug'}">详情
+                                </button>
+                                <button
+                                        style="font-size: 10px;margin-left: 3px;height: 20px;line-height: 20px;padding: 0;padding-left: 4px;padding-right: 4px"
+                                        class="btn btn-outline-info"
+                                        th:if="${item.type eq '测试'}">详情
+                                </button>
                             </div>
                         </li>
                     </ul>
@@ -205,8 +227,8 @@
         </div>
     </div>
 </div>
-
-<div class="modal fade" id="addProject" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="addProject" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -217,15 +239,49 @@
             </div>
             <div class="modal-body">
                 <form action="/project/addProject" method="post">
-                    <div class="form-group" >
+                    <div class="form-group">
                         <label for="projectName">项目名称</label>
-                        <input type="text" class="form-control" id="projectName" name="projectName"  placeholder="请输入项目名">
+                        <input type="text" class="form-control" id="projectName" name="projectName"
+                               placeholder="请输入项目名">
                         <small id="emailHelp" class="form-text text-muted">项目名不能和已有的项目名称重复</small>
                     </div>
                     <div style="margin-top: 10px"></div>
                     <button type="submit" class="btn btn-primary">提交</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer" style="
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #f6f6f6;
+    color: #808080;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px">
+    <span style="height: 40px;line-height: 40px ">© 2021 Copyright: 李景根</span>
+</div>
+<div th:each="item: ${demand_detail_list}">
+    <div class="modal fade" th:id="'demandDetail'+${item.id}" th:if="${item.type eq '需求'}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" th:text="${item.title}"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="font-size: 15px">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal" >删除</button>
+                </div>
             </div>
         </div>
     </div>
@@ -246,7 +302,7 @@
         })
     }
 
-    function addDemand(projectId){
-        window.location.href="/project/demand?projectId="+projectId
+    function addDemand(projectId) {
+        window.location.href = "/project/demand?projectId=" + projectId
     }
 </script>

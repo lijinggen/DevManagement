@@ -72,7 +72,6 @@ public class HomeController {
             }
             if(tabIndex.equals("5")){
                 ListTaskReq listTaskReq=new ListTaskReq();
-                listTaskReq.setUserId(userId);
                 List<Task> list = taskService.list(listTaskReq);
                 List<TaskDto> res=new ArrayList<>();
                 for (Task task : list) {
