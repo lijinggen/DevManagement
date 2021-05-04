@@ -1,12 +1,9 @@
 package com.study.graduation.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.study.graduation.dao.DemandDao;
-import com.study.graduation.dao.ProjectUserRelationDao;
-import com.study.graduation.dao.TaskDao;
+import com.study.graduation.dao.*;
 import com.study.graduation.dto.*;
 import com.study.graduation.entity.*;
-import com.study.graduation.dao.ProjectDao;
 import com.study.graduation.service.*;
 import com.study.graduation.util.DateUtil;
 import org.apache.logging.log4j.util.Strings;
@@ -59,10 +56,16 @@ public class ProjectServiceImpl implements ProjectService {
     private MessageService messageService;
 
     @Resource
+    private TestService testService;
+
+    @Resource
     private UserService userService;
 
     @Resource
     private DemandDao demandDao;
+
+    @Resource
+    private TestDao testDao;
 
     @Resource
     private ProjectService projectService;
@@ -151,8 +154,11 @@ public class ProjectServiceImpl implements ProjectService {
                 QueryWrapper<Project> projectQueryWrapper = new QueryWrapper<>();
                 List<String> ids = projectUserRelations.stream().map(ProjectUserRelation::getProjectId).collect(Collectors.toList());
                 projectQueryWrapper.lambda().in(Project::getId, ids);
-                List<Project> projects = projectDao.selectList(projectQueryWrapper);
-                return projects;
+                if (ids != null && ids.size() > 0) {
+                    List<Project> projects = projectDao.selectList(projectQueryWrapper);
+                    return projects;
+                }
+                return null;
             } else {
                 return result;
             }
@@ -240,20 +246,20 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void addDemand(AddDemandRequest addDemandRequest, MultipartFile[] fileList, String userId) {
         try {
-            String[] fileStringList = new String[fileList.length];
+            String[] fileNameList = new String[fileList.length];
             String res = "";
             int i = 0;
             for (MultipartFile file : fileList) {
                 String uuid = UUID.randomUUID().toString();
                 byte[] bytes = file.getBytes();
-                Path path = Paths.get(uploadDir + uuid + "-" + file.getOriginalFilename());
-                Path resultPath = Files.write(path, bytes);
-                fileStringList[i] = resultPath.toString();
+                Path path = Paths.get(uploadDir + uuid + "~-" + file.getOriginalFilename());
+                Files.write(path, bytes);
+                fileNameList[i] = "/graduation/" + uuid + "~-" + file.getOriginalFilename();
                 i++;
             }
-            for (int i1 = 0; i1 < fileStringList.length; i1++) {
-                res += fileStringList[i];
-                if (i1 + 1 != fileStringList.length) {
+            for (int i1 = 0; i1 < fileNameList.length; i1++) {
+                res += fileNameList[i1];
+                if (i1 + 1 != fileNameList.length) {
                     res += ",";
                 }
             }
@@ -302,6 +308,51 @@ public class ProjectServiceImpl implements ProjectService {
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void addTest(AddTestRequest addTestRequest, String userId) throws ParseException {
+        Test test=new Test();
+        Task task=new Task();
+        task.setCreateUser(userId);
+        task.setModifyTime(new Date());
+        task.setCreateTime(new Date());
+        task.setBatchNo(UUID.randomUUID().toString());
+        if (addTestRequest.getPriority().equals("高")) {
+            task.setPriority(1);
+        } else if (addTestRequest.getPriority().equals("中")) {
+            task.setPriority(2);
+        } else if (addTestRequest.getPriority().equals("低")) {
+            task.setPriority(3);
+        }
+        task.setBeginTime(DateUtil.prase(addTestRequest.getBeginTime()));
+        task.setEndTime(DateUtil.prase(addTestRequest.getEndTime()));
+        task.setId(UUID.randomUUID().toString());
+        task.setStatus(1);
+        task.setTitle("【测试】"+taskService.queryById(addTestRequest.getRelationTaskId()).getTitle());
+        task.setType(2);
+        task.setProjectId(addTestRequest.getProjectId());
+        task.setUserId(addTestRequest.getUserId());
+
+        test.setId(UUID.randomUUID().toString());
+        test.setCreateTime(new Date());
+        test.setModifyTime(new Date());
+        test.setTaskId(task.getId());
+        test.setRelationTaskId(addTestRequest.getRelationTaskId());
+
+        Message message = new Message();
+        message.setId(UUID.randomUUID().toString());
+        message.setCreateTime(new Date());
+        message.setModifyTime(new Date());
+        message.setFromUser(userService.queryById(userId).getUserName());
+        message.setToUser(userService.queryById(addTestRequest.getUserId()).getUserName());
+        message.setTitle("【测试】"+taskService.queryById(addTestRequest.getRelationTaskId()).getTitle());
+        message.setToUserId(addTestRequest.getUserId());
+        message.setIsRead(0);
+        message.setProject(projectDao.selectById(addTestRequest.getProjectId()).getName());
+        messageService.insert(message);
+        testService.insert(test);
+        taskService.insert(task);
     }
 
     @Override
@@ -402,24 +453,62 @@ public class ProjectServiceImpl implements ProjectService {
         List<Task> tasks = taskService.listByProject(projectId);
         List<DemandDetailDto> list = new ArrayList<>();
         for (Task task : tasks) {
-            QueryWrapper<Demand> demandQueryWrapper = new QueryWrapper<>();
-            demandQueryWrapper.lambda().eq(Demand::getTaskId, task.getId());
-            Demand demand = demandDao.selectOne(demandQueryWrapper);
-            DemandDetailDto demandDetailDto = new DemandDetailDto();
-            demandDetailDto.setId(task.getId());
-            demandDetailDto.setBatchNo(task.getBatchNo());
-            demandDetailDto.setBeginTime(DateUtil.format(task.getBeginTime()));
-            demandDetailDto.setEndTime(DateUtil.format(task.getEndTime()));
-            demandDetailDto.setStatus(status[task.getStatus()-1]);
-            demandDetailDto.setType(taskType[task.getType()-1]);
-            demandDetailDto.setPriority(priority[task.getPriority()-1]);
-            demandDetailDto.setTitle(task.getTitle());
-            demandDetailDto.setCreateUser(userService.queryById(task.getCreateUser()).getUserName());
-            demandDetailDto.setDetail(demand.getDetail());
-            String[] split = demand.getFileList().split(",");
-            demandDetailDto.setFileList(split);
-            demandDetailDto.setDemandId(demand.getId());
-            list.add(demandDetailDto);
+            if(task.getType()==1){
+                QueryWrapper<Demand> demandQueryWrapper = new QueryWrapper<>();
+                demandQueryWrapper.lambda().eq(Demand::getTaskId, task.getId());
+                Demand demand = demandDao.selectOne(demandQueryWrapper);
+                DemandDetailDto demandDetailDto = new DemandDetailDto();
+                demandDetailDto.setId(task.getId());
+                demandDetailDto.setBatchNo(task.getBatchNo());
+                demandDetailDto.setBeginTime(DateUtil.format(task.getBeginTime()));
+                demandDetailDto.setEndTime(DateUtil.format(task.getEndTime()));
+                demandDetailDto.setStatus(status[task.getStatus() - 1]);
+                demandDetailDto.setType(taskType[task.getType() - 1]);
+                demandDetailDto.setPriority(priority[task.getPriority() - 1]);
+                demandDetailDto.setTitle(task.getTitle());
+                demandDetailDto.setCreateUser(userService.queryById(task.getCreateUser()).getUserName());
+                demandDetailDto.setDetail(demand.getDetail());
+                String[] split = demand.getFileList().split(",");
+                FileItemDto fileItemDto[] = new FileItemDto[split.length];
+                int i = 0;
+                for (String s : split) {
+                    fileItemDto[i] = new FileItemDto();
+                    fileItemDto[i].setPath(s);
+                    String[] split1 = s.split("~-");
+                    fileItemDto[i].setName(split1[split1.length - 1]);
+                    i++;
+                }
+                demandDetailDto.setFileList(fileItemDto);
+                demandDetailDto.setDemandId(demand.getId());
+                list.add(demandDetailDto);
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public List<TestDetailDto> listTestDetail(String projectId) throws ParseException {
+        List<Task> tasks = taskService.listByProject(projectId);
+        List<TestDetailDto> list = new ArrayList<>();
+        for (Task task : tasks) {
+            if(task.getType()==2){
+                QueryWrapper<Test> demandQueryWrapper = new QueryWrapper<>();
+                demandQueryWrapper.lambda().eq(Test::getTaskId, task.getId());
+                Test test = testDao.selectOne(demandQueryWrapper);
+                TestDetailDto testDetailDto = new TestDetailDto();
+                testDetailDto.setId(task.getId());
+                testDetailDto.setBatchNo(task.getBatchNo());
+                testDetailDto.setBeginTime(DateUtil.format(task.getBeginTime()));
+                testDetailDto.setEndTime(DateUtil.format(task.getEndTime()));
+                testDetailDto.setStatus(status[task.getStatus() - 1]);
+                testDetailDto.setType(taskType[task.getType() - 1]);
+                testDetailDto.setPriority(priority[task.getPriority() - 1]);
+                testDetailDto.setTitle(task.getTitle());
+                testDetailDto.setCreateUser(userService.queryById(task.getCreateUser()).getUserName());
+                testDetailDto.setDetail(test.getDetail());
+                testDetailDto.setTestId(test.getId());
+                list.add(testDetailDto);
+            }
         }
         return list;
     }

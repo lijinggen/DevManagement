@@ -166,9 +166,9 @@
         <div style="height:300px;width:74%;margin-left: 20px;margin-top:60px;border-radius: 2px;
                 display: flex;flex-direction: row" class="border">
             <div style="display: flex;flex-direction: row;width: 100%" th:if="${tabIndex eq 1}">
-                <div id="myProgress" style="width: 50%;height: 90%">
+                <div id="myProgress" style="width: 50%;height: 100%" class="border-right">
                 </div>
-                <div id="taskDistribute" style="width: 50%;height: 90%">
+                <div id="taskDistribute" style="width: 50%;height: 100%">
                 </div>
             </div>
             <div style="display: flex;flex-direction: row;width: 100%;overflow-x: auto" th:if="${tabIndex eq 2}">
@@ -234,6 +234,14 @@
             <h5>我的项目</h5>
         </div>
         <div style="display: flex;flex-direction: row;overflow-x: auto;width: 100%">
+            <div th:if="${#lists.isEmpty(project_list)}">
+                <div class="card" style="width: 13rem; display: flex;" >
+                    <img th:src="@{'/image/bg1.svg'}" class="card-img-top" alt="..." style="width: 13rem;height: 13rem;margin: 0 auto">
+                    <div class="card-body" style="display: flex; flex-direction: column;background: #f6f6f6">
+                        <h5 class="card-title">空~</h5>
+                    </div>
+                </div>
+            </div>
             <div style="margin-right: 10px" th:each="item,idx : ${project_list}">
                 <div class="card" style="width: 13rem; display: flex;" >
                     <img th:src="@{'/image/bg'+${(idx.index)%6+1}+'.svg'}" class="card-img-top" alt="..." style="width: 13rem;height: 13rem;margin: 0 auto">

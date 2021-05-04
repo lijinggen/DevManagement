@@ -106,7 +106,7 @@
          th:if="${#strings.isEmpty(project_name)}">
         <img th:src="@{/image/nothing.svg}" width="500" height="500" style="margin: 0 auto"/>
     </div>
-    <div style="width: 70%;margin: 0 auto; margin-top: 20px; height: 85%;display: flex;flex-direction: column"
+    <div style="width: 70%;margin: 0 auto; margin-top: 20px; height: 90%;display: flex;flex-direction: column"
          class="" data-bs-spy="scroll"
          th:if="not ${#strings.isEmpty(project_name)}">
         <div style="width: 100%;padding: 10px;height: 45px;display: flex;flex-direction: row;
@@ -130,8 +130,8 @@
         </div>
         <div class="progress" style="border-radius: 0 !important">
             <div class="progress-bar bg-warning" role="progressbar" style=""
-                 th:style="'width:'+${progress}+'%;border-radius: 0;'"
-                 th:attr="aria-valuenow=${progress}" aria-valuemin="0" aria-valuemax="100" th:text="${progress}">
+                 th:style="'width:'+${progress}+'%;border-radius: 0;color:black;font-weight:bolder'"
+                 th:attr="aria-valuenow=${progress}" aria-valuemin="0" aria-valuemax="100" th:text="${progress}+'%'">
             </div>
         </div>
         <div class="border-left border-right">
@@ -202,24 +202,33 @@
                                       th:if="${item.priority} eq 2">middle</span>
                                 <span class="badge rounded-pill badge-success" th:if="${item.priority} eq 3">low</span>
                             </div>
-                            <div>
-                                <button
-                                        style="font-size: 10px;margin-left: 3px;height: 20px;line-height: 20px;padding: 0;padding-left: 4px;padding-right: 4px"
-                                        class="btn btn-outline-info" data-toggle="modal"
-                                        th:attr="data-target='#demandDetail'+${item.id}"
-                                        th:if="${item.type eq '需求'}">详情
-                                </button>
-                                <button
-                                        style="font-size: 10px;margin-left: 3px;height: 20px;line-height: 20px;padding: 0;padding-left: 4px;padding-right: 4px"
-                                        class="btn btn-outline-info"
-                                        th:if="${item.type eq 'bug'}">详情
-                                </button>
-                                <button
-                                        style="font-size: 10px;margin-left: 3px;height: 20px;line-height: 20px;padding: 0;padding-left: 4px;padding-right: 4px"
-                                        class="btn btn-outline-info"
-                                        th:if="${item.type eq '测试'}">详情
-                                </button>
-                            </div>
+                            <button class="btn btn-outline-info btn-sm" type="button"
+                                    th:onclick="addTest([[${project_id}]],[[${item.id}]])" th:if="${role} eq 2 and ${item.type eq '需求'}"
+                                    style="font-size: 10px;margin-left: 3px;height: 20px;line-height: 20px;padding: 0;padding-left: 4px;padding-right: 4px">
+                                添加测试任务
+                            </button>
+                            <button class="btn btn-outline-info btn-sm" type="button"
+                                    th:onclick="addBug([[${project_id}]],[[${item.id}]])" th:if="${role} eq 3 and ${item.type eq '需求'}"
+                                    style="font-size: 10px;margin-left: 3px;height: 20px;line-height: 20px;padding: 0;padding-left: 4px;padding-right: 4px">
+                                添加Bug
+                            </button>
+                            <button
+                                    class="btn btn-outline-info" data-toggle="modal"
+                                    style="font-size: 10px;margin-left: 3px;height: 20px;line-height: 20px;padding: 0;padding-left: 4px;padding-right: 4px"
+                                    th:attr="data-target='#demandDetail'+${item.id}"
+                                    th:if="${item.type eq '需求'}">详情
+                            </button>
+                            <button
+                                    style="font-size: 10px;margin-left: 3px;height: 20px;line-height: 20px;padding: 0;padding-left: 4px;padding-right: 4px"
+                                    class="btn btn-outline-info"
+                                    th:attr="data-target='#testDetail'+${item.id}"
+                                    th:if="${item.type eq '测试'}">详情
+                            </button>
+                            <button
+                                    style="font-size: 10px;margin-left: 3px;height: 20px;line-height: 20px;padding: 0;padding-left: 4px;padding-right: 4px"
+                                    class="btn btn-outline-info"
+                                    th:if="${item.type eq '测试'}">详情
+                            </button>
                         </li>
                     </ul>
                 </div>
@@ -267,8 +276,9 @@
     <span style="height: 40px;line-height: 40px ">© 2021 Copyright: 李景根</span>
 </div>
 <div th:each="item: ${demand_detail_list}">
-    <div class="modal fade" th:id="'demandDetail'+${item.id}" th:if="${item.type eq '需求'}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+    <div class="modal fade" th:id="'demandDetail'+${item.id}" th:if="${item.type eq '需求'}" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel" th:text="${item.title}"></h5>
@@ -277,10 +287,109 @@
                     </button>
                 </div>
                 <div class="modal-body" style="font-size: 15px">
+                    <div class="form-group">
+                        <label for="detail" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">需求详情</label>
+                        <textarea class="form-control" id="detail" style="min-height: 150px;overflow: auto" name="detail"
+                                  th:text="${item.detail}" disabled>
+                        </textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="ms" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">任务描述</label>
+                        <div id="ms" style="display: flex;flex-direction: column; font-size: 14px">
+                            <span>优&nbsp;&nbsp;先&nbsp;&nbsp;级：<span th:text="${item.priority}"></span></span>
+                            <span>状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态：<span
+                                    th:text="${item.status}"></span></span>
+                            <span>任务类型：<span>需求</span></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cu" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">创建人</label>
+                        <div id="cu" th:text="${item.createUser}" style="font-size: 14px"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="fl" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">相关文件</label>
+                        <div id="fl" style="font-size: 14px">
+                            <div th:each="str:${item.fileList}">
+                                <a th:text="${str.name}" th:href="@{${str.path}}" class="text-warning"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bt" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">开始时间</label>
+                        <div id="bt" th:text="${item.beginTime}" style="font-size: 14px"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="et" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">结束时间</label>
+                        <div id="et" th:text="${item.endTime}" style="font-size: 14px"></div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal" >删除</button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"
+                            th:if="${item.status eq '已关闭'}">重新打开
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭弹框</button>
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal"
+                            th:if="${item.status eq '进行中'}">关闭需求
+                    </button>
+                    <button type="button" class="btn btn-outline-success" data-dismiss="modal"
+                            th:if="${item.status eq '进行中'}">完成需求
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:each="testItem: ${test_detail_list}">
+    <div class="modal fade" th:id="'testDetail'+${testItem.id}" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="" th:text="${testItem.title}"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="font-size: 15px">
+                    <div class="form-group">
+                        <label for="testDetail" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">需求详情</label>
+                        <textarea class="form-control" id="testDetail" style="min-height: 150px;overflow: auto" name="detail"
+                                  th:text="${testItem.detail}" disabled>
+                        </textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="testMs" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">任务描述</label>
+                        <div id="testMs" style="display: flex;flex-direction: column; font-size: 14px">
+                            <span>优&nbsp;&nbsp;先&nbsp;&nbsp;级：<span th:text="${testItem.priority}"></span></span>
+                            <span>状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态：<span
+                                    th:text="${testItem.status}"></span></span>
+                            <span>任务类型：<span>需求</span></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="testCu" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">创建人</label>
+                        <div id="testCu" th:text="${testItem.createUser}" style="font-size: 14px"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="testbt" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">开始时间</label>
+                        <div id="testbt" th:text="${testItem.beginTime}" style="font-size: 14px"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="testet" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">结束时间</label>
+                        <div id="testet" th:text="${testItem.endTime}" style="font-size: 14px"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"
+                            th:if="${testItem.status eq '已关闭'}">重新打开
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭弹框</button>
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal"
+                            th:if="${testItem.status eq '进行中'}">关闭需求
+                    </button>
+                    <button type="button" class="btn btn-outline-success" data-dismiss="modal"
+                            th:if="${testItem.status eq '进行中'}">完成需求
+                    </button>
                 </div>
             </div>
         </div>
@@ -304,5 +413,9 @@
 
     function addDemand(projectId) {
         window.location.href = "/project/demand?projectId=" + projectId
+    }
+
+    function addTest(projectId,taskId) {
+        window.location.href = "/project/test?projectId=" + projectId+"&taskId="+taskId
     }
 </script>

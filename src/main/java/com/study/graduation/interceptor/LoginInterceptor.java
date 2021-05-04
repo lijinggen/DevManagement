@@ -1,4 +1,4 @@
-package com.study.graduation.Interceptor;
+package com.study.graduation.interceptor;
 
 import java.io.IOException;
 

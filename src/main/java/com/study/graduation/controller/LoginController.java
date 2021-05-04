@@ -66,6 +66,8 @@ public class LoginController {
             user.setId(UUID.randomUUID().toString());
             user.setCreateTime(new Date());
             user.setModifyTime(new Date());
+            user.setUserAccount(user.getUserAccount());
+            user.setUserName(user.getUserName());
             userService.insert(user);
             return new Result(true);
         }

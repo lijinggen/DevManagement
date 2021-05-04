@@ -1,13 +1,13 @@
 package com.study.graduation.dto;
 
-public class DemandDetailDto {
+import lombok.Data;
+
+public class TestDetailDto {
     private String id;
 
     private String title;
 
     private String detail;
-
-    private FileItemDto[] fileList;
 
     private String createUserId;
 
@@ -25,21 +25,13 @@ public class DemandDetailDto {
 
     private String priority;
 
-    public String getDemandId() {
-        return demandId;
-    }
-
-    public void setDemandId(String demandId) {
-        this.demandId = demandId;
-    }
-
     private String beginTime;
 
     private String endTime;
 
     private String createUser;
 
-    private String demandId;
+    private String testId;
 
     public String getId() {
         return id;
@@ -63,14 +55,6 @@ public class DemandDetailDto {
 
     public void setDetail(String detail) {
         this.detail = detail;
-    }
-
-    public FileItemDto[] getFileList() {
-        return fileList;
-    }
-
-    public void setFileList(FileItemDto[] fileList) {
-        this.fileList = fileList;
     }
 
     public String getCreateUserId() {
@@ -161,24 +145,11 @@ public class DemandDetailDto {
         this.createUser = createUser;
     }
 
-    @Override
-    public String toString() {
-        return "DemandDetailDto{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", detail='" + detail + '\'' +
-                ", fileList='" + fileList + '\'' +
-                ", createUserId='" + createUserId + '\'' +
-                ", taskId='" + taskId + '\'' +
-                ", batchNo='" + batchNo + '\'' +
-                ", userId='" + userId + '\'' +
-                ", projectId='" + projectId + '\'' +
-                ", type=" + type +
-                ", status=" + status +
-                ", priority=" + priority +
-                ", beginTime=" + beginTime +
-                ", endTime=" + endTime +
-                ", createUser='" + createUser + '\'' +
-                '}';
+    public String getTestId() {
+        return testId;
+    }
+
+    public void setTestId(String testId) {
+        this.testId = testId;
     }
 }

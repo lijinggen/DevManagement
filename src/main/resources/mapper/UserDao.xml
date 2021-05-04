@@ -52,8 +52,8 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into dev_management.user(user_account, password, create_time, modify_time)
-        values (#{userAccount}, #{password}, #{createTime}, #{modifyTime})
+        insert into dev_management.user(id,user_account,user_name, password, create_time, modify_time)
+        values (#{id},#{userAccount},#{userName}, #{password}, #{createTime}, #{modifyTime})
     </insert>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">

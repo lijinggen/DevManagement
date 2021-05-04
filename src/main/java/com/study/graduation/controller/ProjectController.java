@@ -65,103 +65,112 @@ public class ProjectController {
 
     @PostMapping("/list")
     @ResponseBody
-    public Result<List<Project>> list(HttpServletRequest request, ListProjectReq req){
-        String userId = (String)request.getSession().getAttribute("user_id");
+    public Result<List<Project>> list(HttpServletRequest request, ListProjectReq req) {
+        String userId = (String) request.getSession().getAttribute("user_id");
         req.setUserId(userId);
         List<Project> list = projectService.list(req);
         return new Result<>(list);
     }
 
     @RequestMapping("/index")
-    public String index(Model model, HttpServletRequest request,String id,String status) throws ParseException {
-        String userId = (String)request.getSession().getAttribute("user_id");
+    public String index(Model model, HttpServletRequest request, String id, String status) throws ParseException {
+        String userId = (String) request.getSession().getAttribute("user_id");
         ListProjectReq listProjectReq = new ListProjectReq();
         listProjectReq.setUserId(userId);
         List<Project> list = projectService.list(listProjectReq);
-        List<Map<String,Object>>resultList=new ArrayList<>();
-        if(list!=null&&list.size()>0){
+        List<Map<String, Object>> resultList = new ArrayList<>();
+        if (list != null && list.size() > 0) {
             for (Project project : list) {
-                Map<String,Object> item =new HashMap<>();
-                item.put("id",project.getId());
-                item.put("name",project.getName());
+                Map<String, Object> item = new HashMap<>();
+                item.put("id", project.getId());
+                item.put("name", project.getName());
                 resultList.add(item);
             }
         }
-        if(Strings.isNotEmpty(id)){
-            model.addAttribute("project_name",projectService.queryById(id).getName());
+        if (Strings.isNotEmpty(id)) {
+            model.addAttribute("project_name", projectService.queryById(id).getName());
         }
-        model.addAttribute("project_id",id);
-        model.addAttribute("project_list",resultList);
+        model.addAttribute("project_id", id);
+        model.addAttribute("project_list", resultList);
         ProjectUserRelation projectUserRelation = projectUserRelationService.getByUserId(userId, id);
-        if(projectUserRelation!=null){
-            model.addAttribute("role",projectUserRelation.getRole());
-            model.addAttribute("role_name", RoleEnum.RoleName[projectUserRelation.getRole()-1]);
+        if (projectUserRelation != null) {
+            model.addAttribute("role", projectUserRelation.getRole());
+            model.addAttribute("role_name", RoleEnum.RoleName[projectUserRelation.getRole() - 1]);
         }
         //-------------------------------------------------------------------基本数据
-        List<TaskUserDto> taskUserList=projectService.listTask(id,status);
-        model.addAttribute("task_list",taskUserList);
-        if(status==null){
-            status="0";
+        List<TaskUserDto> taskUserList = projectService.listTask(id, status);
+        model.addAttribute("task_list", taskUserList);
+        if (status == null) {
+            status = "0";
         }
-        model.addAttribute("status",Integer.parseInt(status));
-        float progress=0;
+        model.addAttribute("status", Integer.parseInt(status));
+        float progress = 0;
         int bottom;
         int top;
-        if(taskUserList!=null&&taskUserList.size()>0){
-            bottom=0;
-            top=0;
+        if (taskUserList != null && taskUserList.size() > 0) {
+            bottom = 0;
+            top = 0;
             for (TaskUserDto taskUserDto : taskUserList) {
                 for (TaskDto b : taskUserDto.getTaskDtoList()) {
-                    if(b.getStatus().equals(2)||b.getStatus().equals(3)
-                            ||b.getStatus().equals(4)||b.getStatus().equals(6)){
+                    if (b.getStatus().equals(2) || b.getStatus().equals(3)
+                            || b.getStatus().equals(4) || b.getStatus().equals(6)) {
                         top++;
                     }
                     bottom++;
                 }
             }
-            progress=((float)top/(float)bottom)*100;
-        }else{
-            progress=100;
+            progress = ((float) top / (float) bottom) * 100;
+        } else {
+            progress = 100;
         }
-        String format=String.format("%.2f",progress);
-        model.addAttribute("progress",format);
+        String format = String.format("%.2f", progress);
+        model.addAttribute("progress", format);
         //--------------------------------------------------------------------------详情页数据
         List<DemandDetailDto> demandDetailDtos = projectService.listDemandDetail(id);
-        model.addAttribute("demand_detail_list",demandDetailDtos);
+        List<TestDetailDto> testDetailDtos = projectService.listTestDetail(id);
+        model.addAttribute("demand_detail_list", demandDetailDtos);
+        model.addAttribute("test_detail_list", testDetailDtos);
         return "project";
     }
 
     @RequestMapping("/demand")
-    public String addDemand(Model model,String projectId){
-        model.addAttribute("project_id",projectId);
+    public String addDemand(Model model, String projectId) {
+        model.addAttribute("project_id", projectId);
         List<User> addUserList;
-        addUserList=userService.getProjectDevMember(projectId);
-        model.addAttribute("add_user_list",addUserList);
+        addUserList = userService.getProjectDevMember(projectId);
+        model.addAttribute("add_user_list", addUserList);
         return "demand";
     }
 
     @PostMapping("/addDemandReq")
-    public String addDemandReq(HttpServletRequest request, AddDemandRequest addDemandRequest,@RequestParam("fileList") MultipartFile []fileList){
-        String userId=(String)request.getSession().getAttribute("user_id");
-        projectService.addDemand(addDemandRequest,fileList,userId);
-        return "redirect:index?id="+addDemandRequest.getProjectId() ;
+    public String addDemandReq(HttpServletRequest request, AddDemandRequest addDemandRequest, @RequestParam("fileList") MultipartFile[] fileList) {
+        String userId = (String) request.getSession().getAttribute("user_id");
+        projectService.addDemand(addDemandRequest, fileList, userId);
+        return "redirect:index?id=" + addDemandRequest.getProjectId();
+    }
+
+    @PostMapping("/addTestReq")
+    public String addTestReq(HttpServletRequest request, AddTestRequest addTestRequest) throws ParseException {
+        String userId = (String) request.getSession().getAttribute("user_id");
+        projectService.addTest(addTestRequest, userId);
+        return "redirect:index?id=" + addTestRequest.getProjectId();
     }
 
     @PostMapping("/addProject")
-    public String addProject(Model model,HttpServletRequest request,String projectName){
+    public String addProject(Model model, HttpServletRequest request, String projectName) {
         Project byName = projectService.getByName(projectName);
-        if(byName!=null){
-            model.addAttribute("failed","failed");
+        if (byName != null) {
+            model.addAttribute("failed", "failed");
             return "redirect:index";
         }
-        String userId = (String)request.getSession().getAttribute("user_id");
-        Project project=new Project();
+        String userId = (String) request.getSession().getAttribute("user_id");
+        Project project = new Project();
         project.setCreateTime(new Date());
         project.setModifyTime(new Date());
         project.setName(projectName);
         project.setId(UUID.randomUUID().toString());
         projectService.insert(project);
-        ProjectUserRelation projectUserRelation=new ProjectUserRelation();
+        ProjectUserRelation projectUserRelation = new ProjectUserRelation();
         projectUserRelation.setRole(5);
         projectUserRelation.setModifyTime(new Date());
         projectUserRelation.setCreateTime(new Date());
@@ -169,15 +178,26 @@ public class ProjectController {
         projectUserRelation.setProjectId(project.getId());
         projectUserRelation.setId(UUID.randomUUID().toString());
         projectUserRelationService.insert(projectUserRelation);
-        model.addAttribute("success","success");
+        model.addAttribute("success", "success");
         return "redirect:index";
     }
 
     @PostMapping("/statistic")
     @ResponseBody
     public Result<StatisticDto> getStatistic(HttpServletRequest request) throws ParseException {
-        String userId = (String)request.getSession().getAttribute("user_id");
+        String userId = (String) request.getSession().getAttribute("user_id");
         StatisticDto statistic = projectService.statistic(userId);
         return new Result<>(statistic);
+    }
+
+    @RequestMapping("/test")
+    public String addTest(Model model, String projectId, String taskId) {
+        model.addAttribute("project_id", projectId);
+        Task task = taskService.queryById(taskId);
+        List<User> addUserList;
+        addUserList = userService.getProjectTestMember(projectId);
+        model.addAttribute("add_user_list", addUserList);
+        model.addAttribute("project", task);
+        return "test";
     }
 }

@@ -72,6 +72,8 @@ public interface ProjectService {
 
     void addDemand(AddDemandRequest addDemandRequest, MultipartFile []fileList,String userId);
 
+    void addTest(AddTestRequest addTestRequest,String userId) throws ParseException;
+
     StatisticDto statistic(String userId) throws ParseException;
 
     StatisticDto statisticProjectProgress(String userId);
@@ -79,4 +81,6 @@ public interface ProjectService {
     Integer getRole(String userId);
 
     List<DemandDetailDto> listDemandDetail(String projectId) throws ParseException;
+
+    List<TestDetailDto> listTestDetail(String projectId) throws ParseException;
 }

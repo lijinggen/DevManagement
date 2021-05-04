@@ -68,15 +68,15 @@
                     </div>
                 </div>
             </div>
-            <form action="/project/addDemandReq" method="post" enctype="multipart/form-data" >
+            <form action="/project/addDemandReq" method="post" enctype="multipart/form-data" autocomplete="off" >
                 <input type="text" style="display: none" id="formDevMember" name="userId">
                 <input type="text" style="display: none" id="projectId" name="projectId" th:value="${project_id}">
-                <div class="form-group">
-                    <label for="title">标题</label>
+                <div class="form-group" style="margin-top: 10px">
+                    <label for="title" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">标题</label>
                     <input type="text" class="form-control" id="title" placeholder="请输入标题" name="title">
                 </div>
                 <div class="form-group">
-                    <label for="priority">优先级</label>
+                    <label for="priority" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">优先级</label>
                     <select class="form-control" id="priority" name="priority">
                         <option>低</option>
                         <option>中</option>
@@ -84,14 +84,16 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="detail">需求详情</label>
+                    <label for="detail" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">需求详情</label>
                     <textarea class="form-control" id="detail" rows="3" style="height: 350px;" name="detail"></textarea>
                 </div>
                 <div class="form-group">
+                    <label for="fileList" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">需求相关文件</label>
+                    <br/>
                     <input type="file" id="fileList" name="fileList" multiple>
                 </div>
                 <div class="form-group" style="margin-top: 10px">
-                    <label for="dateselect">预期时间</label>
+                    <label for="dateselect" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">预期时间</label>
                     <div style="display:flex; flex-direction: row;" id="dateselect" >
                         <input id="datepicker_begin" name="beginTime">
                         <span class="input-group-addon" style="margin-left: 12px;margin-right: 12px">to</span>
