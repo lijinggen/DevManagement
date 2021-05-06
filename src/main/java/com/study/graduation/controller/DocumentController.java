@@ -72,9 +72,9 @@ public class DocumentController {
         return "document";
     }
 
-    @PostMapping("/login")
-    @ResponseBody
-    public Result<String> addFile(AddDocumentDto addDocumentDto, MultipartFile file) {
-        return new Result(false);
+    @PostMapping("/addFile")
+    public String addFile(AddDocumentDto addDocumentDto, MultipartFile file) {
+        System.out.println(addDocumentDto);
+        return "redirect:document?id=" + addDocumentDto.getProjectId();
     }
 }

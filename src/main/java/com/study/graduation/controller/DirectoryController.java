@@ -41,11 +41,8 @@ public class DirectoryController {
     @RequestMapping("listByProject")
     public String listByProject(Model model ,String id){
         MainDocumentList mainDocumentList = directoryService.listByProject(id);
-//        Map<String,Object> result = new HashMap<>();
-//        result.put("document_list",mainDocumentList);
-        System.out.println(mainDocumentList);
         model.addAttribute("project_name",mainDocumentList.getProjectName());
-
+        model.addAttribute("project_id",id);
         return "document";
     }
 }
