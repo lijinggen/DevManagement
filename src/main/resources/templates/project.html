@@ -203,12 +203,14 @@
                                 <span class="badge rounded-pill badge-success" th:if="${item.priority} eq 3">low</span>
                             </div>
                             <button class="btn btn-outline-info btn-sm" type="button"
-                                    th:onclick="addTest([[${project_id}]],[[${item.id}]])" th:if="${role} eq 2 and ${item.type eq '需求'}"
+                                    th:onclick="addTest([[${project_id}]],[[${item.id}]])"
+                                    th:if="${role} eq 2 and ${item.type eq '需求'}"
                                     style="font-size: 10px;margin-left: 3px;height: 20px;line-height: 20px;padding: 0;padding-left: 4px;padding-right: 4px">
                                 添加测试任务
                             </button>
                             <button class="btn btn-outline-info btn-sm" type="button"
-                                    th:onclick="addBug([[${project_id}]],[[${item.id}]])" th:if="${role} eq 3 and ${item.type eq '需求'}"
+                                    th:onclick="addBug([[${project_id}]],[[${item.id}]])"
+                                    th:if="${role} eq 3 and ${item.type eq '需求'}"
                                     style="font-size: 10px;margin-left: 3px;height: 20px;line-height: 20px;padding: 0;padding-left: 4px;padding-right: 4px">
                                 添加Bug
                             </button>
@@ -224,11 +226,11 @@
                                     th:attr="data-target='#testDetail'+${item.id}"
                                     th:if="${item.type eq '测试'}">详情
                             </button>
-<!--                            <button-->
-<!--                                    style="font-size: 10px;margin-left: 3px;height: 20px;line-height: 20px;padding: 0;padding-left: 4px;padding-right: 4px"-->
-<!--                                    class="btn btn-outline-info"-->
-<!--                                    th:if="${item.type eq '测试'}">详情-->
-<!--                            </button>-->
+                            <!--                            <button-->
+                            <!--                                    style="font-size: 10px;margin-left: 3px;height: 20px;line-height: 20px;padding: 0;padding-left: 4px;padding-right: 4px"-->
+                            <!--                                    class="btn btn-outline-info"-->
+                            <!--                                    th:if="${item.type eq '测试'}">详情-->
+                            <!--                            </button>-->
                         </li>
                     </ul>
                 </div>
@@ -288,8 +290,10 @@
                 </div>
                 <div class="modal-body" style="font-size: 15px">
                     <div class="form-group">
-                        <label for="detail" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">需求详情</label>
-                        <textarea class="form-control" id="detail" style="min-height: 150px;overflow: auto" name="detail"
+                        <label for="detail"
+                               style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">需求详情</label>
+                        <textarea class="form-control" id="detail" style="min-height: 150px;overflow: auto"
+                                  name="detail"
                                   th:text="${item.detail}" disabled>
                         </textarea>
                     </div>
@@ -303,7 +307,8 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="cu" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">创建人</label>
+                        <label for="cu"
+                               style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">创建人</label>
                         <div id="cu" th:text="${item.createUser}" style="font-size: 14px"></div>
                     </div>
                     <div class="form-group">
@@ -352,13 +357,16 @@
                 </div>
                 <div class="modal-body" style="font-size: 15px">
                     <div class="form-group">
-                        <label for="testDetail" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">需求详情</label>
-                        <textarea class="form-control" id="testDetail" style="min-height: 150px;overflow: auto" name="detail"
+                        <label for="testDetail"
+                               style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">需求详情</label>
+                        <textarea class="form-control" id="testDetail" style="min-height: 150px;overflow: auto"
+                                  name="detail"
                                   th:text="${testItem.detail}" disabled>
                         </textarea>
                     </div>
                     <div class="form-group">
-                        <label for="testMs" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">任务描述</label>
+                        <label for="testMs"
+                               style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">任务描述</label>
                         <div id="testMs" style="display: flex;flex-direction: column; font-size: 14px">
                             <span>优&nbsp;&nbsp;先&nbsp;&nbsp;级：<span th:text="${testItem.priority}"></span></span>
                             <span>状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态：<span
@@ -367,15 +375,18 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="testCu" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">创建人</label>
+                        <label for="testCu"
+                               style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">创建人</label>
                         <div id="testCu" th:text="${testItem.createUser}" style="font-size: 14px"></div>
                     </div>
                     <div class="form-group">
-                        <label for="testbt" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">开始时间</label>
+                        <label for="testbt"
+                               style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">开始时间</label>
                         <div id="testbt" th:text="${testItem.beginTime}" style="font-size: 14px"></div>
                     </div>
                     <div class="form-group">
-                        <label for="testet" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">结束时间</label>
+                        <label for="testet"
+                               style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">结束时间</label>
                         <div id="testet" th:text="${testItem.endTime}" style="font-size: 14px"></div>
                     </div>
                 </div>
@@ -415,7 +426,7 @@
         window.location.href = "/project/demand?projectId=" + projectId
     }
 
-    function addTest(projectId,taskId) {
-        window.location.href = "/project/test?projectId=" + projectId+"&taskId="+taskId
+    function addTest(projectId, taskId) {
+        window.location.href = "/project/test?projectId=" + projectId + "&taskId=" + taskId
     }
 </script>

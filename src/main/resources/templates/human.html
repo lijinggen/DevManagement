@@ -195,10 +195,6 @@
                 <span th:text="${item.userName}" style="color: #545C64"></span>
                 <div style="display: flex;flex-direction:row;align-items: center;margin-left: auto;align-items: center">
                     <span class="badge badge-warning badge-pill" th:text="${item.role}"></span>
-                    <span>
-                         <button type="button" class="btn btn-outline-success btn-sm"
-                                 style="margin-left: 10px;font-size: 12px;">身份变更</button>
-                    </span>
                     <div>
                         <button type="button" class="btn btn-outline-danger btn-sm"
                                 style="margin-left: 10px;font-size: 12px;" data-toggle="modal" th:attr="data-target='#'+${item.userId}">删除</button>
@@ -323,4 +319,6 @@
             },
         })
     }
+    // 任务状态
+    // 需求任务：完成
 </script>

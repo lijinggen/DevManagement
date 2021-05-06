@@ -30,6 +30,10 @@ public class HomeController {
     @Resource
     private ProjectService projectService;
 
+    private static String priority[] = {"low", "middle", "high"};
+
+    private static String[] taskType = {"需求", "测试", "bug"};
+
     @RequestMapping("/index")
     public String home(HttpServletRequest request,Model model, String tabIndex) throws ParseException {
         String userId = (String)request.getSession().getAttribute("user_id");
@@ -48,6 +52,10 @@ public class HomeController {
                         taskDto.setEndTime(DateUtil.format(task.getEndTime()));
                         taskDto.setTitle(task.getTitle());
                         taskDto.setId(task.getId());
+                        taskDto.setPriority(task.getPriority());
+                        taskDto.setType(taskType[task.getType()-1]);
+                        taskDto.setProjectName(projectService.queryById(task.getProjectId()).getName());
+                        taskDto.setProjectId(task.getProjectId());
                         res.add(taskDto);
                     }
                 }
@@ -65,6 +73,10 @@ public class HomeController {
                         taskDto.setEndTime(DateUtil.format(task.getEndTime()));
                         taskDto.setTitle(task.getTitle());
                         taskDto.setId(task.getId());
+                        taskDto.setPriority(task.getPriority());
+                        taskDto.setType(taskType[task.getType()-1]);
+                        taskDto.setProjectName(projectService.queryById(task.getProjectId()).getName());
+                        taskDto.setProjectId(task.getProjectId());
                         res.add(taskDto);
                     }
                 }
@@ -80,6 +92,10 @@ public class HomeController {
                         taskDto.setEndTime(DateUtil.format(task.getEndTime()));
                         taskDto.setTitle(task.getTitle());
                         taskDto.setId(task.getId());
+                        taskDto.setPriority(task.getPriority());
+                        taskDto.setType(taskType[task.getType()-1]);
+                        taskDto.setProjectName(projectService.queryById(task.getProjectId()).getName());
+                        taskDto.setProjectId(task.getProjectId());
                         res.add(taskDto);
                     }
                 }

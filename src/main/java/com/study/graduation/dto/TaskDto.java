@@ -29,4 +29,6 @@ public class TaskDto {
     private Date createTime;
 
     private Date modifyTime;
+
+    private String projectName;
 }
