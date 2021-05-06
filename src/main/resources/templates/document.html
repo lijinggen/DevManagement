@@ -116,7 +116,7 @@
                         </svg>
                         <span style="margin-left: 20px">需求文档</span>
                     </a>
-                    <a href="#" data-target="#exampleModal" style="margin-left: auto;" data-toggle="modal">
+                    <a href="#" data-target="#uploadModel" style="margin-left: auto;" data-toggle="modal" onclick="passUploadValue('需求文档',1)">
                         <svg t="1620283110075" class="icon" viewBox="0 0 1024 1024" version="1.1"
                              xmlns="http://www.w3.org/2000/svg" p-id="8982" width="22" height="22">
                             <path d="M711.125333 85.333333H312.874667C167.68 85.333333 85.333333 167.637333 85.333333 312.874667v398.250666C85.333333 855.978667 167.253333 938.666667 312.874667 938.666667h398.250666C856.32 938.666667 938.666667 855.978667 938.666667 711.125333V312.874667C938.666667 167.68 856.362667 85.333333 711.125333 85.333333z"
@@ -215,7 +215,7 @@
                         </svg>
                         <span style="margin-left: 20px">规范文档</span>
                     </a>
-                    <a href="#" style="margin-left: auto;">
+                    <a href="#" data-target="#uploadModel" style="margin-left: auto;" data-toggle="modal" onclick="passUploadValue('规范文档',1)">
                         <svg t="1620283110075" class="icon" viewBox="0 0 1024 1024" version="1.1"
                              xmlns="http://www.w3.org/2000/svg" p-id="8982" width="22" height="22">
                             <path d="M711.125333 85.333333H312.874667C167.68 85.333333 85.333333 167.637333 85.333333 312.874667v398.250666C85.333333 855.978667 167.253333 938.666667 312.874667 938.666667h398.250666C856.32 938.666667 938.666667 855.978667 938.666667 711.125333V312.874667C938.666667 167.68 856.362667 85.333333 711.125333 85.333333z"
@@ -305,7 +305,7 @@
                         </svg>
                         <span style="margin-left: 20px">开发文档</span>
                     </a>
-                    <a href="#" style="margin-left: auto;">
+                    <a href="#" data-target="#uploadModel" style="margin-left: auto;" data-toggle="modal" onclick="passUploadValue('开发文档',3)" >
                         <svg t="1620283110075" class="icon" viewBox="0 0 1024 1024" version="1.1"
                              xmlns="http://www.w3.org/2000/svg" p-id="8982" width="22" height="22">
                             <path d="M711.125333 85.333333H312.874667C167.68 85.333333 85.333333 167.637333 85.333333 312.874667v398.250666C85.333333 855.978667 167.253333 938.666667 312.874667 938.666667h398.250666C856.32 938.666667 938.666667 855.978667 938.666667 711.125333V312.874667C938.666667 167.68 856.362667 85.333333 711.125333 85.333333z"
@@ -395,7 +395,7 @@
                         </svg>
                         <span style="margin-left: 20px">其它</span>
                     </a>
-                    <a href="#" style="margin-left: auto;">
+                    <a href="#" data-target="#uploadModel" style="margin-left: auto;" data-toggle="modal" onclick="passUploadValue('其它',4)">
                         <svg t="1620283110075" class="icon" viewBox="0 0 1024 1024" version="1.1"
                              xmlns="http://www.w3.org/2000/svg" p-id="8982" width="22" height="22">
                             <path d="M711.125333 85.333333H312.874667C167.68 85.333333 85.333333 167.637333 85.333333 312.874667v398.250666C85.333333 855.978667 167.253333 938.666667 312.874667 938.666667h398.250666C856.32 938.666667 938.666667 855.978667 938.666667 711.125333V312.874667C938.666667 167.68 856.362667 85.333333 711.125333 85.333333z"
@@ -489,25 +489,35 @@
     <span style="height: 40px;line-height: 40px ">© 2021 Copyright: 李景根</span>
 </div>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="uploadModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h6 class="modal-title" id="uploadLabel" style="font-weight: bolder"></h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <form style="display: flex;flex-direction: column">
+                    <input id="type" name="type" style="display: none">
+                    <div class="form-group">
+                        <label for="directoryName" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">文件夹名称</label>
+                        <input type="text" class="form-control" id="directoryName" name="name"  placeholder="请输入文件夹名称">
+                    </div>
+                    <div class="form-group">
+                        <label for="uploadFile" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">添加文件</label>
+                        <br/>
+                        <input type="file" id="uploadFile" name="fileList" placeholder="请选择文件" style="font-size: 14px;lin-height: 14px;">
+                    </div>
+                    <br/>
+                    <button type="submit" class="btn btn-outline-warning" style="width: 30%;margin-left: auto;margin-right: 10px">提交</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
+
 </body>
 </html>
 
@@ -521,5 +531,10 @@
                 console.log(res)
             },
         })
+    }
+
+    function passUploadValue(name,type){
+        $('#uploadLabel').text("添加文件夹或文件到："+name)
+        $('#type').val(type)
     }
 </script>
