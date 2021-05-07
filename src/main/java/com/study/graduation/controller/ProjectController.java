@@ -130,6 +130,7 @@ public class ProjectController {
         List<TestDetailDto> testDetailDtos = projectService.listTestDetail(id);
         model.addAttribute("demand_detail_list", demandDetailDtos);
         model.addAttribute("test_detail_list", testDetailDtos);
+        model.addAttribute("current_user_id",userId);
         return "project";
     }
 

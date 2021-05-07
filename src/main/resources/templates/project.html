@@ -121,10 +121,6 @@
                             th:onclick="addDemand([[${project_id}]])" th:if="${role} eq 5">
                         添加需求
                     </button>
-                    <button class="btn btn-outline-warning btn-sm" type="button"
-                            th:onclick="search([[${project_id}]])" th:if="${role} eq 3">
-                        添加缺陷
-                    </button>
                 </div>
             </div>
         </div>
@@ -204,13 +200,13 @@
                             </div>
                             <button class="btn btn-outline-info btn-sm" type="button"
                                     th:onclick="addTest([[${project_id}]],[[${item.id}]])"
-                                    th:if="${role} eq 2 and ${item.type eq '需求'}"
+                                    th:if="${role eq 2} and ${item.type eq '需求'} and ${item.status eq 2} and ${task.userId eq current_user_id}"
                                     style="font-size: 10px;margin-left: 3px;height: 20px;line-height: 20px;padding: 0;padding-left: 4px;padding-right: 4px">
                                 添加测试任务
                             </button>
                             <button class="btn btn-outline-info btn-sm" type="button"
                                     th:onclick="addBug([[${project_id}]],[[${item.id}]])"
-                                    th:if="${role} eq 3 and ${item.type eq '需求'}"
+                                    th:if="${role} eq 3 and ${item.type eq '需求'} and ${item.status eq 2}"
                                     style="font-size: 10px;margin-left: 3px;height: 20px;line-height: 20px;padding: 0;padding-left: 4px;padding-right: 4px">
                                 添加Bug
                             </button>
@@ -223,6 +219,7 @@
                             <button
                                     style="font-size: 10px;margin-left: 3px;height: 20px;line-height: 20px;padding: 0;padding-left: 4px;padding-right: 4px"
                                     class="btn btn-outline-info"
+                                    data-toggle="modal"
                                     th:attr="data-target='#testDetail'+${item.id}"
                                     th:if="${item.type eq '测试'}">详情
                             </button>
@@ -337,7 +334,8 @@
                             th:if="${item.status eq '进行中'}">关闭需求
                     </button>
                     <button type="button" class="btn btn-outline-success" data-dismiss="modal"
-                            th:if="${item.status eq '进行中'}">完成需求
+                            th:if="${item.status eq '进行中'}"
+                            th:onclick="finished([[${item.id}]],[[${project_id}]])">完成需求
                     </button>
                 </div>
             </div>
@@ -371,7 +369,7 @@
                             <span>优&nbsp;&nbsp;先&nbsp;&nbsp;级：<span th:text="${testItem.priority}"></span></span>
                             <span>状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态：<span
                                     th:text="${testItem.status}"></span></span>
-                            <span>任务类型：<span>需求</span></span>
+                            <span>任务类型：<span>测试</span></span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -396,10 +394,10 @@
                     </button>
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭弹框</button>
                     <button type="button" class="btn btn-outline-danger" data-dismiss="modal"
-                            th:if="${testItem.status eq '进行中'}">关闭需求
+                            th:if="${testItem.status eq '进行中'}">关闭测试
                     </button>
                     <button type="button" class="btn btn-outline-success" data-dismiss="modal"
-                            th:if="${testItem.status eq '进行中'}">完成需求
+                            th:if="${testItem.status eq '进行中'}">完成测试
                     </button>
                 </div>
             </div>
@@ -428,5 +426,14 @@
 
     function addTest(projectId, taskId) {
         window.location.href = "/project/test?projectId=" + projectId + "&taskId=" + taskId
+    }
+
+    function finished(taskId,projectId){
+        $.ajax({
+            url: "http://localhost:8080/task/finished?id="+taskId,
+            dataType: "json",
+            type: "GET",
+        })
+        window.location.href='/project/index?id='+projectId;
     }
 </script>

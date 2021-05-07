@@ -32,4 +32,10 @@ public class TaskController {
         return this.taskService.queryById(id);
     }
 
+    @GetMapping("finished")
+    public void finished(String id){
+        Task task = taskService.queryById(id);
+        task.setStatus(2);
+        taskService.update(task);
+    }
 }

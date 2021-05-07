@@ -158,7 +158,8 @@
                                                       fill="#3c4683" p-id="8984"></path>
                                             </svg>
                                         </a>
-                                        <a href="#" style="margin-left: 5px;margin-right: 23px;">
+                                        <a href="#" style="margin-left: 5px;margin-right: 23px;" data-target="#remModel"
+                                           data-toggle="modal" th:onclick="passRemValue([[${item.directory.id}]],'',[[${item.directory.name}]])">
                                             <svg t="1620368450863" class="icon" viewBox="0 0 1024 1024" version="1.1"
                                                  xmlns="http://www.w3.org/2000/svg" p-id="5283" width="16" height="16">
                                                 <path d="M0 0l0 1024 1024 0L1024 0 0 0zM819.2 787.2c6.4 6.4 6.4 19.2 0 25.6-6.4 6.4-6.4 6.4-12.8 6.4s-12.8 0-12.8-6.4L512 531.2l-281.6 281.6c-6.4 6.4-6.4 6.4-12.8 6.4-6.4 0-12.8 0-12.8-6.4-6.4-6.4-6.4-19.2 0-25.6l281.6-281.6L204.8 224C192 217.6 192 204.8 204.8 198.4s19.2-6.4 25.6 0L512 480l281.6-281.6c6.4-6.4 19.2-6.4 25.6 0 6.4 6.4 6.4 19.2 0 25.6L537.6 505.6 819.2 787.2z"
@@ -185,9 +186,12 @@
                                                     </svg>
                                                     <a th:text="${subItem.name}" th:href="@{${subItem.path}}"
                                                        style="margin-left: 5px;font-size: 14px"></a>
-                                                    <a href="#" style="margin-left: auto;margin-right: -1px">
-                                                        <svg t="1620368450863" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                                                             xmlns="http://www.w3.org/2000/svg" p-id="5283" width="16" height="16">
+                                                    <a href="#" style="margin-left: auto;margin-right: -1px" data-target="#remModel"
+                                                       data-toggle="modal" th:onclick="passRemValue('',[[${subItem.id}]],[[${subItem.name}]])">
+                                                        <svg t="1620368450863" class="icon" viewBox="0 0 1024 1024"
+                                                             version="1.1"
+                                                             xmlns="http://www.w3.org/2000/svg" p-id="5283" width="16"
+                                                             height="16">
                                                             <path d="M0 0l0 1024 1024 0L1024 0 0 0zM819.2 787.2c6.4 6.4 6.4 19.2 0 25.6-6.4 6.4-6.4 6.4-12.8 6.4s-12.8 0-12.8-6.4L512 531.2l-281.6 281.6c-6.4 6.4-6.4 6.4-12.8 6.4-6.4 0-12.8 0-12.8-6.4-6.4-6.4-6.4-19.2 0-25.6l281.6-281.6L204.8 224C192 217.6 192 204.8 204.8 198.4s19.2-6.4 25.6 0L512 480l281.6-281.6c6.4-6.4 19.2-6.4 25.6 0 6.4 6.4 6.4 19.2 0 25.6L537.6 505.6 819.2 787.2z"
                                                                   p-id="5284" fill="#d81e06"></path>
                                                         </svg>
@@ -216,7 +220,8 @@
                                 </svg>
                                 <a th:text="${item.name}" th:href="@{${item.path}}"
                                    style="margin-left: 5px;font-size: 14px"></a>
-                                <a href="#" style="margin-left: auto;margin-right: 19px">
+                                <a href="#" style="margin-left: auto;margin-right: 19px" data-target="#remModel"
+                                   data-toggle="modal" th:onclick="passRemValue('',[[${item.id}]],[[${item.name}]])">
                                     <svg t="1620368450863" class="icon" viewBox="0 0 1024 1024" version="1.1"
                                          xmlns="http://www.w3.org/2000/svg" p-id="5283" width="16" height="16">
                                         <path d="M0 0l0 1024 1024 0L1024 0 0 0zM819.2 787.2c6.4 6.4 6.4 19.2 0 25.6-6.4 6.4-6.4 6.4-12.8 6.4s-12.8 0-12.8-6.4L512 531.2l-281.6 281.6c-6.4 6.4-6.4 6.4-12.8 6.4-6.4 0-12.8 0-12.8-6.4-6.4-6.4-6.4-19.2 0-25.6l281.6-281.6L204.8 224C192 217.6 192 204.8 204.8 198.4s19.2-6.4 25.6 0L512 480l281.6-281.6c6.4-6.4 19.2-6.4 25.6 0 6.4 6.4 6.4 19.2 0 25.6L537.6 505.6 819.2 787.2z"
@@ -268,7 +273,7 @@
                                            style="display: flex;flex-direction: row;font-size: 14px;height: 16px;line-height: 16px;padding-left: 0">
                                             <span style="margin-left: 5px" th:text="${item.directory.name}"></span>
                                         </a>
-                                        <a href="#" style="margin-left: auto;margin-right: 20px"
+                                        <a href="#" style="margin-left: auto;"
                                            data-target="#uploadModel" data-toggle="modal"
                                            th:onclick="passUploadValue([[${project_id}]],[[${item.directory.name}]],2,[[${item.directory.id}]])">
                                             <svg t="1620283110075" class="icon" viewBox="0 0 1024 1024" version="1.1"
@@ -277,6 +282,14 @@
                                                       fill="#3c4683" opacity=".4" p-id="8983"></path>
                                                 <path d="M653.653333 542.208h-109.653333v108.757333c0 17.493333-14.336 31.701333-32 31.701334a31.829333 31.829333 0 0 1-32-31.701334v-108.757333H370.346667a32.128 32.128 0 0 1-29.013334-31.872c0-16.426667 12.501333-30.165333 29.013334-31.872h109.312v-108.373333A32.213333 32.213333 0 0 1 511.829333 341.333333c16.554667 0 30.464 12.373333 32.170667 28.757334v108.373333h109.653333c16.512 1.706667 29.013333 15.445333 29.013334 31.872a32.128 32.128 0 0 1-29.013334 31.872z"
                                                       fill="#3c4683" p-id="8984"></path>
+                                            </svg>
+                                        </a>
+                                        <a href="#" style="margin-left: 5px;margin-right: 23px;" data-target="#remModel"
+                                           data-toggle="modal" th:onclick="passRemValue([[${item.directory.id}]],'',[[${item.directory.name}]])">
+                                            <svg t="1620368450863" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                                                 xmlns="http://www.w3.org/2000/svg" p-id="5283" width="16" height="16">
+                                                <path d="M0 0l0 1024 1024 0L1024 0 0 0zM819.2 787.2c6.4 6.4 6.4 19.2 0 25.6-6.4 6.4-6.4 6.4-12.8 6.4s-12.8 0-12.8-6.4L512 531.2l-281.6 281.6c-6.4 6.4-6.4 6.4-12.8 6.4-6.4 0-12.8 0-12.8-6.4-6.4-6.4-6.4-19.2 0-25.6l281.6-281.6L204.8 224C192 217.6 192 204.8 204.8 198.4s19.2-6.4 25.6 0L512 480l281.6-281.6c6.4-6.4 19.2-6.4 25.6 0 6.4 6.4 6.4 19.2 0 25.6L537.6 505.6 819.2 787.2z"
+                                                      p-id="5284" fill="#d81e06"></path>
                                             </svg>
                                         </a>
                                     </div>
@@ -299,9 +312,12 @@
                                                     </svg>
                                                     <a th:text="${subItem.name}" th:href="@{${subItem.path}}"
                                                        style="margin-left: 5px;font-size: 14px"></a>
-                                                    <a href="#" style="margin-left: auto;margin-right: -1px">
-                                                        <svg t="1620368450863" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                                                             xmlns="http://www.w3.org/2000/svg" p-id="5283" width="16" height="16">
+                                                    <a href="#" style="margin-left: auto;margin-right: -1px" data-target="#remModel"
+                                                       data-toggle="modal" th:onclick="passRemValue('',[[${subItem.id}]],[[${subItem.name}]])">
+                                                        <svg t="1620368450863" class="icon" viewBox="0 0 1024 1024"
+                                                             version="1.1"
+                                                             xmlns="http://www.w3.org/2000/svg" p-id="5283" width="16"
+                                                             height="16">
                                                             <path d="M0 0l0 1024 1024 0L1024 0 0 0zM819.2 787.2c6.4 6.4 6.4 19.2 0 25.6-6.4 6.4-6.4 6.4-12.8 6.4s-12.8 0-12.8-6.4L512 531.2l-281.6 281.6c-6.4 6.4-6.4 6.4-12.8 6.4-6.4 0-12.8 0-12.8-6.4-6.4-6.4-6.4-19.2 0-25.6l281.6-281.6L204.8 224C192 217.6 192 204.8 204.8 198.4s19.2-6.4 25.6 0L512 480l281.6-281.6c6.4-6.4 19.2-6.4 25.6 0 6.4 6.4 6.4 19.2 0 25.6L537.6 505.6 819.2 787.2z"
                                                                   p-id="5284" fill="#d81e06"></path>
                                                         </svg>
@@ -330,7 +346,8 @@
                                 </svg>
                                 <a th:text="${item.name}" th:href="@{${item.path}}"
                                    style="margin-left: 5px;font-size: 14px"></a>
-                                <a href="#" style="margin-left: auto;margin-right: 19px">
+                                <a href="#" style="margin-left: auto;margin-right: 19px" data-target="#remModel"
+                                   data-toggle="modal" th:onclick="passRemValue('',[[${item.id}]],[[${item.name}]])">
                                     <svg t="1620368450863" class="icon" viewBox="0 0 1024 1024" version="1.1"
                                          xmlns="http://www.w3.org/2000/svg" p-id="5283" width="16" height="16">
                                         <path d="M0 0l0 1024 1024 0L1024 0 0 0zM819.2 787.2c6.4 6.4 6.4 19.2 0 25.6-6.4 6.4-6.4 6.4-12.8 6.4s-12.8 0-12.8-6.4L512 531.2l-281.6 281.6c-6.4 6.4-6.4 6.4-12.8 6.4-6.4 0-12.8 0-12.8-6.4-6.4-6.4-6.4-19.2 0-25.6l281.6-281.6L204.8 224C192 217.6 192 204.8 204.8 198.4s19.2-6.4 25.6 0L512 480l281.6-281.6c6.4-6.4 19.2-6.4 25.6 0 6.4 6.4 6.4 19.2 0 25.6L537.6 505.6 819.2 787.2z"
@@ -414,8 +431,10 @@
                                                     <a th:text="${subItem.name}" th:href="@{${subItem.path}}"
                                                        style="margin-left: 5px;font-size: 14px"></a>
                                                     <a href="#" style="margin-left: auto;margin-right: -1px">
-                                                        <svg t="1620368450863" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                                                             xmlns="http://www.w3.org/2000/svg" p-id="5283" width="16" height="16">
+                                                        <svg t="1620368450863" class="icon" viewBox="0 0 1024 1024"
+                                                             version="1.1"
+                                                             xmlns="http://www.w3.org/2000/svg" p-id="5283" width="16"
+                                                             height="16">
                                                             <path d="M0 0l0 1024 1024 0L1024 0 0 0zM819.2 787.2c6.4 6.4 6.4 19.2 0 25.6-6.4 6.4-6.4 6.4-12.8 6.4s-12.8 0-12.8-6.4L512 531.2l-281.6 281.6c-6.4 6.4-6.4 6.4-12.8 6.4-6.4 0-12.8 0-12.8-6.4-6.4-6.4-6.4-19.2 0-25.6l281.6-281.6L204.8 224C192 217.6 192 204.8 204.8 198.4s19.2-6.4 25.6 0L512 480l281.6-281.6c6.4-6.4 19.2-6.4 25.6 0 6.4 6.4 6.4 19.2 0 25.6L537.6 505.6 819.2 787.2z"
                                                                   p-id="5284" fill="#d81e06"></path>
                                                         </svg>
@@ -444,7 +463,9 @@
                                 </svg>
                                 <a th:text="${item.name}" th:href="@{${item.path}}"
                                    style="margin-left: 5px;font-size: 14px"></a>
-                                <a href="#" style="margin-left: auto;margin-right: 19px">
+                                <a href="#" style="margin-left: auto;margin-right: 19px"
+                                   data-target="#remModel"
+                                   data-toggle="modal" th:onclick="passRemValue('',[[${item.id}]],[[${item.name}]])">
                                     <svg t="1620368450863" class="icon" viewBox="0 0 1024 1024" version="1.1"
                                          xmlns="http://www.w3.org/2000/svg" p-id="5283" width="16" height="16">
                                         <path d="M0 0l0 1024 1024 0L1024 0 0 0zM819.2 787.2c6.4 6.4 6.4 19.2 0 25.6-6.4 6.4-6.4 6.4-12.8 6.4s-12.8 0-12.8-6.4L512 531.2l-281.6 281.6c-6.4 6.4-6.4 6.4-12.8 6.4-6.4 0-12.8 0-12.8-6.4-6.4-6.4-6.4-19.2 0-25.6l281.6-281.6L204.8 224C192 217.6 192 204.8 204.8 198.4s19.2-6.4 25.6 0L512 480l281.6-281.6c6.4-6.4 19.2-6.4 25.6 0 6.4 6.4 6.4 19.2 0 25.6L537.6 505.6 819.2 787.2z"
@@ -528,8 +549,11 @@
                                                     <a th:text="${subItem.name}" th:href="@{${subItem.path}}"
                                                        style="margin-left: 5px;font-size: 14px"></a>
                                                     <a href="#" style="margin-left: auto;margin-right: -1px">
-                                                        <svg t="1620368450863" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                                                             xmlns="http://www.w3.org/2000/svg" p-id="5283" width="16" height="16">
+                                                        <svg t="1620368450863" class="icon" viewBox="0 0 1024 1024"
+                                                             version="1.1"
+                                                             xmlns="http://www.w3.org/2000/svg" p-id="5283" width="16"
+                                                             height="16" data-target="#remModel"
+                                                             data-toggle="modal" th:onclick="passRemValue('',[[${subItem.id}]],[[${subItem.name}]])">
                                                             <path d="M0 0l0 1024 1024 0L1024 0 0 0zM819.2 787.2c6.4 6.4 6.4 19.2 0 25.6-6.4 6.4-6.4 6.4-12.8 6.4s-12.8 0-12.8-6.4L512 531.2l-281.6 281.6c-6.4 6.4-6.4 6.4-12.8 6.4-6.4 0-12.8 0-12.8-6.4-6.4-6.4-6.4-19.2 0-25.6l281.6-281.6L204.8 224C192 217.6 192 204.8 204.8 198.4s19.2-6.4 25.6 0L512 480l281.6-281.6c6.4-6.4 19.2-6.4 25.6 0 6.4 6.4 6.4 19.2 0 25.6L537.6 505.6 819.2 787.2z"
                                                                   p-id="5284" fill="#d81e06"></path>
                                                         </svg>
@@ -558,7 +582,8 @@
                                 </svg>
                                 <a th:text="${item.name}" th:href="@{${item.path}}"
                                    style="margin-left: 5px;font-size: 14px"></a>
-                                <a href="#" style="margin-left: auto;margin-right: 19px">
+                                <a href="#" style="margin-left: auto;margin-right: 19px" data-target="#remModel"
+                                   data-toggle="modal" th:onclick="passRemValue('',[[${item.id}]],[[${item.name}]])">
                                     <svg t="1620368450863" class="icon" viewBox="0 0 1024 1024" version="1.1"
                                          xmlns="http://www.w3.org/2000/svg" p-id="5283" width="16" height="16">
                                         <path d="M0 0l0 1024 1024 0L1024 0 0 0zM819.2 787.2c6.4 6.4 6.4 19.2 0 25.6-6.4 6.4-6.4 6.4-12.8 6.4s-12.8 0-12.8-6.4L512 531.2l-281.6 281.6c-6.4 6.4-6.4 6.4-12.8 6.4-6.4 0-12.8 0-12.8-6.4-6.4-6.4-6.4-19.2 0-25.6l281.6-281.6L204.8 224C192 217.6 192 204.8 204.8 198.4s19.2-6.4 25.6 0L512 480l281.6-281.6c6.4-6.4 19.2-6.4 25.6 0 6.4 6.4 6.4 19.2 0 25.6L537.6 505.6 819.2 787.2z"
@@ -625,10 +650,33 @@
     </div>
 </div>
 
+<div class="modal fade" id="remModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">确认删除</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="font-size: 15px">
+                <span>删除</span>
+                <span style="background: red;border-radius: 5px;padding: 3px;color: white" id="remTip"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal" th:onclick="remFile([[${project_id}]])">删除</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
-</html>
 
 <script>
+    let globalDirectroyId="";
+    let globalFileId="";
+    let globalName="";
     function getDocument(id) {
         $.ajax({
             url: "http://localhost:8080/directory/listByProject?id=" + id,
@@ -651,4 +699,37 @@
             $('#directoryRow').css("display", "block")
         }
     }
+
+    function passRemValue(directory, fileId, name){
+        $('#remTip').text("")
+        globalFileId="";
+        globalDirectroyId="";
+        globalName="";
+        globalDirectroyId=directory;
+        globalFileId=fileId;
+        globalName=name;
+        if(directory!==""){
+            $('#remTip').text("文件夹"+name+"以及文件夹下面的文件")
+        }
+        if(fileId!==""){
+            $('#remTip').text("文件"+name)
+        }
+
+    }
+
+    function remFile(projectId) {
+        $.ajax({
+            url: "http://localhost:8080/doc/remFile",
+            dataType: "json",
+            type: "POST",
+            data: {
+                directoryId: globalDirectroyId,
+                fileId: globalFileId,
+            },
+            success: function (res) {
+            },
+        })
+        window.location.href="http://localhost:8080/doc/document?id="+projectId
+    }
 </script>
+</html>

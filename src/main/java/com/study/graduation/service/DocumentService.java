@@ -4,6 +4,7 @@ import com.study.graduation.dto.AddDocumentDto;
 import com.study.graduation.entity.Document;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.print.Doc;
 import java.io.IOException;
 import java.util.List;
 
@@ -57,4 +58,6 @@ public interface DocumentService {
     boolean deleteById(String id);
 
     void addFile(AddDocumentDto addDocumentDto, MultipartFile file) throws IOException;
+
+    List<Document> listByDirectory(String directoryId);
 }

@@ -339,7 +339,7 @@ public class ProjectServiceImpl implements ProjectService {
         test.setModifyTime(new Date());
         test.setTaskId(task.getId());
         test.setRelationTaskId(addTestRequest.getRelationTaskId());
-
+        test.setDetail(addTestRequest.getDetail());
         Message message = new Message();
         message.setId(UUID.randomUUID().toString());
         message.setCreateTime(new Date());

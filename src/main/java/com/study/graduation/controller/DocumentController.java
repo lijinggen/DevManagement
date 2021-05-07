@@ -2,10 +2,8 @@ package com.study.graduation.controller;
 
 import com.study.graduation.config.Result;
 import com.study.graduation.dto.AddDocumentDto;
-import com.study.graduation.entity.Directory;
-import com.study.graduation.entity.MainDocumentList;
-import com.study.graduation.entity.Project;
-import com.study.graduation.entity.User;
+import com.study.graduation.dto.RemFileDto;
+import com.study.graduation.entity.*;
 import com.study.graduation.service.DirectoryService;
 import com.study.graduation.service.DocumentService;
 import com.study.graduation.service.ProjectService;
@@ -92,5 +90,21 @@ public class DocumentController {
             }
         }
         return "redirect:document?id=" + addDocumentDto.getProjectId();
+    }
+
+    @PostMapping("/remFile")
+    public void remFile(RemFileDto remFileDto){
+        if(Strings.isNotEmpty(remFileDto.getFileId())){
+            documentService.deleteById(remFileDto.getFileId());
+        }
+        if(Strings.isNotEmpty(remFileDto.getDirectroyId())){
+            List<Document> documentList = documentService.listByDirectory(remFileDto.getDirectroyId());
+            if(documentList!=null&&documentList.size()>0){
+                for (Document document : documentList) {
+                    documentService.deleteById(document.getId());
+                }
+            }
+            directoryService.deleteById(remFileDto.getDirectroyId());
+        }
     }
 }

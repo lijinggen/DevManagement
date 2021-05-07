@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.graduation.dao.BugDao">
+
+    <resultMap type="com.study.graduation.entity.Bug" id="BugMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="taskId" column="task_id" jdbcType="VARCHAR"/>
+        <result property="relationTaskId" column="relation_task_id" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="modifyTime" column="modify_time" jdbcType="TIMESTAMP"/>
+        <result property="detauk" column="detauk" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BugMap">
+        select
+          id, task_id, relation_task_id, create_time, modify_time, detauk
+        from dev_management.bug
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BugMap">
+        select
+          id, task_id, relation_task_id, create_time, modify_time, detauk
+        from dev_management.bug
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BugMap">
+        select
+        id, task_id, relation_task_id, create_time, modify_time, detauk
+        from dev_management.bug
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="taskId != null and taskId != ''">
+                and task_id = #{taskId}
+            </if>
+            <if test="relationTaskId != null and relationTaskId != ''">
+                and relation_task_id = #{relationTaskId}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="modifyTime != null">
+                and modify_time = #{modifyTime}
+            </if>
+            <if test="detauk != null and detauk != ''">
+                and detauk = #{detauk}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into dev_management.bug(task_id, relation_task_id, create_time, modify_time, detauk)
+        values (#{taskId}, #{relationTaskId}, #{createTime}, #{modifyTime}, #{detauk})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into dev_management.bug(task_id, relation_task_id, create_time, modify_time, detauk)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.taskId}, #{entity.relationTaskId}, #{entity.createTime}, #{entity.modifyTime}, #{entity.detauk})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into dev_management.bug(task_id, relation_task_id, create_time, modify_time, detauk)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.taskId}, #{entity.relationTaskId}, #{entity.createTime}, #{entity.modifyTime}, #{entity.detauk})
+        </foreach>
+        on duplicate key update
+        task_id = values(task_id) , relation_task_id = values(relation_task_id) , create_time = values(create_time) ,
+        modify_time = values(modify_time) , detauk = values(detauk)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update dev_management.bug
+        <set>
+            <if test="taskId != null and taskId != ''">
+                task_id = #{taskId},
+            </if>
+            <if test="relationTaskId != null and relationTaskId != ''">
+                relation_task_id = #{relationTaskId},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime},
+            </if>
+            <if test="detauk != null and detauk != ''">
+                detauk = #{detauk},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from dev_management.bug where id = #{id}
+    </delete>
+
+</mapper>
+

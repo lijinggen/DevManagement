@@ -1,5 +1,6 @@
 package com.study.graduation.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.study.graduation.dto.AddDocumentDto;
 import com.study.graduation.entity.Document;
 import com.study.graduation.dao.DocumentDao;
@@ -105,5 +106,13 @@ public class DocumentServiceImpl implements DocumentService {
         Files.write(path, bytes);
         document.setPath("/graduation/" + uuid + "~-" + file.getOriginalFilename());
         documentDao.insert(document);
+    }
+
+    @Override
+    public List<Document> listByDirectory(String directoryId) {
+        QueryWrapper<Document> documentQueryWrapper=new QueryWrapper<>();
+        documentQueryWrapper.lambda().eq(Document::getDirectoryId,directoryId);
+        List<Document> documentList = documentDao.selectList(documentQueryWrapper);
+        return documentList;
     }
 }
