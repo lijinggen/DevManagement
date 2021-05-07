@@ -1,12 +1,21 @@
 package com.study.graduation.service.impl;
 
+import com.study.graduation.dto.AddDocumentDto;
 import com.study.graduation.entity.Document;
 import com.study.graduation.dao.DocumentDao;
 import com.study.graduation.service.DocumentService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * (Document)表服务实现类
@@ -18,6 +27,9 @@ import java.util.List;
 public class DocumentServiceImpl implements DocumentService {
     @Resource
     private DocumentDao documentDao;
+
+    @Value("${customFile}")
+    public String uploadDir;
 
     /**
      * 通过ID查询单条数据
@@ -75,5 +87,23 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public boolean deleteById(String id) {
         return this.documentDao.deleteById(id) > 0;
+    }
+
+    @Override
+    public void addFile(AddDocumentDto addDocumentDto, MultipartFile file) throws IOException {
+        Document document = new Document();
+        document.setId(UUID.randomUUID().toString());
+        document.setCreateTime(new Date());
+        document.setModifyTime(new Date());
+        document.setDirectoryId(addDocumentDto.getDirectoryId());
+        document.setName(file.getOriginalFilename());
+        document.setProjectId(addDocumentDto.getProjectId());
+        document.setType(addDocumentDto.getType());
+        String uuid = UUID.randomUUID().toString();
+        byte[] bytes = file.getBytes();
+        Path path = Paths.get(uploadDir + uuid + "~-" + file.getOriginalFilename());
+        Files.write(path, bytes);
+        document.setPath("/graduation/" + uuid + "~-" + file.getOriginalFilename());
+        documentDao.insert(document);
     }
 }

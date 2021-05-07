@@ -164,4 +164,13 @@ public class DirectoryServiceImpl implements DirectoryService {
         documentLists.setProjectName(projectDao.queryById(projectId).getName());
         return documentLists;
     }
+
+    @Override
+    public boolean selectByNameAndType(String name, int type) {
+        QueryWrapper<Directory> directoryQueryWrapper=new QueryWrapper<>();
+        directoryQueryWrapper.lambda().eq(Directory::getName,name);
+        directoryQueryWrapper.lambda().eq(Directory::getType,type);
+        Directory directory = directoryDao.selectOne(directoryQueryWrapper);
+        return directory==null;
+    }
 }

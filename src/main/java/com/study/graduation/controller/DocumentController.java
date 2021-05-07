@@ -2,6 +2,7 @@ package com.study.graduation.controller;
 
 import com.study.graduation.config.Result;
 import com.study.graduation.dto.AddDocumentDto;
+import com.study.graduation.entity.Directory;
 import com.study.graduation.entity.MainDocumentList;
 import com.study.graduation.entity.Project;
 import com.study.graduation.entity.User;
@@ -23,10 +24,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.util.*;
 
 @Controller
 @RequestMapping("/doc")
@@ -57,6 +56,7 @@ public class DocumentController {
             }
         }
         model.addAttribute("project_list", resultList);
+        model.addAttribute("project_id",id);
         if (Strings.isNotBlank(id)) {
             MainDocumentList mainDocumentList = directoryService.listByProject(id);
             model.addAttribute("project_name", mainDocumentList.getProjectName());
@@ -73,8 +73,24 @@ public class DocumentController {
     }
 
     @PostMapping("/addFile")
-    public String addFile(AddDocumentDto addDocumentDto, MultipartFile file) {
-        System.out.println(addDocumentDto);
+    public String addFile(AddDocumentDto addDocumentDto, MultipartFile file) throws IOException {
+        // 文件不为空；添加文件
+        if(!file.isEmpty()){
+            documentService.addFile(addDocumentDto,file);
+        }
+        // 名字不为空，添加文件夹
+        if(Strings.isNotEmpty(addDocumentDto.getName())){
+            if(directoryService.selectByNameAndType(addDocumentDto.getName(),addDocumentDto.getType())){
+                Directory directory = new Directory();
+                directory.setCreateTime(new Date());
+                directory.setModifyTime(new Date());
+                directory.setId(UUID.randomUUID().toString());
+                directory.setName(addDocumentDto.getName());
+                directory.setType(addDocumentDto.getType());
+                directory.setProjectId(addDocumentDto.getProjectId());
+                directoryService.insert(directory);
+            }
+        }
         return "redirect:document?id=" + addDocumentDto.getProjectId();
     }
 }

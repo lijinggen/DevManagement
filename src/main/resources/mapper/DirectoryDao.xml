@@ -56,8 +56,8 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into dev_management.directory(type, name, project_id, create_time, modify_time)
-        values (#{type}, #{name}, #{projectId}, #{createTime}, #{modifyTime})
+        insert into dev_management.directory(id, type, name, project_id, create_time, modify_time)
+        values (#{id}, #{type}, #{name}, #{projectId}, #{createTime}, #{modifyTime})
     </insert>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">

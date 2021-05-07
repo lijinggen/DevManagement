@@ -56,4 +56,5 @@ public interface DirectoryService {
 
     MainDocumentList listByProject(String projectId);
 
+    boolean selectByNameAndType(String name, int type);
 }
