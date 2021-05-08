@@ -56,8 +56,8 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into dev_management.bug(task_id, relation_task_id, create_time, modify_time, detauk)
-        values (#{taskId}, #{relationTaskId}, #{createTime}, #{modifyTime}, #{detauk})
+        insert into dev_management.bug(id, task_id, relation_task_id, create_time, modify_time, detauk)
+        values (#{id}, #{taskId}, #{relationTaskId}, #{createTime}, #{modifyTime}, #{detauk})
     </insert>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">

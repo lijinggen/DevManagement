@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class RemFileDto {
-    private String directroyId;
+    private String directoryId;
     private String fileId;
 }

@@ -35,7 +35,7 @@ public interface ProjectUserRelationService {
      * @param projectUserRelation 实例对象
      * @return 实例对象
      */
-    ProjectUserRelation insert(ProjectUserRelation projectUserRelation);
+    ProjectUserRelation insert(ProjectUserRelation projectUserRelation,String userId);
 
     /**
      * 修改数据

@@ -206,7 +206,7 @@
                             </button>
                             <button class="btn btn-outline-info btn-sm" type="button"
                                     th:onclick="addBug([[${project_id}]],[[${item.id}]])"
-                                    th:if="${role} eq 3 and ${item.type eq '需求'} and ${item.status eq 2}"
+                                    th:if="${role} eq 3 and ${item.type eq '测试'} and (${item.status eq 1} or ${item.status eq 5})"
                                     style="font-size: 10px;margin-left: 3px;height: 20px;line-height: 20px;padding: 0;padding-left: 4px;padding-right: 4px">
                                 添加Bug
                             </button>
@@ -426,6 +426,10 @@
 
     function addTest(projectId, taskId) {
         window.location.href = "/project/test?projectId=" + projectId + "&taskId=" + taskId
+    }
+
+    function addBug(projectId, taskId) {
+        window.location.href = "/project/bug?projectId=" + projectId + "&taskId=" + taskId
     }
 
     function finished(taskId,projectId){

@@ -1,5 +1,6 @@
 package com.study.graduation.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.study.graduation.entity.Test;
 import com.study.graduation.dao.TestDao;
 import com.study.graduation.service.TestService;
@@ -75,5 +76,13 @@ public class TestServiceImpl implements TestService {
     @Override
     public boolean deleteById(String id) {
         return this.testDao.deleteById(id) > 0;
+    }
+
+    @Override
+    public Test getByTaskId(String taskId) {
+        QueryWrapper<Test> testQueryWrapper=new QueryWrapper<>();
+        testQueryWrapper.lambda().eq(Test::getTaskId,taskId);
+        Test test = testDao.selectOne(testQueryWrapper);
+        return test;
     }
 }

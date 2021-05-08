@@ -74,6 +74,8 @@ public interface ProjectService {
 
     void addTest(AddTestRequest addTestRequest,String userId) throws ParseException;
 
+    void addBug(AddBugRequest addBugRequest,String userId) throws ParseException;
+
     StatisticDto statistic(String userId) throws ParseException;
 
     StatisticDto statisticProjectProgress(String userId);

@@ -1,5 +1,6 @@
 package com.study.graduation.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.study.graduation.entity.Demand;
 import com.study.graduation.dao.DemandDao;
 import com.study.graduation.service.DemandService;
@@ -75,5 +76,13 @@ public class DemandServiceImpl implements DemandService {
     @Override
     public boolean deleteById(String id) {
         return this.demandDao.deleteById(id) > 0;
+    }
+
+    @Override
+    public Demand getByTaskId(String taskId) {
+        QueryWrapper<Demand> demandQueryWrapper=new QueryWrapper<>();
+        demandQueryWrapper.lambda().eq(Demand::getTaskId,taskId);
+        Demand demand = demandDao.selectOne(demandQueryWrapper);
+        return demand;
     }
 }

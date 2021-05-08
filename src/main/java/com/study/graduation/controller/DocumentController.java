@@ -93,18 +93,20 @@ public class DocumentController {
     }
 
     @PostMapping("/remFile")
-    public void remFile(RemFileDto remFileDto){
+    @ResponseBody
+    public Result<String> remFile(RemFileDto remFileDto){
         if(Strings.isNotEmpty(remFileDto.getFileId())){
             documentService.deleteById(remFileDto.getFileId());
         }
-        if(Strings.isNotEmpty(remFileDto.getDirectroyId())){
-            List<Document> documentList = documentService.listByDirectory(remFileDto.getDirectroyId());
+        if(Strings.isNotEmpty(remFileDto.getDirectoryId())){
+            List<Document> documentList = documentService.listByDirectory(remFileDto.getDirectoryId());
             if(documentList!=null&&documentList.size()>0){
                 for (Document document : documentList) {
                     documentService.deleteById(document.getId());
                 }
             }
-            directoryService.deleteById(remFileDto.getDirectroyId());
+            directoryService.deleteById(remFileDto.getDirectoryId());
         }
+        return new Result<String>("true");
     }
 }

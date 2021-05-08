@@ -86,7 +86,8 @@ public class HumanController {
 
     @PostMapping("/addUserToProject")
     @ResponseBody
-    public Result<String> addToProject(AddUserToProjectReq addUserToProjectReq){
+    public Result<String> addToProject(AddUserToProjectReq addUserToProjectReq,HttpServletRequest httpServletRequest){
+        String userId=(String) httpServletRequest.getSession().getAttribute("user_id");
         ProjectUserRelation projectUserRelation=new ProjectUserRelation();
         projectUserRelation.setId(UUID.randomUUID().toString());
         projectUserRelation.setProjectId(addUserToProjectReq.getProjectId());
@@ -94,7 +95,7 @@ public class HumanController {
         projectUserRelation.setCreateTime(new Date());
         projectUserRelation.setModifyTime(new Date());
         projectUserRelation.setRole(addUserToProjectReq.getRole());
-        projectUserRelationService.insert(projectUserRelation);
+        projectUserRelationService.insert(projectUserRelation,userId);
         return new Result("true");
     }
 

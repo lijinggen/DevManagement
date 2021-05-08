@@ -3,10 +3,7 @@ package com.study.graduation.controller;
 import com.study.graduation.config.Result;
 import com.study.graduation.dto.*;
 import com.study.graduation.entity.*;
-import com.study.graduation.service.ProjectService;
-import com.study.graduation.service.ProjectUserRelationService;
-import com.study.graduation.service.TaskService;
-import com.study.graduation.service.UserService;
+import com.study.graduation.service.*;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -50,7 +47,14 @@ public class ProjectController {
     @Resource
     private TaskService taskService;
 
+    @Resource
+    private DemandService demandService;
 
+    @Resource
+    private TestService  testService;
+
+    @Resource
+    private BugService bugService;
     /**
      * 通过主键查询单条数据
      *
@@ -157,6 +161,13 @@ public class ProjectController {
         return "redirect:index?id=" + addTestRequest.getProjectId();
     }
 
+    @PostMapping("/addBugReq")
+    public String addBugReq(HttpServletRequest request, AddBugRequest addBugRequest) throws ParseException {
+        String userId = (String) request.getSession().getAttribute("user_id");
+        projectService.addBug(addBugRequest, userId);
+        return "redirect:index?id=" + addBugRequest.getProjectId();
+    }
+
     @PostMapping("/addProject")
     public String addProject(Model model, HttpServletRequest request, String projectName) {
         Project byName = projectService.getByName(projectName);
@@ -178,7 +189,7 @@ public class ProjectController {
         projectUserRelation.setUserId(userId);
         projectUserRelation.setProjectId(project.getId());
         projectUserRelation.setId(UUID.randomUUID().toString());
-        projectUserRelationService.insert(projectUserRelation);
+        projectUserRelationService.insert(projectUserRelation,userId);
         model.addAttribute("success", "success");
         return "redirect:index";
     }
@@ -200,5 +211,20 @@ public class ProjectController {
         model.addAttribute("add_user_list", addUserList);
         model.addAttribute("project", task);
         return "test";
+    }
+
+    @RequestMapping("/bug")
+    public String addBug(Model model, String projectId, String taskId) {
+        model.addAttribute("project_id", projectId);
+        // 获取测试任务
+        Task task = taskService.queryById(taskId);
+        Test test=testService.getByTaskId(taskId);
+        Task devTask=taskService.queryById(test.getRelationTaskId());
+        Demand byTaskId = demandService.getByTaskId(test.getRelationTaskId());
+        model.addAttribute("task", task);
+        model.addAttribute("relation_task_id",taskId);
+        model.addAttribute("devTitle",byTaskId.getTitle());
+        model.addAttribute("devUserId",devTask.getUserId());
+        return "bug";
     }
 }

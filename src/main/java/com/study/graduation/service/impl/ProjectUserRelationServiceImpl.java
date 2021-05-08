@@ -1,13 +1,20 @@
 package com.study.graduation.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.study.graduation.dto.RoleEnum;
+import com.study.graduation.entity.Message;
 import com.study.graduation.entity.ProjectUserRelation;
 import com.study.graduation.dao.ProjectUserRelationDao;
+import com.study.graduation.service.MessageService;
+import com.study.graduation.service.ProjectService;
 import com.study.graduation.service.ProjectUserRelationService;
+import com.study.graduation.service.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * (ProjectUserRelation)表服务实现类
@@ -20,6 +27,14 @@ public class ProjectUserRelationServiceImpl implements ProjectUserRelationServic
     @Resource
     private ProjectUserRelationDao projectUserRelationDao;
 
+    @Resource
+    private ProjectService projectService;
+
+    @Resource
+    private MessageService messageService;
+
+    @Resource
+    private UserService userService;
     /**
      * 通过ID查询单条数据
      *
@@ -50,8 +65,19 @@ public class ProjectUserRelationServiceImpl implements ProjectUserRelationServic
      * @return 实例对象
      */
     @Override
-    public ProjectUserRelation insert(ProjectUserRelation projectUserRelation) {
+    public ProjectUserRelation insert(ProjectUserRelation projectUserRelation,String userId) {
+        Message message=new Message();
+        message.setId(UUID.randomUUID().toString());
+        message.setCreateTime(new Date());
+        message.setModifyTime(new Date());
+        message.setProject(projectService.queryById(projectUserRelation.getProjectId()).getName());
+        message.setToUserId(projectUserRelation.getUserId());
+        message.setToUser(userService.queryById(projectUserRelation.getUserId()).getUserName());
+        message.setIsRead(0);
+        message.setFromUser(userService.queryById(userId).getUserName());
+        message.setTitle("添加你为"+ RoleEnum.RoleName[projectUserRelation.getRole()-1]+"成员");
         this.projectUserRelationDao.insert(projectUserRelation);
+        this.messageService.insert(message);
         return projectUserRelation;
     }
 

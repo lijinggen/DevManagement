@@ -53,4 +53,6 @@ public interface DemandService {
      */
     boolean deleteById(String id);
 
+    Demand getByTaskId(String taskId);
+
 }

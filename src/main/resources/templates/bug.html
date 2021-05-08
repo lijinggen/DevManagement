@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <link rel="icon" href="http://localhost:8080/image/logo.svg" type="image/x-icon">
+    <meta http-equiv="Cache-Control" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+    <title>添加测试任务</title>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.min.css}"
+          href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/container.css}"
+          href="../css/container.css"/>
+    <link rel="stylesheet" th:href="@{/css/demand.css}"
+          href="../css/demand.css"/>
+    <link href="https://cdn.bootcss.com/gijgo/1.9.13/combined/css/gijgo.min.css" rel="stylesheet">
+    <script src="webjars/jquery/3.0.0/jquery.min.js"
+            th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+    <script src="webjars/bootstrap/4.0.0/js/bootstrap.js"
+            th:src="@{/webjars/bootstrap/4.0.0/js/bootstrap.js}"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.15.0/esm/popper.min.js"></script>
+    <script src="https://cdn.bootcss.com/gijgo/1.9.13/combined/js/gijgo.min.js"></script>
+    <script src="https://cdn.bootcss.com/gijgo/1.9.13/combined/js/messages/messages.zh-cn.min.js"></script>
+</head>
+<body style="display: flex;justify-content: center;">
+<div style="display: flex;flex-direction: column; width: 55%;height: fit-content;margin-bottom: 15px"class="border">
+    <div style="color: white;background: black;display: flex;justify-content: center;align-items: center;width: 100%;
+                    height: 50px">
+        <h5>添加Bug</h5>
+    </div>
+    <div style="padding: 10px">
+        <form action="/project/addBugReq" method="post" enctype="multipart/form-data" autocomplete="off">
+            <input type="text" style="display: none" id="formDevMember" name="userId" th:value="${devUserId}" \>
+            <input type="text" style="display: none" id="projectId" name="projectId" th:value="${project_id}">
+            <input type="text" style="display: none" id="relationTaskId" name="relationTaskId" th:value="${task.id}">
+            <div class="form-group" style="margin-top: 15px;display: flex;flex-direction: column;">
+                <label for="title" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">关联测试任务</label>
+                <span id="title" th:text="${task.title}" style="font-size: 14px"></span>
+            </div>
+            <div class="form-group" style="margin-top: 15px;display: flex;flex-direction: column;">
+                <label for="title" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">关联开发任务</label>
+                <span id="devTitle" th:text="${devTitle}" style="font-size: 14px"></span>
+            </div>
+            <div class="form-group">
+                <label for="priority" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">优先级</label>
+                <select class="form-control" id="priority" name="priority">
+                    <option>低</option>
+                    <option>中</option>
+                    <option>高</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="detail" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">bug描述</label>
+                <textarea class="form-control" id="detail" rows="3" style="height: 350px;" name="detail"></textarea>
+            </div>
+            <div class="form-group" style="margin-top: 10px">
+                <label for="dateselect" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">预期时间</label>
+                <div style="display:flex; flex-direction: row;" id="dateselect" >
+                    <input id="datepicker_begin" name="beginTime">
+                    <span class="input-group-addon" style="margin-left: 12px;margin-right: 12px">to</span>
+                    <input id="datepicker_end" name="endTime">
+                </div>
+            </div>
+            <div class="form-group row" style="margin-left: auto;width: fit-content;margin-top: 20px;">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <button type="button" class="btn btn-outline-secondary" id="close"
+                            th:onclick="back([[${project_id}]])">返回</button>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <button type="submit" class="btn btn-warning" id="submit">提交</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+</body>
+
+
+</html>
+
+<script>
+    let globalUserId;
+    let globalUserName;
+    $("#datepicker_begin").datepicker({
+        locale: 'zh-cn',
+        format: 'yyyy-mm-dd',
+        weekStartDay: 1
+    });
+    $("#datepicker_end").datepicker({
+        locale: 'zh-cn',
+        format: 'yyyy-mm-dd',
+        weekStartDay: 1
+    });
+    function back(projectId){
+        window.location.href='/project/index?id='+projectId;
+    }
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    function filterFunction() {
+        var input, filter, ul, li, a, i;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        div = document.getElementById("myDropdown");
+        a = div.getElementsByTagName("a");
+        for (i = 0; i < a.length; i++) {
+            txtValue = a[i].textContent || a[i].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                a[i].style.display = "";
+            } else {
+                a[i].style.display = "none";
+            }
+        }
+    }
+    function addToProject(userId,userName) {
+        document.getElementById("myDropdown").classList.toggle("show")
+        globalUserId=userId
+        globalUserName=userName
+        $("#toBeAddUserName").text(userName)
+    }
+    function allocate(){
+        $("#devMember").val(globalUserName)
+        $("#formDevMember").val(globalUserId)
+    }
+</script>

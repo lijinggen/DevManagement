@@ -53,4 +53,5 @@ public interface TestService {
      */
     boolean deleteById(String id);
 
+    Test getByTaskId(String taskId);
 }

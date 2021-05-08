@@ -70,6 +70,9 @@ public class ProjectServiceImpl implements ProjectService {
     @Resource
     private ProjectService projectService;
 
+    @Resource
+    private BugService bugService;
+
     @Value("${customFile}")
     public String uploadDir;
 
@@ -314,10 +317,11 @@ public class ProjectServiceImpl implements ProjectService {
     public void addTest(AddTestRequest addTestRequest, String userId) throws ParseException {
         Test test=new Test();
         Task task=new Task();
+        Task devTask=taskService.queryById(addTestRequest.getRelationTaskId());
         task.setCreateUser(userId);
         task.setModifyTime(new Date());
         task.setCreateTime(new Date());
-        task.setBatchNo(UUID.randomUUID().toString());
+        task.setBatchNo(devTask.getBatchNo());
         if (addTestRequest.getPriority().equals("高")) {
             task.setPriority(1);
         } else if (addTestRequest.getPriority().equals("中")) {
@@ -346,13 +350,66 @@ public class ProjectServiceImpl implements ProjectService {
         message.setModifyTime(new Date());
         message.setFromUser(userService.queryById(userId).getUserName());
         message.setToUser(userService.queryById(addTestRequest.getUserId()).getUserName());
-        message.setTitle("【测试】"+taskService.queryById(addTestRequest.getRelationTaskId()).getTitle());
+        message.setTitle("分配了一个任务给您【测试】"+taskService.queryById(addTestRequest.getRelationTaskId()).getTitle());
         message.setToUserId(addTestRequest.getUserId());
         message.setIsRead(0);
         message.setProject(projectDao.selectById(addTestRequest.getProjectId()).getName());
         messageService.insert(message);
         testService.insert(test);
         taskService.insert(task);
+    }
+
+    @Override
+    public void addBug(AddBugRequest addBugRequest, String userId) throws ParseException {
+        // userId当前用户
+        Bug bug=new Bug();
+        Task task=new Task();
+        Task testTask=taskService.queryById(addBugRequest.getRelationTaskId());
+        task.setCreateUser(userId);
+        task.setModifyTime(new Date());
+        task.setCreateTime(new Date());
+        task.setBatchNo(testTask.getBatchNo());
+        if (addBugRequest.getPriority().equals("高")) {
+            task.setPriority(1);
+        } else if (addBugRequest.getPriority().equals("中")) {
+            task.setPriority(2);
+        } else if (addBugRequest.getPriority().equals("低")) {
+            task.setPriority(3);
+        }
+        task.setBeginTime(DateUtil.prase(addBugRequest.getBeginTime()));
+        task.setEndTime(DateUtil.prase(addBugRequest.getEndTime()));
+        task.setId(UUID.randomUUID().toString());
+        task.setStatus(1);
+        task.setTitle("【BUG】"+taskService.queryById(addBugRequest.getRelationTaskId()).getTitle());
+        task.setType(3);
+        task.setProjectId(addBugRequest.getProjectId());
+        task.setUserId(addBugRequest.getUserId());
+
+        bug.setCreateTime(new Date());
+        bug.setModifyTime(new Date());
+        bug.setId(UUID.randomUUID().toString());
+        bug.setTaskId(task.getId());
+        bug.setRelationTaskId(addBugRequest.getRelationTaskId());
+        bug.setDetauk(addBugRequest.getDetail());
+
+        Message message = new Message();
+        message.setId(UUID.randomUUID().toString());
+        message.setCreateTime(new Date());
+        message.setModifyTime(new Date());
+        message.setFromUser(userService.queryById(userId).getUserName());
+        message.setToUser(userService.queryById(addBugRequest.getUserId()).getUserName());
+        message.setTitle("分配了一个任务给您【BUG】"+taskService.queryById(addBugRequest.getRelationTaskId()).getTitle());
+        message.setToUserId(addBugRequest.getUserId());
+        message.setIsRead(0);
+        message.setProject(projectDao.selectById(addBugRequest.getProjectId()).getName());
+        messageService.insert(message);
+
+        testTask.setStatus(5);
+        taskService.update(testTask);
+
+        taskService.insert(task);
+
+        bugService.insert(bug);
     }
 
     @Override

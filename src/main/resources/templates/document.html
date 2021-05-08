@@ -689,6 +689,7 @@
     }
 
     function passUploadValue(projectId, name, type, directoryId) {
+        alert()
         $('#uploadLabel').text("添加文件夹或文件到：" + name)
         $('#type').val(type)
         $('#directoryId').val(directoryId)
@@ -727,9 +728,9 @@
                 fileId: globalFileId,
             },
             success: function (res) {
+                window.location.href="http://localhost:8080/doc/document?id="+projectId
             },
         })
-        window.location.href="http://localhost:8080/doc/document?id="+projectId
     }
 </script>
 </html>
