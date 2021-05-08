@@ -127,12 +127,16 @@
                                   fill="#3c4683" p-id="8984"></path>
                         </svg>
                     </a>
-
                 </div>
                 <div id="collapseOne" class="collapse show" data-parent="#accordion"
-                     style="color: #545C64;padding-bottom: 5px">
+                     style="color: #545C64;padding-bottom: 5px;">
+                    <div class="card-body"  th:if="${#lists.isEmpty(demand_dirs)} and ${#lists.isEmpty(demand_files)}"
+                            style="display:flex;flex-direction: row;justify-content: center">
+                        <img th:src="@{'/image/empty.svg'}" >
+                    </div>
                     <div class="card-body"
-                         style="padding-left: 0px;padding-right: 0px;padding-top: 3px;padding-bottom: 3px">
+                         style="padding-left: 0px;padding-right: 0px;padding-top: 3px;padding-bottom: 3px"
+                           th:if="${not #lists.isEmpty(demand_dirs)} or not ${#lists.isEmpty(demand_files)}">
                         <ul class="list-unstyled" style="padding-bottom: 2px">
                             <li th:each="item : ${demand_dirs}">
                                 <div class="card" style="border: none;padding-top: 5px">
@@ -399,7 +403,7 @@
                                            style="display: flex;flex-direction: row;font-size: 14px;height: 16px;line-height: 16px;padding-left: 0">
                                             <span style="margin-left: 5px" th:text="${item.directory.name}"></span>
                                         </a>
-                                        <a href="#" style="margin-left: auto;margin-right: 20px"
+                                        <a href="#" style="margin-left: auto;"
                                            data-target="#uploadModel" data-toggle="modal"
                                            th:onclick="passUploadValue([[${project_id}]],[[${item.directory.name}]],3,[[${item.directory.id}]])">
                                             <svg t="1620283110075" class="icon" viewBox="0 0 1024 1024" version="1.1"
@@ -408,6 +412,14 @@
                                                       fill="#3c4683" opacity=".4" p-id="8983"></path>
                                                 <path d="M653.653333 542.208h-109.653333v108.757333c0 17.493333-14.336 31.701333-32 31.701334a31.829333 31.829333 0 0 1-32-31.701334v-108.757333H370.346667a32.128 32.128 0 0 1-29.013334-31.872c0-16.426667 12.501333-30.165333 29.013334-31.872h109.312v-108.373333A32.213333 32.213333 0 0 1 511.829333 341.333333c16.554667 0 30.464 12.373333 32.170667 28.757334v108.373333h109.653333c16.512 1.706667 29.013333 15.445333 29.013334 31.872a32.128 32.128 0 0 1-29.013334 31.872z"
                                                       fill="#3c4683" p-id="8984"></path>
+                                            </svg>
+                                        </a>
+                                        <a href="#" style="margin-left: 5px;margin-right: 23px;" data-target="#remModel"
+                                           data-toggle="modal" th:onclick="passRemValue([[${item.directory.id}]],'',[[${item.directory.name}]])">
+                                            <svg t="1620368450863" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                                                 xmlns="http://www.w3.org/2000/svg" p-id="5283" width="16" height="16">
+                                                <path d="M0 0l0 1024 1024 0L1024 0 0 0zM819.2 787.2c6.4 6.4 6.4 19.2 0 25.6-6.4 6.4-6.4 6.4-12.8 6.4s-12.8 0-12.8-6.4L512 531.2l-281.6 281.6c-6.4 6.4-6.4 6.4-12.8 6.4-6.4 0-12.8 0-12.8-6.4-6.4-6.4-6.4-19.2 0-25.6l281.6-281.6L204.8 224C192 217.6 192 204.8 204.8 198.4s19.2-6.4 25.6 0L512 480l281.6-281.6c6.4-6.4 19.2-6.4 25.6 0 6.4 6.4 6.4 19.2 0 25.6L537.6 505.6 819.2 787.2z"
+                                                      p-id="5284" fill="#d81e06"></path>
                                             </svg>
                                         </a>
                                     </div>
@@ -517,7 +529,7 @@
                                            style="display: flex;flex-direction: row;font-size: 14px;height: 16px;line-height: 16px;padding-left: 0">
                                             <span style="margin-left: 5px" th:text="${item.directory.name}"></span>
                                         </a>
-                                        <a href="#" style="margin-left: auto;margin-right: 20px"
+                                        <a href="#" style="margin-left: auto;"
                                            data-target="#uploadModel" data-toggle="modal"
                                            th:onclick="passUploadValue([[${project_id}]],[[${item.directory.name}]],4,[[${item.directory.id}]])">
                                             <svg t="1620283110075" class="icon" viewBox="0 0 1024 1024" version="1.1"
@@ -526,6 +538,14 @@
                                                       fill="#3c4683" opacity=".4" p-id="8983"></path>
                                                 <path d="M653.653333 542.208h-109.653333v108.757333c0 17.493333-14.336 31.701333-32 31.701334a31.829333 31.829333 0 0 1-32-31.701334v-108.757333H370.346667a32.128 32.128 0 0 1-29.013334-31.872c0-16.426667 12.501333-30.165333 29.013334-31.872h109.312v-108.373333A32.213333 32.213333 0 0 1 511.829333 341.333333c16.554667 0 30.464 12.373333 32.170667 28.757334v108.373333h109.653333c16.512 1.706667 29.013333 15.445333 29.013334 31.872a32.128 32.128 0 0 1-29.013334 31.872z"
                                                       fill="#3c4683" p-id="8984"></path>
+                                            </svg>
+                                        </a>
+                                        <a href="#" style="margin-left: 5px;margin-right: 23px;" data-target="#remModel"
+                                           data-toggle="modal" th:onclick="passRemValue([[${item.directory.id}]],'',[[${item.directory.name}]])">
+                                            <svg t="1620368450863" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                                                 xmlns="http://www.w3.org/2000/svg" p-id="5283" width="16" height="16">
+                                                <path d="M0 0l0 1024 1024 0L1024 0 0 0zM819.2 787.2c6.4 6.4 6.4 19.2 0 25.6-6.4 6.4-6.4 6.4-12.8 6.4s-12.8 0-12.8-6.4L512 531.2l-281.6 281.6c-6.4 6.4-6.4 6.4-12.8 6.4-6.4 0-12.8 0-12.8-6.4-6.4-6.4-6.4-19.2 0-25.6l281.6-281.6L204.8 224C192 217.6 192 204.8 204.8 198.4s19.2-6.4 25.6 0L512 480l281.6-281.6c6.4-6.4 19.2-6.4 25.6 0 6.4 6.4 6.4 19.2 0 25.6L537.6 505.6 819.2 787.2z"
+                                                      p-id="5284" fill="#d81e06"></path>
                                             </svg>
                                         </a>
                                     </div>
@@ -689,7 +709,6 @@
     }
 
     function passUploadValue(projectId, name, type, directoryId) {
-        alert()
         $('#uploadLabel').text("添加文件夹或文件到：" + name)
         $('#type').val(type)
         $('#directoryId').val(directoryId)
