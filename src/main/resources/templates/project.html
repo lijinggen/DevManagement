@@ -179,7 +179,7 @@
                             flex-direction: row; align-items: center;font-size: 14px;"
                             th:each="item:${task.taskDtoList}"
                             th:styleappend="${item.border}"
-                            th:classappend="${item.status==4}?'disabled':'a-black-color'">
+                            th:classappend="${item.status==4 or item.status eq 2}?'disabled':'a-black-color'">
                             <span class="badge rounded-pill badge-warning" th:if="${item.status} eq 1">进行中</span>
                             <span class="badge rounded-pill badge-dark" th:if="${item.status} eq 2">已完成</span>
                             <span class="badge rounded-pill badge-success" th:if="${item.status} eq 3">已上线</span>
@@ -223,11 +223,13 @@
                                     th:attr="data-target='#testDetail'+${item.id}"
                                     th:if="${item.type eq '测试'}">详情
                             </button>
-                            <!--                            <button-->
-                            <!--                                    style="font-size: 10px;margin-left: 3px;height: 20px;line-height: 20px;padding: 0;padding-left: 4px;padding-right: 4px"-->
-                            <!--                                    class="btn btn-outline-info"-->
-                            <!--                                    th:if="${item.type eq '测试'}">详情-->
-                            <!--                            </button>-->
+                            <button
+                                    style="font-size: 10px;margin-left: 3px;height: 20px;line-height: 20px;padding: 0;padding-left: 4px;padding-right: 4px"
+                                    class="btn btn-outline-info"
+                                    data-toggle="modal"
+                                    th:attr="data-target='#bugDetail'+${item.id}"
+                                    th:if="${item.type eq 'bug'}">详情
+                            </button>
                         </li>
                     </ul>
                 </div>
@@ -317,21 +319,23 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="bt" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">开始时间</label>
+                        <label for="bt" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">预计开始时间</label>
                         <div id="bt" th:text="${item.beginTime}" style="font-size: 14px"></div>
                     </div>
                     <div class="form-group">
-                        <label for="et" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">结束时间</label>
+                        <label for="et" style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">预计结束时间</label>
                         <div id="et" th:text="${item.endTime}" style="font-size: 14px"></div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"
-                            th:if="${item.status eq '已关闭'}">重新打开
+                            th:if="${item.status eq '已关闭'}"
+                            th:onclick="reOpen([[${item.id}]],[[${project_id}]])">重新打开
                     </button>
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭弹框</button>
                     <button type="button" class="btn btn-outline-danger" data-dismiss="modal"
-                            th:if="${item.status eq '进行中'}">关闭需求
+                            th:if="${item.status eq '进行中'}"
+                            th:onclick="closed([[${item.id}]],[[${project_id}]])">关闭需求
                     </button>
                     <button type="button" class="btn btn-outline-success" data-dismiss="modal"
                             th:if="${item.status eq '进行中'}"
@@ -356,7 +360,7 @@
                 <div class="modal-body" style="font-size: 15px">
                     <div class="form-group">
                         <label for="testDetail"
-                               style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">需求详情</label>
+                               style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">测试描述</label>
                         <textarea class="form-control" id="testDetail" style="min-height: 150px;overflow: auto"
                                   name="detail"
                                   th:text="${testItem.detail}" disabled>
@@ -379,12 +383,12 @@
                     </div>
                     <div class="form-group">
                         <label for="testbt"
-                               style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">开始时间</label>
+                               style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">预计开始时间</label>
                         <div id="testbt" th:text="${testItem.beginTime}" style="font-size: 14px"></div>
                     </div>
                     <div class="form-group">
                         <label for="testet"
-                               style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">结束时间</label>
+                               style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">预计结束时间</label>
                         <div id="testet" th:text="${testItem.endTime}" style="font-size: 14px"></div>
                     </div>
                 </div>
@@ -404,7 +408,68 @@
         </div>
     </div>
 </div>
-
+<div th:each="bugItem: ${bug_detail_list}">
+    <div class="modal fade" th:id="'bugDetail'+${bugItem.id}" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bugTitle" th:text="${bugItem.title}"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="font-size: 15px">
+                    <div class="form-group">
+                        <label for="bugDetail"
+                               style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">Bug描述</label>
+                        <textarea class="form-control" id="bugDetail" style="min-height: 150px;overflow: auto"
+                                  name="detail"
+                                  th:text="${bugItem.detauk}" disabled>
+                        </textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="bugMs"
+                               style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">任务描述</label>
+                        <div id="bugMs" style="display: flex;flex-direction: column; font-size: 14px">
+                            <span>优&nbsp;&nbsp;先&nbsp;&nbsp;级：<span th:text="${bugItem.priority}"></span></span>
+                            <span>状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态：<span
+                                    th:text="${bugItem.status}"></span></span>
+                            <span>任务类型：<span>Bug</span></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="BugCu"
+                               style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">创建人</label>
+                        <div id="BugCu" th:text="${bugItem.createUser}" style="font-size: 14px"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bugBt"
+                               style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">预计开始时间</label>
+                        <div id="bugBt" th:text="${bugItem.beginTime}" style="font-size: 14px"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bugEt"
+                               style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">预计结束时间</label>
+                        <div id="bugEt" th:text="${bugItem.endTime}" style="font-size: 14px"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"
+                            th:if="${bugItem.status eq '已关闭'}">重新打开
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭弹框</button>
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal"
+                            th:if="${bugItem.status eq '进行中'}">拒绝
+                    </button>
+                    <button type="button" class="btn btn-outline-success" data-dismiss="modal"
+                            th:if="${bugItem.status eq '进行中'}">修复完成
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
 
@@ -435,6 +500,24 @@
     function finished(taskId,projectId){
         $.ajax({
             url: "http://localhost:8080/task/finished?id="+taskId,
+            dataType: "json",
+            type: "GET",
+        })
+        window.location.href='/project/index?id='+projectId;
+    }
+
+    function closed(taskId,projectId){
+        $.ajax({
+            url: "http://localhost:8080/task/closed?id="+taskId,
+            dataType: "json",
+            type: "GET",
+        })
+        window.location.href='/project/index?id='+projectId;
+    }
+
+    function reOpen(taskId,projectId){
+        $.ajax({
+            url: "http://localhost:8080/task/reopen?id="+taskId,
             dataType: "json",
             type: "GET",
         })

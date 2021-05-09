@@ -132,8 +132,10 @@ public class ProjectController {
         //--------------------------------------------------------------------------详情页数据
         List<DemandDetailDto> demandDetailDtos = projectService.listDemandDetail(id);
         List<TestDetailDto> testDetailDtos = projectService.listTestDetail(id);
+        List<BugDetailDto> bugDetailDtoList=projectService.listBugDetail(id);
         model.addAttribute("demand_detail_list", demandDetailDtos);
         model.addAttribute("test_detail_list", testDetailDtos);
+        model.addAttribute("bug_detail_list",bugDetailDtoList);
         model.addAttribute("current_user_id",userId);
         return "project";
     }

@@ -7,10 +7,10 @@ import java.io.Serializable;
  * (Directory)实体类
  *
  * @author makejava
- * @since 2021-03-24 21:36:11
+ * @since 2021-05-09 11:51:15
  */
 public class Directory implements Serializable {
-    private static final long serialVersionUID = 925607985028051456L;
+    private static final long serialVersionUID = -35432182362036348L;
 
     private String id;
     /**
@@ -30,6 +30,9 @@ public class Directory implements Serializable {
      */
     private Date modifyTime;
 
+    private String createUser;
+
+    private String desciption;
 
     public String getId() {
         return id;
@@ -77,6 +80,22 @@ public class Directory implements Serializable {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
+
+    public String getDesciption() {
+        return desciption;
+    }
+
+    public void setDesciption(String desciption) {
+        this.desciption = desciption;
     }
 
 }

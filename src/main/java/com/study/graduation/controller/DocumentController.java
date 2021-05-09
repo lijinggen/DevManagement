@@ -7,6 +7,7 @@ import com.study.graduation.entity.*;
 import com.study.graduation.service.DirectoryService;
 import com.study.graduation.service.DocumentService;
 import com.study.graduation.service.ProjectService;
+import com.study.graduation.service.UserService;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,9 @@ public class DocumentController {
 
     @Resource
     private DocumentService documentService;
+
+    @Resource
+    private UserService userService;
 
     @RequestMapping("/document")
     public String document(Model model, HttpServletRequest request, String id) {
@@ -71,7 +75,9 @@ public class DocumentController {
     }
 
     @PostMapping("/addFile")
-    public String addFile(AddDocumentDto addDocumentDto, MultipartFile file) throws IOException {
+    public String addFile(HttpServletRequest httpServletRequest,AddDocumentDto addDocumentDto, MultipartFile file) throws IOException {
+        String userName=userService.queryById((String) httpServletRequest.getSession().getAttribute("user_id")).getUserName();
+        addDocumentDto.setUserName(userName);
         // 文件不为空；添加文件
         if(!file.isEmpty()){
             documentService.addFile(addDocumentDto,file);
@@ -85,7 +91,9 @@ public class DocumentController {
                 directory.setId(UUID.randomUUID().toString());
                 directory.setName(addDocumentDto.getName());
                 directory.setType(addDocumentDto.getType());
+                directory.setCreateUser(addDocumentDto.getUserName());
                 directory.setProjectId(addDocumentDto.getProjectId());
+                directory.setDesciption(addDocumentDto.getDescription());
                 directoryService.insert(directory);
             }
         }

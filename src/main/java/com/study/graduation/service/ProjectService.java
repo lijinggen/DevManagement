@@ -85,4 +85,6 @@ public interface ProjectService {
     List<DemandDetailDto> listDemandDetail(String projectId) throws ParseException;
 
     List<TestDetailDto> listTestDetail(String projectId) throws ParseException;
+
+    List<BugDetailDto> listBugDetail(String projectId) throws ParseException;
 }

@@ -130,18 +130,18 @@
                 </div>
                 <div id="collapseOne" class="collapse show" data-parent="#accordion"
                      style="color: #545C64;padding-bottom: 5px;">
-                    <div class="card-body"  th:if="${#lists.isEmpty(demand_dirs)} and ${#lists.isEmpty(demand_files)}"
-                            style="display:flex;flex-direction: row;justify-content: center">
-                        <img th:src="@{'/image/empty.svg'}" >
+                    <div class="card-body" th:if="${#lists.isEmpty(demand_dirs)} and ${#lists.isEmpty(demand_files)}"
+                         style="display:flex;flex-direction: row;justify-content: center">
+                        <img th:src="@{'/image/empty.svg'}">
                     </div>
                     <div class="card-body"
                          style="padding-left: 0px;padding-right: 0px;padding-top: 3px;padding-bottom: 3px"
-                           th:if="${not #lists.isEmpty(demand_dirs)} or not ${#lists.isEmpty(demand_files)}">
+                         th:if="${not #lists.isEmpty(demand_dirs)} or not ${#lists.isEmpty(demand_files)}">
                         <ul class="list-unstyled" style="padding-bottom: 2px">
                             <li th:each="item : ${demand_dirs}">
-                                <div class="card" style="border: none;padding-top: 5px">
-                                    <div class="" style="display: flex;flex-direction: row;height: 25px;line-height: 25px;border: none;
-                                    border-radius: 0px;padding-left: 8px">
+                                <div class="card" style="border: none;padding-top: 5px;">
+                                    <div class="" style="display: flex;flex-direction: row;height: 25px;border: none;
+                                    border-radius: 0px;padding-left: 8px;align-items: center">
                                         <svg t="1620350828894" class="icon" viewBox="0 0 1024 1024" version="1.1"
                                              xmlns="http://www.w3.org/2000/svg" p-id="9839" width="15" height="15">
                                             <path d="M954.186 312.086c-3.361-3.492-7.857-5.238-12.383-5.238L500.621 306.848l-17.927 0-36.202-142.977c-1.106-3.317-3.187-6.315-6.243-8.527-3.056-2.183-6.591-3.23-10.04-3.23L167.523 152.114c-4.395 0-8.789 1.688-12.15 5.035-3.361 3.347-5.049 7.77-5.049 12.164l-34.369 137.535L82.197 306.848c-4.496 0-8.993 1.746-12.383 5.238-3.361 3.521-4.977 8.09-4.802 12.572l33.103 530.669c0.175 4.308 1.921 8.526 5.268 11.757 3.332 3.23 7.625 4.802 11.932 4.802L891.5 871.886c4.293 0 8.6-1.571 11.946-4.802 3.332-3.23 5.078-7.449 5.238-11.757l50.303-530.669C959.162 320.176 957.547 315.607 954.186 312.086zM177.898 181.914l242.417 0 31.619 124.875L146.687 306.789 177.898 181.914zM880.034 842.086 127.116 842.086 95.642 336.648l43.58 0 0.015-0.058 320.25 0 0.015 0.058 468.376 0L880.034 842.086z"
@@ -151,19 +151,24 @@
                                            style="display: flex;flex-direction: row;font-size: 14px;height: 16px;line-height: 16px;padding-left: 0">
                                             <span style="margin-left: 5px" th:text="${item.directory.name}"></span>
                                         </a>
+                                        <span style="margin-left: auto;color: grey;font-size: 14px;margin-right: 10px"
+                                              th:text="''+${item.directory.desciption}+';  创建者：'+${item.directory.createUser}"></span>
                                         <a href="#" data-target="#uploadModel" data-toggle="modal"
-                                           style="margin-left: auto;"
+                                           style="display: flex;align-items: center"
                                            th:onclick="passUploadValue([[${project_id}]],[[${item.directory.name}]],1,[[${item.directory.id}]])">
                                             <svg t="1620283110075" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                                                 xmlns="http://www.w3.org/2000/svg" p-id="8982" width="22" height="22">
+                                                 xmlns="http://www.w3.org/2000/svg" p-id="8982" width="20" height="20">
                                                 <path d="M711.125333 85.333333H312.874667C167.68 85.333333 85.333333 167.637333 85.333333 312.874667v398.250666C85.333333 855.978667 167.253333 938.666667 312.874667 938.666667h398.250666C856.32 938.666667 938.666667 855.978667 938.666667 711.125333V312.874667C938.666667 167.68 856.362667 85.333333 711.125333 85.333333z"
                                                       fill="#3c4683" opacity=".4" p-id="8983"></path>
                                                 <path d="M653.653333 542.208h-109.653333v108.757333c0 17.493333-14.336 31.701333-32 31.701334a31.829333 31.829333 0 0 1-32-31.701334v-108.757333H370.346667a32.128 32.128 0 0 1-29.013334-31.872c0-16.426667 12.501333-30.165333 29.013334-31.872h109.312v-108.373333A32.213333 32.213333 0 0 1 511.829333 341.333333c16.554667 0 30.464 12.373333 32.170667 28.757334v108.373333h109.653333c16.512 1.706667 29.013333 15.445333 29.013334 31.872a32.128 32.128 0 0 1-29.013334 31.872z"
                                                       fill="#3c4683" p-id="8984"></path>
                                             </svg>
                                         </a>
-                                        <a href="#" style="margin-left: 5px;margin-right: 23px;" data-target="#remModel"
-                                           data-toggle="modal" th:onclick="passRemValue([[${item.directory.id}]],'',[[${item.directory.name}]])">
+                                        <a href="#"
+                                           style="margin-left: 5px;margin-right: 23px; display: flex;flex-direction: row"
+                                           data-target="#remModel"
+                                           data-toggle="modal"
+                                           th:onclick="passRemValue([[${item.directory.id}]],'',[[${item.directory.name}]])">
                                             <svg t="1620368450863" class="icon" viewBox="0 0 1024 1024" version="1.1"
                                                  xmlns="http://www.w3.org/2000/svg" p-id="5283" width="16" height="16">
                                                 <path d="M0 0l0 1024 1024 0L1024 0 0 0zM819.2 787.2c6.4 6.4 6.4 19.2 0 25.6-6.4 6.4-6.4 6.4-12.8 6.4s-12.8 0-12.8-6.4L512 531.2l-281.6 281.6c-6.4 6.4-6.4 6.4-12.8 6.4-6.4 0-12.8 0-12.8-6.4-6.4-6.4-6.4-19.2 0-25.6l281.6-281.6L204.8 224C192 217.6 192 204.8 204.8 198.4s19.2-6.4 25.6 0L512 480l281.6-281.6c6.4-6.4 19.2-6.4 25.6 0 6.4 6.4 6.4 19.2 0 25.6L537.6 505.6 819.2 787.2z"
@@ -190,8 +195,13 @@
                                                     </svg>
                                                     <a th:text="${subItem.name}" th:href="@{${subItem.path}}"
                                                        style="margin-left: 5px;font-size: 14px"></a>
-                                                    <a href="#" style="margin-left: auto;margin-right: -1px" data-target="#remModel"
-                                                       data-toggle="modal" th:onclick="passRemValue('',[[${subItem.id}]],[[${subItem.name}]])">
+                                                    <span style="margin-left: auto;color: grey;font-size: 14px;margin-right: 10px"
+                                                          th:text="''+${subItem.desciption}+';  创建者：'+${subItem.createUser}"></span>
+                                                    <a href="#"
+                                                       style="margin-right: -1px;display: flex;align-items: center"
+                                                       data-target="#remModel"
+                                                       data-toggle="modal"
+                                                       th:onclick="passRemValue('',[[${subItem.id}]],[[${subItem.name}]])">
                                                         <svg t="1620368450863" class="icon" viewBox="0 0 1024 1024"
                                                              version="1.1"
                                                              xmlns="http://www.w3.org/2000/svg" p-id="5283" width="16"
@@ -224,7 +234,10 @@
                                 </svg>
                                 <a th:text="${item.name}" th:href="@{${item.path}}"
                                    style="margin-left: 5px;font-size: 14px"></a>
-                                <a href="#" style="margin-left: auto;margin-right: 19px" data-target="#remModel"
+                                <span style="margin-left: auto;color: grey;font-size: 14px;margin-right: 10px"
+                                      th:text="''+${item.desciption}+';  创建者：'+${item.createUser}"> </span>
+                                <a href="#" style="margin-right: 19px;display: flex;align-items: center"
+                                   data-target="#remModel"
                                    data-toggle="modal" th:onclick="passRemValue('',[[${item.id}]],[[${item.name}]])">
                                     <svg t="1620368450863" class="icon" viewBox="0 0 1024 1024" version="1.1"
                                          xmlns="http://www.w3.org/2000/svg" p-id="5283" width="16" height="16">
@@ -262,11 +275,17 @@
                     </a>
                 </div>
                 <div id="collapseTwo" class="collapse" data-parent="#accordion" style="color: #4299ff">
-                    <div class="card-body" style="padding-left: 0px;padding-right: 0px;padding-top: 3px;">
+                    <div class="card-body" th:if="${#lists.isEmpty(stander_dirs)} and ${#lists.isEmpty(stander_files)}"
+                         style="display:flex;flex-direction: row;justify-content: center">
+                        <img th:src="@{'/image/empty.svg'}">
+                    </div>
+                    <div class="card-body"
+                         style="padding-left: 0px;padding-right: 0px;padding-top: 3px;padding-bottom: 3px"
+                         th:if="${not #lists.isEmpty(stander_dirs)} or not ${#lists.isEmpty(stander_files)}">
                         <ul class="list-unstyled">
                             <li th:each="item : ${stander_dirs}">
                                 <div class="card" style="border: none;padding-top: 5px">
-                                    <div class="" style="display: flex;flex-direction: row;height: 25px;line-height: 25px;border: none;
+                                    <div class="" style="display: flex;flex-direction: row;height: 25px;align-items: center;border: none;
                                     border-radius: 0px;padding-left: 8px">
                                         <svg t="1620350828894" class="icon" viewBox="0 0 1024 1024" version="1.1"
                                              xmlns="http://www.w3.org/2000/svg" p-id="9839" width="15" height="15">
@@ -277,7 +296,9 @@
                                            style="display: flex;flex-direction: row;font-size: 14px;height: 16px;line-height: 16px;padding-left: 0">
                                             <span style="margin-left: 5px" th:text="${item.directory.name}"></span>
                                         </a>
-                                        <a href="#" style="margin-left: auto;"
+                                        <span style="margin-left: auto;color: grey;font-size: 14px;margin-right: 10px"
+                                              th:text="''+${item.directory.desciption}+';  创建者：'+${item.directory.createUser}"></span>
+                                        <a href="#" style=""
                                            data-target="#uploadModel" data-toggle="modal"
                                            th:onclick="passUploadValue([[${project_id}]],[[${item.directory.name}]],2,[[${item.directory.id}]])">
                                             <svg t="1620283110075" class="icon" viewBox="0 0 1024 1024" version="1.1"
@@ -289,7 +310,8 @@
                                             </svg>
                                         </a>
                                         <a href="#" style="margin-left: 5px;margin-right: 23px;" data-target="#remModel"
-                                           data-toggle="modal" th:onclick="passRemValue([[${item.directory.id}]],'',[[${item.directory.name}]])">
+                                           data-toggle="modal"
+                                           th:onclick="passRemValue([[${item.directory.id}]],'',[[${item.directory.name}]])">
                                             <svg t="1620368450863" class="icon" viewBox="0 0 1024 1024" version="1.1"
                                                  xmlns="http://www.w3.org/2000/svg" p-id="5283" width="16" height="16">
                                                 <path d="M0 0l0 1024 1024 0L1024 0 0 0zM819.2 787.2c6.4 6.4 6.4 19.2 0 25.6-6.4 6.4-6.4 6.4-12.8 6.4s-12.8 0-12.8-6.4L512 531.2l-281.6 281.6c-6.4 6.4-6.4 6.4-12.8 6.4-6.4 0-12.8 0-12.8-6.4-6.4-6.4-6.4-19.2 0-25.6l281.6-281.6L204.8 224C192 217.6 192 204.8 204.8 198.4s19.2-6.4 25.6 0L512 480l281.6-281.6c6.4-6.4 19.2-6.4 25.6 0 6.4 6.4 6.4 19.2 0 25.6L537.6 505.6 819.2 787.2z"
@@ -316,8 +338,13 @@
                                                     </svg>
                                                     <a th:text="${subItem.name}" th:href="@{${subItem.path}}"
                                                        style="margin-left: 5px;font-size: 14px"></a>
-                                                    <a href="#" style="margin-left: auto;margin-right: -1px" data-target="#remModel"
-                                                       data-toggle="modal" th:onclick="passRemValue('',[[${subItem.id}]],[[${subItem.name}]])">
+                                                    <span style="margin-left: auto;color: grey;font-size: 14px;margin-right: 10px"
+                                                          th:text="''+${subItem.desciption}+';  创建者：'+${subItem.createUser}"></span>
+                                                    <a href="#"
+                                                       style="margin-right: -1px;display: flex;align-items: center"
+                                                       data-target="#remModel"
+                                                       data-toggle="modal"
+                                                       th:onclick="passRemValue('',[[${subItem.id}]],[[${subItem.name}]])">
                                                         <svg t="1620368450863" class="icon" viewBox="0 0 1024 1024"
                                                              version="1.1"
                                                              xmlns="http://www.w3.org/2000/svg" p-id="5283" width="16"
@@ -350,7 +377,10 @@
                                 </svg>
                                 <a th:text="${item.name}" th:href="@{${item.path}}"
                                    style="margin-left: 5px;font-size: 14px"></a>
-                                <a href="#" style="margin-left: auto;margin-right: 19px" data-target="#remModel"
+                                <span style="margin-left: auto;color: grey;font-size: 14px;margin-right: 10px"
+                                      th:text="''+${item.desciption}+';  创建者：'+${item.createUser}"></span>
+                                <a href="#" style="margin-right: 19px;display: flex;align-items: center"
+                                   data-target="#remModel"
                                    data-toggle="modal" th:onclick="passRemValue('',[[${item.id}]],[[${item.name}]])">
                                     <svg t="1620368450863" class="icon" viewBox="0 0 1024 1024" version="1.1"
                                          xmlns="http://www.w3.org/2000/svg" p-id="5283" width="16" height="16">
@@ -388,11 +418,17 @@
                     </a>
                 </div>
                 <div id="collapseThree" class="collapse" data-parent="#accordion" style="color: #4299ff">
-                    <div class="card-body" style="padding-left: 0px;padding-right: 0px;padding-top: 3px;">
+                    <div class="card-body" th:if="${#lists.isEmpty(dev_dirs)} and ${#lists.isEmpty(dev_files)}"
+                         style="display:flex;flex-direction: row;justify-content: center">
+                        <img th:src="@{'/image/empty.svg'}">
+                    </div>
+                    <div class="card-body"
+                         style="padding-left: 0px;padding-right: 0px;padding-top: 3px;padding-bottom: 3px"
+                         th:if="${not #lists.isEmpty(dev_dirs)} or not ${#lists.isEmpty(dev_files)}">
                         <ul class="list-unstyled">
                             <li th:each="item : ${dev_dirs}">
                                 <div class="card" style="border: none;padding-top: 5px">
-                                    <div class="" style="display: flex;flex-direction: row;height: 25px;line-height: 25px;border: none;
+                                    <div class="" style="display: flex;flex-direction: row;height: 25px;align-items: center;border: none;
                                     border-radius: 0px;padding-left: 8px">
                                         <svg t="1620350828894" class="icon" viewBox="0 0 1024 1024" version="1.1"
                                              xmlns="http://www.w3.org/2000/svg" p-id="9839" width="15" height="15">
@@ -403,7 +439,9 @@
                                            style="display: flex;flex-direction: row;font-size: 14px;height: 16px;line-height: 16px;padding-left: 0">
                                             <span style="margin-left: 5px" th:text="${item.directory.name}"></span>
                                         </a>
-                                        <a href="#" style="margin-left: auto;"
+                                        <span style="margin-left: auto;color: grey;font-size: 14px;margin-right: 10px"
+                                              th:text="''+${item.directory.desciption}+';  创建者：'+${item.directory.createUser}"></span>
+                                        <a href="#" style=""
                                            data-target="#uploadModel" data-toggle="modal"
                                            th:onclick="passUploadValue([[${project_id}]],[[${item.directory.name}]],3,[[${item.directory.id}]])">
                                             <svg t="1620283110075" class="icon" viewBox="0 0 1024 1024" version="1.1"
@@ -415,7 +453,8 @@
                                             </svg>
                                         </a>
                                         <a href="#" style="margin-left: 5px;margin-right: 23px;" data-target="#remModel"
-                                           data-toggle="modal" th:onclick="passRemValue([[${item.directory.id}]],'',[[${item.directory.name}]])">
+                                           data-toggle="modal"
+                                           th:onclick="passRemValue([[${item.directory.id}]],'',[[${item.directory.name}]])">
                                             <svg t="1620368450863" class="icon" viewBox="0 0 1024 1024" version="1.1"
                                                  xmlns="http://www.w3.org/2000/svg" p-id="5283" width="16" height="16">
                                                 <path d="M0 0l0 1024 1024 0L1024 0 0 0zM819.2 787.2c6.4 6.4 6.4 19.2 0 25.6-6.4 6.4-6.4 6.4-12.8 6.4s-12.8 0-12.8-6.4L512 531.2l-281.6 281.6c-6.4 6.4-6.4 6.4-12.8 6.4-6.4 0-12.8 0-12.8-6.4-6.4-6.4-6.4-19.2 0-25.6l281.6-281.6L204.8 224C192 217.6 192 204.8 204.8 198.4s19.2-6.4 25.6 0L512 480l281.6-281.6c6.4-6.4 19.2-6.4 25.6 0 6.4 6.4 6.4 19.2 0 25.6L537.6 505.6 819.2 787.2z"
@@ -442,7 +481,9 @@
                                                     </svg>
                                                     <a th:text="${subItem.name}" th:href="@{${subItem.path}}"
                                                        style="margin-left: 5px;font-size: 14px"></a>
-                                                    <a href="#" style="margin-left: auto;margin-right: -1px">
+                                                    <span style="margin-left: auto;color: grey;font-size: 14px;margin-right: 10px"
+                                                          th:text="''+${subItem.desciption}+';  创建者：'+${subItem.createUser}"></span>
+                                                    <a href="#" style="margin-right: -1px">
                                                         <svg t="1620368450863" class="icon" viewBox="0 0 1024 1024"
                                                              version="1.1"
                                                              xmlns="http://www.w3.org/2000/svg" p-id="5283" width="16"
@@ -475,7 +516,9 @@
                                 </svg>
                                 <a th:text="${item.name}" th:href="@{${item.path}}"
                                    style="margin-left: 5px;font-size: 14px"></a>
-                                <a href="#" style="margin-left: auto;margin-right: 19px"
+                                <span style="margin-left: auto;color: grey;font-size: 14px;margin-right: 10px"
+                                      th:text="''+${item.desciption}+';  创建者：'+${item.createUser}"></span>
+                                <a href="#" style="display:flex;align-items:center;margin-right: 19px"
                                    data-target="#remModel"
                                    data-toggle="modal" th:onclick="passRemValue('',[[${item.id}]],[[${item.name}]])">
                                     <svg t="1620368450863" class="icon" viewBox="0 0 1024 1024" version="1.1"
@@ -514,11 +557,17 @@
                     </a>
                 </div>
                 <div id="collapseFour" class="collapse" data-parent="#accordion" style="color: #4299ff">
-                    <div class="card-body" style="padding-left: 0px;padding-right: 0px;padding-top: 3px;">
+                    <div class="card-body" th:if="${#lists.isEmpty(other_dirs)} and ${#lists.isEmpty(other_files)}"
+                         style="display:flex;flex-direction: row;justify-content: center">
+                        <img th:src="@{'/image/empty.svg'}">
+                    </div>
+                    <div class="card-body"
+                         style="padding-left: 0px;padding-right: 0px;padding-top: 3px;padding-bottom: 3px"
+                         th:if="${not #lists.isEmpty(other_dirs)} or not ${#lists.isEmpty(other_files)}">
                         <ul class="list-unstyled">
                             <li th:each="item : ${other_dirs}">
                                 <div class="card" style="border: none;padding-top: 5px">
-                                    <div class="" style="display: flex;flex-direction: row;height: 25px;line-height: 25px;border: none;
+                                    <div class="" style="display: flex;flex-direction: row;height: 25px;align-items: center;border: none;
                                     border-radius: 0px;padding-left: 8px">
                                         <svg t="1620350828894" class="icon" viewBox="0 0 1024 1024" version="1.1"
                                              xmlns="http://www.w3.org/2000/svg" p-id="9839" width="15" height="15">
@@ -529,7 +578,9 @@
                                            style="display: flex;flex-direction: row;font-size: 14px;height: 16px;line-height: 16px;padding-left: 0">
                                             <span style="margin-left: 5px" th:text="${item.directory.name}"></span>
                                         </a>
-                                        <a href="#" style="margin-left: auto;"
+                                        <span style="margin-left: auto;color: grey;font-size: 14px;margin-right: 10px"
+                                              th:text="''+${item.directory.desciption}+';  创建者：'+${item.directory.createUser}"></span>
+                                        <a href="#" style=""
                                            data-target="#uploadModel" data-toggle="modal"
                                            th:onclick="passUploadValue([[${project_id}]],[[${item.directory.name}]],4,[[${item.directory.id}]])">
                                             <svg t="1620283110075" class="icon" viewBox="0 0 1024 1024" version="1.1"
@@ -541,7 +592,8 @@
                                             </svg>
                                         </a>
                                         <a href="#" style="margin-left: 5px;margin-right: 23px;" data-target="#remModel"
-                                           data-toggle="modal" th:onclick="passRemValue([[${item.directory.id}]],'',[[${item.directory.name}]])">
+                                           data-toggle="modal"
+                                           th:onclick="passRemValue([[${item.directory.id}]],'',[[${item.directory.name}]])">
                                             <svg t="1620368450863" class="icon" viewBox="0 0 1024 1024" version="1.1"
                                                  xmlns="http://www.w3.org/2000/svg" p-id="5283" width="16" height="16">
                                                 <path d="M0 0l0 1024 1024 0L1024 0 0 0zM819.2 787.2c6.4 6.4 6.4 19.2 0 25.6-6.4 6.4-6.4 6.4-12.8 6.4s-12.8 0-12.8-6.4L512 531.2l-281.6 281.6c-6.4 6.4-6.4 6.4-12.8 6.4-6.4 0-12.8 0-12.8-6.4-6.4-6.4-6.4-19.2 0-25.6l281.6-281.6L204.8 224C192 217.6 192 204.8 204.8 198.4s19.2-6.4 25.6 0L512 480l281.6-281.6c6.4-6.4 19.2-6.4 25.6 0 6.4 6.4 6.4 19.2 0 25.6L537.6 505.6 819.2 787.2z"
@@ -568,12 +620,15 @@
                                                     </svg>
                                                     <a th:text="${subItem.name}" th:href="@{${subItem.path}}"
                                                        style="margin-left: 5px;font-size: 14px"></a>
-                                                    <a href="#" style="margin-left: auto;margin-right: -1px">
+                                                    <span style="margin-left: auto;color: grey;font-size: 14px;margin-right: 10px"
+                                                          th:text="''+${subItem.desciption}+';  创建者：'+${subItem.createUser}"></span>
+                                                    <a href="#" style="margin-right: -1px">
                                                         <svg t="1620368450863" class="icon" viewBox="0 0 1024 1024"
                                                              version="1.1"
                                                              xmlns="http://www.w3.org/2000/svg" p-id="5283" width="16"
                                                              height="16" data-target="#remModel"
-                                                             data-toggle="modal" th:onclick="passRemValue('',[[${subItem.id}]],[[${subItem.name}]])">
+                                                             data-toggle="modal"
+                                                             th:onclick="passRemValue('',[[${subItem.id}]],[[${subItem.name}]])">
                                                             <path d="M0 0l0 1024 1024 0L1024 0 0 0zM819.2 787.2c6.4 6.4 6.4 19.2 0 25.6-6.4 6.4-6.4 6.4-12.8 6.4s-12.8 0-12.8-6.4L512 531.2l-281.6 281.6c-6.4 6.4-6.4 6.4-12.8 6.4-6.4 0-12.8 0-12.8-6.4-6.4-6.4-6.4-19.2 0-25.6l281.6-281.6L204.8 224C192 217.6 192 204.8 204.8 198.4s19.2-6.4 25.6 0L512 480l281.6-281.6c6.4-6.4 19.2-6.4 25.6 0 6.4 6.4 6.4 19.2 0 25.6L537.6 505.6 819.2 787.2z"
                                                                   p-id="5284" fill="#d81e06"></path>
                                                         </svg>
@@ -602,7 +657,10 @@
                                 </svg>
                                 <a th:text="${item.name}" th:href="@{${item.path}}"
                                    style="margin-left: 5px;font-size: 14px"></a>
-                                <a href="#" style="margin-left: auto;margin-right: 19px" data-target="#remModel"
+                                <span style="margin-left: auto;color: grey;font-size: 14px;margin-right: 10px"
+                                      th:text="''+${item.desciption}+';  创建者：'+${item.createUser}"></span>
+                                <a href="#" style="margin-right: 19px;display: flex;align-items: center"
+                                   data-target="#remModel"
                                    data-toggle="modal" th:onclick="passRemValue('',[[${item.id}]],[[${item.name}]])">
                                     <svg t="1620368450863" class="icon" viewBox="0 0 1024 1024" version="1.1"
                                          xmlns="http://www.w3.org/2000/svg" p-id="5283" width="16" height="16">
@@ -660,7 +718,12 @@
                         <input type="file" id="uploadFile" name="file" placeholder="请选择文件"
                                style="font-size: 14px;lin-height: 14px;">
                     </div>
-                    <br/>
+                    <div class="form-group" id="">
+                        <label for="description"
+                               style="padding-left:10px;font-weight: bolder;border-left: #FFC107 solid 4px">描述信息</label>
+                        <input type="text" class="form-control" id="description" name="description"
+                               placeholder="请输入描述内容">
+                    </div>
                     <button type="submit" class="btn btn-outline-warning"
                             style="width: 30%;margin-left: auto;margin-right: 10px">提交
                     </button>
@@ -686,7 +749,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-outline-danger" data-dismiss="modal" th:onclick="remFile([[${project_id}]])">删除</button>
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal"
+                        th:onclick="remFile([[${project_id}]])">删除
+                </button>
             </div>
         </div>
     </div>
@@ -694,9 +759,10 @@
 </body>
 
 <script>
-    let globalDirectroyId="";
-    let globalFileId="";
-    let globalName="";
+    let globalDirectroyId = "";
+    let globalFileId = "";
+    let globalName = "";
+
     function getDocument(id) {
         $.ajax({
             url: "http://localhost:8080/directory/listByProject?id=" + id,
@@ -720,19 +786,19 @@
         }
     }
 
-    function passRemValue(directory, fileId, name){
+    function passRemValue(directory, fileId, name) {
         $('#remTip').text("")
-        globalFileId="";
-        globalDirectroyId="";
-        globalName="";
-        globalDirectroyId=directory;
-        globalFileId=fileId;
-        globalName=name;
-        if(directory!==""){
-            $('#remTip').text("文件夹"+name+"以及文件夹下面的文件")
+        globalFileId = "";
+        globalDirectroyId = "";
+        globalName = "";
+        globalDirectroyId = directory;
+        globalFileId = fileId;
+        globalName = name;
+        if (directory !== "") {
+            $('#remTip').text("文件夹" + name + "以及文件夹下面的文件")
         }
-        if(fileId!==""){
-            $('#remTip').text("文件"+name)
+        if (fileId !== "") {
+            $('#remTip').text("文件" + name)
         }
 
     }
@@ -747,7 +813,7 @@
                 fileId: globalFileId,
             },
             success: function (res) {
-                window.location.href="http://localhost:8080/doc/document?id="+projectId
+                window.location.href = "http://localhost:8080/doc/document?id=" + projectId
             },
         })
     }

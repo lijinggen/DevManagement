@@ -38,4 +38,14 @@ public class TaskController {
         task.setStatus(2);
         taskService.update(task);
     }
+
+    @GetMapping("closed")
+    public void closed(String id){
+        taskService.closed(id);
+    }
+
+    @GetMapping("reopen")
+    public void reopen(String id){
+        taskService.reopen(id);
+    }
 }

@@ -8,4 +8,6 @@ public class AddDocumentDto {
     String directoryId;
     String name;
     String projectId;
+    String description;
+    String userName;
 }

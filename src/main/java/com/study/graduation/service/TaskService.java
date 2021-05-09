@@ -61,4 +61,9 @@ public interface TaskService {
     List<Task> list(ListTaskReq listTaskReq);
 
     int getICreate(String userId) throws ParseException;
+
+    void closed (String id);
+
+    void reopen(String id);
+
 }

@@ -118,4 +118,22 @@ public class TaskServiceImpl implements TaskService {
         }
         return res.size();
     }
+
+    @Override
+    public void closed(String id) {
+        Task task=queryById(id);
+        if (task.getType().equals(1)){
+            task.setStatus(4);
+            update(task);
+        }
+    }
+
+    @Override
+    public void reopen(String id) {
+        Task task=queryById(id);
+        if (task.getType().equals(1)){
+            task.setStatus(1);
+            update(task);
+        }
+    }
 }

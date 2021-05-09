@@ -7,10 +7,10 @@ import java.io.Serializable;
  * (Document)实体类
  *
  * @author makejava
- * @since 2021-03-29 13:08:54
+ * @since 2021-05-09 11:50:56
  */
 public class Document implements Serializable {
-    private static final long serialVersionUID = -98690824553668611L;
+    private static final long serialVersionUID = 330567550718122249L;
 
     private String id;
     /**
@@ -33,6 +33,10 @@ public class Document implements Serializable {
      * 修改时间
      */
     private Date modifyTime;
+
+    private String createUser;
+
+    private String desciption;
 
 
     public String getId() {
@@ -97,6 +101,22 @@ public class Document implements Serializable {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
+
+    public String getDesciption() {
+        return desciption;
+    }
+
+    public void setDesciption(String desciption) {
+        this.desciption = desciption;
     }
 
 }

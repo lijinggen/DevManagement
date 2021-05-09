@@ -53,6 +53,9 @@ public class ProjectServiceImpl implements ProjectService {
     private TaskDao taskDao;
 
     @Resource
+    private BugDao bugDao;
+
+    @Resource
     private MessageService messageService;
 
     @Resource
@@ -455,7 +458,7 @@ public class ProjectServiceImpl implements ProjectService {
                         }
                     } else {
                         if (task.getType().equals(2)) {
-                            if (task.getStatus().equals(1)) {
+                            if (task.getStatus().equals(1)||task.getStatus().equals(5)) {
                                 statisticDto.setTesting(statisticDto.getTesting() + 1);
                             }
                         }
@@ -565,6 +568,32 @@ public class ProjectServiceImpl implements ProjectService {
                 testDetailDto.setDetail(test.getDetail());
                 testDetailDto.setTestId(test.getId());
                 list.add(testDetailDto);
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public List<BugDetailDto> listBugDetail(String projectId) throws ParseException {
+        List<Task> tasks = taskService.listByProject(projectId);
+        List<BugDetailDto> list = new ArrayList<>();
+        for (Task task : tasks) {
+            if(task.getType()==3){
+                QueryWrapper<Bug> demandQueryWrapper = new QueryWrapper<>();
+                demandQueryWrapper.lambda().eq(Bug::getTaskId, task.getId());
+                Bug bug = bugDao.selectOne(demandQueryWrapper);
+                BugDetailDto bugDetailDto = new BugDetailDto();
+                bugDetailDto.setId(task.getId());
+                bugDetailDto.setBatchNo(task.getBatchNo());
+                bugDetailDto.setBeginTime(DateUtil.format(task.getBeginTime()));
+                bugDetailDto.setEndTime(DateUtil.format(task.getEndTime()));
+                bugDetailDto.setStatus(status[task.getStatus() - 1]);
+                bugDetailDto.setType(taskType[task.getType() - 1]);
+                bugDetailDto.setPriority(priority[task.getPriority() - 1]);
+                bugDetailDto.setTitle(task.getTitle());
+                bugDetailDto.setCreateUser(userService.queryById(task.getCreateUser()).getUserName());
+                bugDetailDto.setDetauk(bug.getDetauk());
+                list.add(bugDetailDto);
             }
         }
         return list;

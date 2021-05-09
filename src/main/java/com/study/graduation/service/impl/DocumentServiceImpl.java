@@ -100,6 +100,8 @@ public class DocumentServiceImpl implements DocumentService {
         document.setName(file.getOriginalFilename());
         document.setProjectId(addDocumentDto.getProjectId());
         document.setType(addDocumentDto.getType());
+        document.setDesciption(addDocumentDto.getDescription());
+        document.setCreateUser(addDocumentDto.getUserName());
         String uuid = UUID.randomUUID().toString();
         byte[] bytes = file.getBytes();
         Path path = Paths.get(uploadDir + uuid + "~-" + file.getOriginalFilename());
