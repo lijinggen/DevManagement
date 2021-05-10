@@ -120,9 +120,22 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public void finished(String id) {
+        Task task = queryById(id);
+        if(task.getType().equals(1)||task.getType().equals(2)){
+            task.setStatus(2);
+            update(task);
+        }
+    }
+
+    @Override
     public void closed(String id) {
         Task task=queryById(id);
         if (task.getType().equals(1)){
+            task.setStatus(4);
+            update(task);
+        }
+        if (task.getType().equals(2)){
             task.setStatus(4);
             update(task);
         }
@@ -132,6 +145,10 @@ public class TaskServiceImpl implements TaskService {
     public void reopen(String id) {
         Task task=queryById(id);
         if (task.getType().equals(1)){
+            task.setStatus(1);
+            update(task);
+        }
+        if(task.getType().equals(2)){
             task.setStatus(1);
             update(task);
         }

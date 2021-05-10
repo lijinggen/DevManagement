@@ -34,9 +34,7 @@ public class TaskController {
 
     @GetMapping("finished")
     public void finished(String id){
-        Task task = taskService.queryById(id);
-        task.setStatus(2);
-        taskService.update(task);
+        taskService.finished(id);
     }
 
     @GetMapping("closed")

@@ -57,5 +57,6 @@ public interface MessageService {
 
     public List<MessageDto> queryAllByUserId(String userId) throws ParseException;
 
+    public List<MessageDto> queryAllInMyProject(String userId);
     public void read(String id);
 }

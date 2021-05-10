@@ -112,6 +112,11 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    public List<MessageDto> queryAllInMyProject(String userId) {
+        return null;
+    }
+
+    @Override
     public void read(String id) {
         Message message=messageDao.queryById(id);
         message.setIsRead(1);

@@ -394,14 +394,17 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"
-                            th:if="${testItem.status eq '已关闭'}">重新打开
+                            th:if="${testItem.status eq '已关闭'}"
+                            th:onclick="reOpen([[${testItem.id}]],[[${project_id}]])">重新打开
                     </button>
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">关闭弹框</button>
                     <button type="button" class="btn btn-outline-danger" data-dismiss="modal"
-                            th:if="${testItem.status eq '进行中'}">关闭测试
+                            th:if="${testItem.status eq '进行中'}"
+                            th:onclick="closed([[${testItem.id}]],[[${project_id}]])">关闭测试
                     </button>
                     <button type="button" class="btn btn-outline-success" data-dismiss="modal"
-                            th:if="${testItem.status eq '进行中'}">完成测试
+                            th:if="${testItem.status eq '进行中'}"
+                            th:onclick="finished([[${testItem.id}]],[[${project_id}]])">完成测试
                     </button>
                 </div>
             </div>

@@ -12,28 +12,44 @@
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="modifyTime" column="modify_time" jdbcType="TIMESTAMP"/>
         <result property="toUserId" column="to_user_id" jdbcType="VARCHAR"/>
+        <result property="projectId" column="project_id" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="MessageMap">
-        select
-          id, project, from_user, to_user, is_read, title, create_time, modify_time, to_user_id
+        select id,
+               project,
+               from_user,
+               to_user,
+               is_read,
+               title,
+               create_time,
+               modify_time,
+               to_user_id,
+               project_id
         from dev_management.message
         where id = #{id}
     </select>
 
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="MessageMap">
-        select
-          id, project, from_user, to_user, is_read, title, create_time, modify_time, to_user_id
-        from dev_management.message
-        limit #{offset}, #{limit}
+        select id,
+               project,
+               from_user,
+               to_user,
+               is_read,
+               title,
+               create_time,
+               modify_time,
+               to_user_id,
+               project_id
+        from dev_management.message limit #{offset}, #{limit}
     </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="MessageMap">
         select
-        id, project, from_user, to_user, is_read, title, create_time, modify_time, to_user_id
+        id, project, from_user, to_user, is_read, title, create_time, modify_time, to_user_id, project_id
         from dev_management.message
         <where>
             <if test="id != null and id != ''">
@@ -63,37 +79,42 @@
             <if test="toUserId != null and toUserId != ''">
                 and to_user_id = #{toUserId}
             </if>
+            <if test="projectId != null and projectId != ''">
+                and project_id = #{projectId}
+            </if>
         </where>
     </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into dev_management.message(id, project, from_user, to_user, is_read, title, create_time, modify_time, to_user_id)
-        values (#{id}, #{project}, #{fromUser}, #{toUser}, #{isRead}, #{title}, #{createTime}, #{modifyTime}, #{toUserId})
+        insert into dev_management.message(id,project, from_user, to_user, is_read, title, create_time, modify_time,
+                                           to_user_id, project_id)
+        values (#{id},#{project}, #{fromUser}, #{toUser}, #{isRead}, #{title}, #{createTime}, #{modifyTime}, #{toUserId},
+                #{projectId})
     </insert>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
         insert into dev_management.message(project, from_user, to_user, is_read, title, create_time, modify_time,
-        to_user_id)
+        to_user_id, project_id)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.project}, #{entity.fromUser}, #{entity.toUser}, #{entity.isRead}, #{entity.title},
-            #{entity.createTime}, #{entity.modifyTime}, #{entity.toUserId})
+            #{entity.createTime}, #{entity.modifyTime}, #{entity.toUserId}, #{entity.projectId})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
         insert into dev_management.message(project, from_user, to_user, is_read, title, create_time, modify_time,
-        to_user_id)
+        to_user_id, project_id)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.project}, #{entity.fromUser}, #{entity.toUser}, #{entity.isRead}, #{entity.title},
-            #{entity.createTime}, #{entity.modifyTime}, #{entity.toUserId})
+            #{entity.createTime}, #{entity.modifyTime}, #{entity.toUserId}, #{entity.projectId})
         </foreach>
         on duplicate key update
         project = values(project) , from_user = values(from_user) , to_user = values(to_user) , is_read =
         values(is_read) , title = values(title) , create_time = values(create_time) , modify_time = values(modify_time)
-        , to_user_id = values(to_user_id)
+        , to_user_id = values(to_user_id) , project_id = values(project_id)
     </insert>
 
     <!--通过主键修改数据-->
@@ -124,13 +145,18 @@
             <if test="toUserId != null and toUserId != ''">
                 to_user_id = #{toUserId},
             </if>
+            <if test="projectId != null and projectId != ''">
+                project_id = #{projectId},
+            </if>
         </set>
         where id = #{id}
     </update>
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from dev_management.message where id = #{id}
+        delete
+        from dev_management.message
+        where id = #{id}
     </delete>
 
 </mapper>

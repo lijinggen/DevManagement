@@ -62,6 +62,8 @@ public interface TaskService {
 
     int getICreate(String userId) throws ParseException;
 
+    void finished(String id);
+
     void closed (String id);
 
     void reopen(String id);

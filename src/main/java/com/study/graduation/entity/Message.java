@@ -7,10 +7,10 @@ import java.io.Serializable;
  * (Message)实体类
  *
  * @author makejava
- * @since 2021-04-26 21:02:50
+ * @since 2021-05-10 13:23:02
  */
 public class Message implements Serializable {
-    private static final long serialVersionUID = -72968895264486591L;
+    private static final long serialVersionUID = -93722845339631113L;
 
     private String id;
 
@@ -33,6 +33,8 @@ public class Message implements Serializable {
     private Date modifyTime;
 
     private String toUserId;
+
+    private String projectId;
 
 
     public String getId() {
@@ -105,6 +107,14 @@ public class Message implements Serializable {
 
     public void setToUserId(String toUserId) {
         this.toUserId = toUserId;
+    }
+
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
     }
 
 }
