@@ -68,4 +68,5 @@ public interface TaskService {
 
     void reopen(String id);
 
+    void shangXian(String id);
 }

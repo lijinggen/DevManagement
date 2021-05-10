@@ -1,7 +1,9 @@
 package com.study.graduation.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.study.graduation.entity.Bug;
 import com.study.graduation.dao.BugDao;
+import com.study.graduation.entity.Test;
 import com.study.graduation.service.BugService;
 import org.springframework.stereotype.Service;
 
@@ -75,5 +77,13 @@ public class BugServiceImpl implements BugService {
     @Override
     public boolean deleteById(String id) {
         return this.bugDao.deleteById(id) > 0;
+    }
+
+    @Override
+    public Bug getByTaskId(String taskId) {
+        QueryWrapper<Bug> testQueryWrapper=new QueryWrapper<>();
+        testQueryWrapper.lambda().eq(Bug::getTaskId,taskId);
+        Bug test = bugDao.selectOne(testQueryWrapper);
+        return test;
     }
 }

@@ -526,6 +526,7 @@ public class ProjectServiceImpl implements ProjectService {
                 demandDetailDto.setType(taskType[task.getType() - 1]);
                 demandDetailDto.setPriority(priority[task.getPriority() - 1]);
                 demandDetailDto.setTitle(task.getTitle());
+                demandDetailDto.setUserId(task.getUserId());
                 demandDetailDto.setCreateUser(userService.queryById(task.getCreateUser()).getUserName());
                 demandDetailDto.setDetail(demand.getDetail());
                 String[] split = demand.getFileList().split(",");
@@ -564,6 +565,7 @@ public class ProjectServiceImpl implements ProjectService {
                 testDetailDto.setType(taskType[task.getType() - 1]);
                 testDetailDto.setPriority(priority[task.getPriority() - 1]);
                 testDetailDto.setTitle(task.getTitle());
+                testDetailDto.setUserId(task.getUserId());
                 testDetailDto.setCreateUser(userService.queryById(task.getCreateUser()).getUserName());
                 testDetailDto.setDetail(test.getDetail());
                 testDetailDto.setTestId(test.getId());
@@ -591,6 +593,7 @@ public class ProjectServiceImpl implements ProjectService {
                 bugDetailDto.setType(taskType[task.getType() - 1]);
                 bugDetailDto.setPriority(priority[task.getPriority() - 1]);
                 bugDetailDto.setTitle(task.getTitle());
+                bugDetailDto.setUserId(task.getUserId());
                 bugDetailDto.setCreateUser(userService.queryById(task.getCreateUser()).getUserName());
                 bugDetailDto.setDetauk(bug.getDetauk());
                 list.add(bugDetailDto);

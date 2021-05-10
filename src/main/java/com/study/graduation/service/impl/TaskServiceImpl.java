@@ -3,9 +3,13 @@ package com.study.graduation.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.study.graduation.dto.ListTaskReq;
 import com.study.graduation.dto.TaskDto;
+import com.study.graduation.entity.Bug;
 import com.study.graduation.entity.Task;
 import com.study.graduation.dao.TaskDao;
+import com.study.graduation.entity.Test;
+import com.study.graduation.service.BugService;
 import com.study.graduation.service.TaskService;
+import com.study.graduation.service.TestService;
 import com.study.graduation.util.DateUtil;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +29,11 @@ public class TaskServiceImpl implements TaskService {
     @Resource
     private TaskDao taskDao;
 
+    @Resource
+    private TestService testService;
+
+    @Resource
+    private BugService bugService;
     /**
      * 通过ID查询单条数据
      *
@@ -35,6 +44,7 @@ public class TaskServiceImpl implements TaskService {
     public Task queryById(String id) {
         return this.taskDao.queryById(id);
     }
+
 
     /**
      * 查询多条数据
@@ -122,9 +132,54 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void finished(String id) {
         Task task = queryById(id);
-        if(task.getType().equals(1)||task.getType().equals(2)){
+        if(task.getType().equals(1)){
             task.setStatus(2);
             update(task);
+        }
+        if(task.getType().equals(2)){
+            ListTaskReq listTaskReq=new ListTaskReq();
+            listTaskReq.setBatchNo(task.getBatchNo());
+            List<Task> list = list(listTaskReq);
+            int flag=1;
+            for(Task task1:list){
+                if(task1.getType().equals(2)&&task1.getStatus().equals(1)&&!task1.getId().equals(id)){
+                    flag=-1;
+                }
+            }
+            if(flag==1){
+                for (Task task1 : list) {
+                    task1.setStatus(6);
+                    update(task1);
+                }
+            }
+            if(flag==-1){
+                task.setStatus(2);
+                update(task);
+            }
+        }
+        if(task.getType().equals(3)){
+            task.setStatus(2);
+            update(task);
+            ListTaskReq listTaskReq=new ListTaskReq();
+            listTaskReq.setBatchNo(task.getBatchNo());
+            List<Task> list = list(listTaskReq);
+            int flag=-1;
+            Task testTask=new Task();
+            Bug byTaskId = bugService.getByTaskId(task.getId());
+            for (Task task1 : list) {
+                if(task1.getType().equals(3)){
+                    Bug bb = bugService.getByTaskId(task1.getId());
+                    if (task1.getStatus().equals(1)&&!task.getId().equals(id)&&bb.getRelationTaskId().equals(byTaskId.getRelationTaskId())){
+                        flag=1;
+                    }
+                }else if(task1.getType().equals(2)&&task1.getId().equals(byTaskId.getRelationTaskId())){
+                    testTask=task1;
+                }
+            }
+            if(flag==-1){
+                testTask.setStatus(1);
+                update(testTask);
+            }
         }
     }
 
@@ -139,6 +194,30 @@ public class TaskServiceImpl implements TaskService {
             task.setStatus(4);
             update(task);
         }
+        if(task.getType().equals(3)){
+            task.setStatus(4);
+            update(task);
+            ListTaskReq listTaskReq=new ListTaskReq();
+            listTaskReq.setBatchNo(task.getBatchNo());
+            List<Task> list = list(listTaskReq);
+            int flag=-1;
+            Task testTask=new Task();
+            Bug byTaskId = bugService.getByTaskId(task.getId());
+            for (Task task1 : list) {
+                if(task1.getType().equals(3)){
+                    Bug bb = bugService.getByTaskId(task1.getId());
+                    if (task1.getStatus().equals(1)&&!task.getId().equals(id)&&bb.getRelationTaskId().equals(byTaskId.getRelationTaskId())){
+                        flag=1;
+                    }
+                }else if(task1.getType().equals(2)&&task1.getId().equals(byTaskId.getRelationTaskId())){
+                    testTask=task1;
+                }
+            }
+            if(flag==-1){
+                testTask.setStatus(1);
+                update(testTask);
+            }
+        }
     }
 
     @Override
@@ -151,6 +230,34 @@ public class TaskServiceImpl implements TaskService {
         if(task.getType().equals(2)){
             task.setStatus(1);
             update(task);
+        }
+        if(task.getType().equals(3)){
+            task.setStatus(1);
+            update(task);
+            ListTaskReq listTaskReq=new ListTaskReq();
+            listTaskReq.setBatchNo(task.getBatchNo());
+            List<Task> list = list(listTaskReq);
+            Task testTask;
+            Bug byTaskId = bugService.getByTaskId(task.getId());
+            for (Task task1 : list) {
+                if(task1.getType().equals(2)&&task1.getId().equals(byTaskId.getRelationTaskId())){
+                    testTask=task1;
+                    testTask.setStatus(5);
+                    update(testTask);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void shangXian(String id) {
+        Task task=queryById(id);
+        ListTaskReq listTaskReq=new ListTaskReq();
+        listTaskReq.setBatchNo(task.getBatchNo());
+        List<Task> list = list(listTaskReq);
+        for (Task task1 : list) {
+            task1.setStatus(3);
+            update(task1);
         }
     }
 }

@@ -34,6 +34,7 @@ public class TaskController {
 
     @GetMapping("finished")
     public void finished(String id){
+        System.out.println(id);
         taskService.finished(id);
     }
 
@@ -45,5 +46,10 @@ public class TaskController {
     @GetMapping("reopen")
     public void reopen(String id){
         taskService.reopen(id);
+    }
+
+    @GetMapping("shangXian")
+    public void shangXian(String id){
+        taskService.shangXian(id);
     }
 }

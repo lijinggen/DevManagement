@@ -1,6 +1,7 @@
 package com.study.graduation.service;
 
 import com.study.graduation.entity.Bug;
+import com.study.graduation.entity.Test;
 
 import java.util.List;
 
@@ -53,4 +54,5 @@ public interface BugService {
      */
     boolean deleteById(String id);
 
+    Bug getByTaskId(String taskId);
 }
