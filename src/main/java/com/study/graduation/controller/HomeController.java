@@ -11,6 +11,7 @@ import com.study.graduation.util.DateUtil;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.unit.DataUnit;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
@@ -111,6 +112,7 @@ public class HomeController {
                 Map<String,Object> item =new HashMap<>();
                 item.put("id",project.getId());
                 item.put("name",project.getName());
+                item.put("createTime", DateUtil.format(project.getCreateTime()));
                 resultList.add(item);
             }
         }

@@ -231,8 +231,8 @@
             </div>
         </div>
     </div>
-    <div style="display: flex;flex-direction: row; width: 94%">
-        <div class="border" style="height: 380px;padding: 15px;width: 60%;margin: 0 auto;margin-top: -5px; display: flex;flex-direction: column;">
+    <div style="display: flex;flex-direction: row; width: 96%;margin: 0 auto">
+        <div class="border" style="height: 400px;padding: 15px;width: 60%;margin: 0 auto;margin-top: -5px; display: flex;flex-direction: column;">
             <div style="margin-left: 10px">
                 <h5>我的项目</h5>
             </div>
@@ -250,8 +250,9 @@
                     <div class="card" style="width: 13rem; display: flex;">
                         <img th:src="@{'/image/bg'+${(idx.index)%6+1}+'.svg'}" class="card-img-top" alt="..."
                              style="width: 13rem;height: 13rem;margin: 0 auto">
-                        <div class="card-body" style="display: flex; flex-direction: column;background: rgb(247,247,247)">
+                        <div class="card-body " style="display: flex; flex-direction: column;background: rgb(247,247,247)">
                             <h5 class="card-title" th:text="${item.name}" style="font-weight: bolder"></h5>
+                            <span th:text="${item.createTime}"></span>
                             <a th:href="@{'/project/index?id='+${item.id}}" class="stretched-link text-warning"
                                style="margin-left: auto;font-weight: bolder">
                                 跳转
@@ -261,7 +262,7 @@
                 </div>
             </div>
         </div>
-        <div class="border" style="display: flex;flex-direction:column;width: 38%; padding-top: 15px;padding-left:15px;padding-right:15px;margin-top: -5px;height: 380px">
+        <div class="border-right border-top border-bottom" style="display: flex;flex-direction:column;width: 40%; padding-top: 15px;padding-left:15px;padding-right:15px;margin-top: -5px;height: 400px">
             <span class="border-bottom border-dark" style="font-size: 14px;font-weight: bolder;padding: 5px">最近动态</span>
             <ul style="overflow-y: auto;height: 360px;margin-top: 10px;">
                 <li>11111111111111</li>
