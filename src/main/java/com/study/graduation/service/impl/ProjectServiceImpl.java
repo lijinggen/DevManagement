@@ -304,9 +304,10 @@ public class ProjectServiceImpl implements ProjectService {
             message.setModifyTime(new Date());
             message.setFromUser(userService.queryById(userId).getUserName());
             message.setToUser(userService.queryById(addDemandRequest.getUserId()).getUserName());
-            message.setTitle(addDemandRequest.getTitle());
+            message.setTitle("分配了一个任务给"+userService.queryById(userId).getUserName()+": "+addDemandRequest.getTitle());
             message.setToUserId(addDemandRequest.getUserId());
             message.setIsRead(0);
+            message.setProjectId(addDemandRequest.getProjectId());
             message.setProject(projectDao.selectById(addDemandRequest.getProjectId()).getName());
             messageService.insert(message);
             demandService.insert(demand);
@@ -353,9 +354,10 @@ public class ProjectServiceImpl implements ProjectService {
         message.setModifyTime(new Date());
         message.setFromUser(userService.queryById(userId).getUserName());
         message.setToUser(userService.queryById(addTestRequest.getUserId()).getUserName());
-        message.setTitle("分配了一个任务给您【测试】"+taskService.queryById(addTestRequest.getRelationTaskId()).getTitle());
+        message.setTitle("分配了一个任务给"+userService.queryById(userId).getUserName()+":【测试】"+taskService.queryById(addTestRequest.getRelationTaskId()).getTitle());
         message.setToUserId(addTestRequest.getUserId());
         message.setIsRead(0);
+        message.setProjectId(addTestRequest.getProjectId());
         message.setProject(projectDao.selectById(addTestRequest.getProjectId()).getName());
         messageService.insert(message);
         testService.insert(test);
@@ -401,10 +403,11 @@ public class ProjectServiceImpl implements ProjectService {
         message.setModifyTime(new Date());
         message.setFromUser(userService.queryById(userId).getUserName());
         message.setToUser(userService.queryById(addBugRequest.getUserId()).getUserName());
-        message.setTitle("分配了一个任务给您【BUG】"+taskService.queryById(addBugRequest.getRelationTaskId()).getTitle());
+        message.setTitle("分配了一个任务给"+userService.queryById(userId).getUserName()+"：【BUG】"+taskService.queryById(addBugRequest.getRelationTaskId()).getTitle());
         message.setToUserId(addBugRequest.getUserId());
         message.setIsRead(0);
         message.setProject(projectDao.selectById(addBugRequest.getProjectId()).getName());
+        message.setProjectId(addBugRequest.getProjectId());
         messageService.insert(message);
 
         testTask.setStatus(5);

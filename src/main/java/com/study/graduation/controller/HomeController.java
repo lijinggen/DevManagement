@@ -3,8 +3,10 @@ package com.study.graduation.controller;
 import com.study.graduation.dto.ListProjectReq;
 import com.study.graduation.dto.ListTaskReq;
 import com.study.graduation.dto.TaskDto;
+import com.study.graduation.entity.Message;
 import com.study.graduation.entity.Project;
 import com.study.graduation.entity.Task;
+import com.study.graduation.service.MessageService;
 import com.study.graduation.service.ProjectService;
 import com.study.graduation.service.TaskService;
 import com.study.graduation.util.DateUtil;
@@ -30,6 +32,9 @@ public class HomeController {
 
     @Resource
     private ProjectService projectService;
+
+    @Resource
+    private MessageService messageService;
 
     private static String priority[] = {"low", "middle", "high"};
 
@@ -116,7 +121,10 @@ public class HomeController {
                 resultList.add(item);
             }
         }
+
         model.addAttribute("project_list",resultList);
+        List<Message> messageList=messageService.queryAllInMyProject(userId);
+        model.addAttribute("message_list",messageList);
         return "home";
     }
 }

@@ -252,7 +252,6 @@
                              style="width: 13rem;height: 13rem;margin: 0 auto">
                         <div class="card-body " style="display: flex; flex-direction: column;background: rgb(247,247,247)">
                             <h5 class="card-title" th:text="${item.name}" style="font-weight: bolder"></h5>
-                            <span th:text="${item.createTime}"></span>
                             <a th:href="@{'/project/index?id='+${item.id}}" class="stretched-link text-warning"
                                style="margin-left: auto;font-weight: bolder">
                                 跳转
@@ -264,34 +263,12 @@
         </div>
         <div class="border-right border-top border-bottom" style="display: flex;flex-direction:column;width: 40%; padding-top: 15px;padding-left:15px;padding-right:15px;margin-top: -5px;height: 400px">
             <span class="border-bottom border-dark" style="font-size: 14px;font-weight: bolder;padding: 5px">最近动态</span>
-            <ul style="overflow-y: auto;height: 360px;margin-top: 10px;">
-                <li>11111111111111</li>
-                <li>11111111111111</li>
-                <li>11111111111111</li>
-                <li>11111111111111</li>
-                <li>11111111111111</li>
-                <li>11111111111111</li>
-                <li>11111111111111</li>
-                <li>11111111111111</li>
-                <li>11111111111111</li>
-                <li>11111111111111</li>
-                <li>11111111111111</li>
-                <li>11111111111111</li>
-                <li>11111111111111</li>
-                <li>11111111111111</li>
-                <li>11111111111111</li>
-                <li>11111111111111</li>
-                <li>11111111111111</li>
-                <li>11111111111111</li>
-                <li>11111111111111</li>
-                <li>11111111111111</li>
-                <li>11111111111111</li>
-                <li>11111111111111</li>
-                <li>11111111111111</li>
-                <li>11111111111111</li>
-                <li>11111111111111</li>
-                <li>11111111111111</li>
-                <li>11111111111111</li>
+            <ul class="list-group" style="overflow-y: auto;height: 360px;margin-top: 10px;">
+                <li class="list-group-item list-group-item-action" th:each="item : ${message_list}"
+                    style="display: flex;flex-direction: row;align-items: center">
+                    <span th:text="${item.title}" style="font-size: 14px;width: 80%;text-overflow: ellipsis;overflow-x: hidden;white-space: nowrap;"></span>
+                    <span class="badge badge-warning" th:text="${item.project}" style="margin-left: auto;margin-right: 5px; width: 15%"></span>
+                </li>
             </ul>
         </div>
 
